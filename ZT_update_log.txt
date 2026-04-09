@@ -1,0 +1,9 @@
+6 de abril de 2026
+clases : 
+	Persona (abstracto)	superclase
+		Paciente		subclase
+		Profesional		subclase
+
+更新内容：
+	增加了抽象类Persona作为父类
+	对应子类Paciente与Profesional
