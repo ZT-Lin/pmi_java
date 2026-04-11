@@ -8,19 +8,19 @@ package com.mycompany.proyect_2026;
  *
  * @author linzh
  */
-class Profesional extends Persona {
+public class Profesional extends Persona {
 
     private int matricula;
 
-    Profesional() {
-        this.nombre = null;
+    public Profesional() {
+        this.nombre = null; 
         this.apellido = null;
         this.mail = null;
         this.telefono = 0;
         this.matricula = 00000000;
     }
 
-    Profesional(String nombre, String apellido, int matricula) {
+    public Profesional(String nombre, String apellido, int matricula) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = null;

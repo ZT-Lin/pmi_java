@@ -8,8 +8,7 @@ package com.mycompany.proyect_2026;
  *
  * @author linzh
  */
-abstract class Persona {
-
+public abstract class Persona {
     protected String nombre, apellido;
     /*
         ↑no se modifica↑

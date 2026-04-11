@@ -1,8 +1,8 @@
 /*  11/04/2026
-modificacion 1: debe agregar "package ..." para incluir la clase en el app
-*/
+    debe agregar "package ..." para incluir la clase en el app, sino sale error
+*/ //--- Lin
 package com.mycompany.proyect_2026;
-//---ZT
+
 
 
 public class Fecha {

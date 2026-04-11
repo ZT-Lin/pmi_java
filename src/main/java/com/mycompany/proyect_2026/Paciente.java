@@ -8,13 +8,13 @@ package com.mycompany.proyect_2026;
  *
  * @author linzh
  */
-class Paciente extends Persona {
+public class Paciente extends Persona {
 
     private String dni;
     // controlar que sea 7 u 8 caracter antes de usar
     private boolean obraSocial;
 
-    Paciente() {
+    public Paciente() {
         this.nombre = null;
         this.apellido = null;
         this.mail = null;
@@ -23,7 +23,7 @@ class Paciente extends Persona {
         this.obraSocial = false;
     }
 
-    Paciente(String nombre, String apellido, String dni) {
+    public Paciente(String nombre, String apellido, String dni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = null;
