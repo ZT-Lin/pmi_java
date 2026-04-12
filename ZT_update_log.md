@@ -1,26 +1,25 @@
 # change log / 更新日志
 
+## **_TODO / 待办事项_**
+
+- [ ] **Qustion**: El _Hashmap global_ para los tipos de análisis lo metemos en una clase o directamente en clase principal `Proyecto_2026`? / 关于哈希表归属问题。
+
+- [ ] Pensar como van a ser nuestro interface para usuario. / 思考GUI样式。
+
 ---
 
 ## [12 - 04 - 2024]
-
-### Actualizaciones / 更新内容
-
-**Estructura actual / 现结构**
 
 ### Modificaciones / 修改内容
 
 **Lin**
 
-- Mover archivos para crear modelo mvc. / mvc文档架构
+- Reorganizar los archivos para estructurar el proyecto bajo el modelo MVC. / 调整文件结构以构建 MVC 架构。
+- Añadir la carpeta `target/` al archivo `.gitignore.` / 在 `.gitignore` 中添加 `target/` 目录以忽略构建产物。
 
 ---
 
 ## [11 - 04 - 2024]
-
-### TODO / 待办事项
-
-- [ ] **Qustion**: El _Hashmap global_ para los tipos de análisis lo implementamos en clase o directamente en clase principal `Proyecto_2026`? / 关于哈希表归属问题
 
 ### Actualizaciones / 更新内容
 
