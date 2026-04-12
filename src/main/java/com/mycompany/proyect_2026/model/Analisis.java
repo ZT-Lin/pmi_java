@@ -9,9 +9,6 @@ import java.util.HashMap;
  * @author linzh
  */
 public class Analisis {
-    /*
-        Creamos una clase nuevo para esto o directamente lo meten en el main?
-    */
     public static final HashMap<Integer,String> TIPO_ANALYSIS = new HashMap<>();
     
     public Analisis(){

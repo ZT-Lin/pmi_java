@@ -4,11 +4,15 @@
 
 ## [12 - 04 - 2024]
 
+### Actualizaciones / 更新内容
+
+**Estructura actual / 现结构**
+
 ### Modificaciones / 修改内容
 
 **Lin**
 
-- Mover archivos para modelo mvc. / mvc文档架构
+- Mover archivos para crear modelo mvc. / mvc文档架构
 
 ---
 
