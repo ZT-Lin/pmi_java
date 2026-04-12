@@ -1,7 +1,7 @@
 /*  11/04/2026
     debe agregar "package ..." para incluir la clase en el app, sino sale error
 */ //--- Lin
-package com.mycompany.proyect_2026;
+package com.mycompany.proyect_2026.model;
 
 
 
