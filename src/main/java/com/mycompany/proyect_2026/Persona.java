@@ -53,4 +53,11 @@ public abstract class Persona {
     public int getTelef() {
         return this.telefono;
     }
+    
+    @Override
+    public String toString(){
+        return this.nombre + " "+ this.apellido
+                +"\n\ttelefono:\t\t"+this.telefono
+                +"\n\tcorreo:\t\t"+this.mail;
+    }
 }

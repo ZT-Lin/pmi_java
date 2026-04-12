@@ -41,8 +41,10 @@ public class Paciente extends Persona {
         return this.dni;
     }
 
-    //obraSocial
-    public void setObSocial(String obraSocial) {
+    //obraSocial  
+    // modificado en 11/04/2026 - Lin
+    // pequeña modificacion del nombre
+    public void setObraSocial(String obraSocial) {
         if (obraSocial.compareToIgnoreCase("si") == 0) {
             this.obraSocial = true;
             return;
@@ -52,11 +54,20 @@ public class Paciente extends Persona {
             return;
         }
     }
-
-    public String getObSocial() {
+    // modificado en 11/04/2026 - Lin
+    // pequeña modificacion del nombre
+    public String getObraSocial() {
         if (this.obraSocial) {
             return "SI";
         }
         return "NO";
+    }
+    
+    // agreagado en 11/04/2026 - Lin
+    @Override
+    public String toString(){
+        return "Paciente: "+super.toString()
+                +"\n\tdni:\t\t\t"+this.dni
+                +"\n\tobra social:\t"+this.getObraSocial();
     }
 }

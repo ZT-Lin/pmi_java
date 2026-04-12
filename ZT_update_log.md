@@ -4,6 +4,10 @@
 
 ## [11 - 04 - 2024]
 
+### TODO / 待办事项
+
+- [ ] **Qustion**: El _Hashmap global_ para los tipos de análisis lo implementamos en clase o directamente en clase principal `Proyecto_2026`? / 关于哈希表归属问题
+
 ### Actualizaciones / 更新内容
 
 **Nuevas Clases / 新增类**
@@ -16,6 +20,7 @@
 | ├─ Estudio ← Paciente | `incluye` |
 | └─ Estudio ← Profesional | `incluye` |
 | | |
+|Analisis|`independiente`|
 | Fecha | `independiente` |
 | | |
 |**_clases existentes_**|_previos_|
@@ -29,6 +34,14 @@
 
 - Completaron los `modificadores de acceso` que faltan en las clases: `Persona`, `Paciente`, `Profesional`. / 补齐了三个类的访问权限。
 - Agregué la declaración `package ...` en la clase `Fecha` para incluirlo en el proyecto. / 补全`Fecha`类的package声明，加入至包结构。
+- Cambio de nombre de `setter` & `getter` relacionado con `obraSocial`. / 方法名称微调。
+- Clase: `Estudio` / 新增并修改了一系列细节
+  - Nuevo instante `String[] analisis`
+  - Nuevo método `setAnalisis(String... analisis)`
+  - Modificar método `toString()` para mostrar las analisis
+- Clase: `Proyecto_2026` / 新增常量
+  - Nuevo constante `private static final Analisis TIPO`
+- Método `toString()` para `Persona` `Paciente` `Profesional` / 新增了方法
 
 ---
 

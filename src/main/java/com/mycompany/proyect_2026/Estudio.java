@@ -16,6 +16,10 @@ public class Estudio {
     //Variales de instancia por composicion (Relacion con las clases de Lin)
     private Paciente paciente;
     private Profesional profesional;
+    
+    
+    private String[] analisis;
+
 
     //Constructor
     public Estudio(Fecha fecha, String nombreEstudio, Paciente paciente, Profesional profesional) {
@@ -58,13 +62,37 @@ public class Estudio {
         this.profesional = profesional;
     }
     
+    
+    /*creado en 11/04/2026-Lin*/
+    public void setAnalisis(String... analisis){
+        if(analisis == null || analisis.length == 0){
+            this.analisis = new String[0];
+            return;
+        }
+        this.analisis = new String[analisis.length];
+        System.arraycopy(analisis, 0,this.analisis, 0,analisis.length);
+    }
+    
     //Metodo toString
     @Override
     public String toString(){
-        return "Estudio: " + nombreEstudio +
-               "\nFecha: " + fecha.toString() + " " + paciente.getApellido() +
-               "\nPaciente: " + paciente.getNombre() +
-               "\nProfesional a cargo: " + profesional.getNombre() +
-               "\nInforme: " + informeResultados;
+        String str =
+               "Estudio: " + nombreEstudio +
+               "\n\tFecha: " + fecha.toString() + " " + paciente.getApellido() +
+               "\n\tPaciente: " + paciente.getNombre() +
+               "\n\tProfesional a cargo: " + profesional.getNombre() +
+               "\n\tInforme: " + informeResultados;
+        
+        StringBuilder an = new StringBuilder();
+        
+        if (this.analisis == null || this.analisis.length == 0) {
+            an.append("\n\t(No hay estudio cargado)");
+            return str + an.toString();
+        }
+        
+        for(String s: this.analisis){
+           an.append("\n\t- ").append(s);
+        }
+        return str + an.toString();
     }
 }
