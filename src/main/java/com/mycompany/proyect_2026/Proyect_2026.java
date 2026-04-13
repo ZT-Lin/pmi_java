@@ -5,6 +5,8 @@
 package com.mycompany.proyect_2026;
 
 import com.mycompany.proyect_2026.model.*;
+import com.mycompany.proyect_2026.view.MainView;
+
 
 /**
  *
@@ -15,6 +17,7 @@ public class Proyect_2026 {
     private static final Analisis TIPO = new Analisis();
     
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        MainView.start();
     }
+
 }
