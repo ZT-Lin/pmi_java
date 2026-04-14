@@ -1,11 +1,5 @@
 # change log / 更新日志
 
-## **_TODO / 待办事项_**
-
-- [ ] **Qustion**: El _Hashmap global_ para los tipos de análisis lo metemos en una clase o directamente en clase principal `Proyecto_2026`? / 关于哈希表归属问题。
-
-- [ ] Pensar como van a ser nuestro interface para usuario. / 思考GUI样式。
-
 ---
 
 ## [12 - 04 - 2024]
