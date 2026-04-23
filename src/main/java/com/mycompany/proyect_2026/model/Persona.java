@@ -18,6 +18,12 @@ public abstract class Persona {
     protected String mail;
     protected int telefono;
 
+    public Persona() {
+        this.nombre = null;
+        this.apellido = null;
+        this.mail = null;
+        this.telefono = 0;
+    }
     //nombre
     public void setNombre(String nombre) {
         this.nombre = nombre;
