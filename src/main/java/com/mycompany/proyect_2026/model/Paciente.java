@@ -10,7 +10,6 @@ package com.mycompany.proyect_2026.model;
  */
 public class Paciente extends Persona {
 
-    private String dni;
     // controlar que sea 7 u 8 caracter antes de usar
     private boolean obraSocial;
 

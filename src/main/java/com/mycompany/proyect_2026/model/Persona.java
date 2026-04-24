@@ -17,12 +17,21 @@ public abstract class Persona {
      */
     protected String mail,dni;
     protected int telefono;
-
+    //Constructores:
+    
     public Persona() {
         this.nombre = null;
         this.apellido = null;
         this.mail = null;
+        this.dni = null;
         this.telefono = 0;
+    }
+    public Persona(String nombre, String apellido, String mail, String dni, int telefono) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.dni = dni;
+        this.telefono = telefono;
     }
     //nombre
     public void setNombre(String nombre) {
