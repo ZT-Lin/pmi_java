@@ -13,18 +13,12 @@ public class Profesional extends Persona {
     private int matricula;
 
     public Profesional() {
-        this.nombre = null; 
-        this.apellido = null;
-        this.mail = null;
-        this.telefono = 0;
+        super();
         this.matricula = 00000000;
     }
 
-    public Profesional(String nombre, String apellido, int matricula) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.mail = null;
-        this.telefono = 0;
+    public Profesional(String nombre, String apellido, String mail, String dni, int telefono, int matricula) {
+        super(nombre, apellido, mail, dni, telefono);
         this.matricula = matricula;
     }
 

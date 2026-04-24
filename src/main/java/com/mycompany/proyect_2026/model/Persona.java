@@ -59,15 +59,6 @@ public abstract class Persona {
     public String getMail() {
         return this.mail;
     }
-
-    //telefono
-    public void setTelef(int numero) {
-        this.telefono = numero;
-    }
-
-    public int getTelef() {
-        return this.telefono;
-    }
     
     //DNI
     public void setDni(String dni) {
@@ -76,6 +67,15 @@ public abstract class Persona {
     
     public String getDni() {
         return this.dni;
+    }
+    
+    //telefono
+    public void setTelef(int numero) {
+        this.telefono = numero;
+    }
+
+    public int getTelef() {
+        return this.telefono;
     }
     
     @Override
