@@ -15,7 +15,7 @@ public abstract class Persona {
         implementar el set y get 
         pero no le deja cambiar en el sistema
      */
-    protected String mail;
+    protected String mail,dni;
     protected int telefono;
 
     public Persona() {
@@ -58,6 +58,15 @@ public abstract class Persona {
 
     public int getTelef() {
         return this.telefono;
+    }
+    
+    //DNI
+    public void setDni(String dni) {
+        this.dni=dni;
+    }
+    
+    public String getDni() {
+        return this.dni;
     }
     
     @Override
