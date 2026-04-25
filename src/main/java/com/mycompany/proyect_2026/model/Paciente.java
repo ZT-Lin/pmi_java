@@ -10,7 +10,6 @@ package com.mycompany.proyect_2026.model;
  */
 public class Paciente extends Persona {
 
-    // controlar que sea 7 u 8 caracter antes de usar
     private boolean obraSocial;
 
     public Paciente() {
@@ -18,7 +17,7 @@ public class Paciente extends Persona {
         this.obraSocial = false;
     }
 
-    public Paciente(String nombre, String apellido, String mail, String dni, int telefono) {
+    public Paciente(String nombre, String apellido, String mail, String dni, String telefono) {
         super(nombre, apellido, mail, dni, telefono);
         this.obraSocial = false;
     }
