@@ -11,6 +11,7 @@ package com.mycompany.proyect_2026.model;
 public class Paciente extends Persona {
 
     private boolean obraSocial;
+    private String dni;
 
     public Paciente() {
         super();
@@ -18,7 +19,8 @@ public class Paciente extends Persona {
     }
 
     public Paciente(String nombre, String apellido, String mail, String dni, String telefono) {
-        super(nombre, apellido, mail, dni, telefono);
+        super(nombre, apellido, mail, telefono);
+        this.dni = dni;
         this.obraSocial = false;
     }
     
@@ -32,6 +34,16 @@ public class Paciente extends Persona {
     // pequeña modificacion del variable
     public boolean getObraSocial() {
         return this.obraSocial;
+    }
+    
+    //modificado en 25/04/2026 - Lin
+    //DNI no va en Persona
+    //por que el Profesional no lo pide
+    public void setDNI(String dni){
+        this.dni = dni;
+    }
+    public String getDNI(){
+        return this.dni;
     }
     
     // agreagado en 11/04/2026 - Lin

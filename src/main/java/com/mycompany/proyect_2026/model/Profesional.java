@@ -10,24 +10,24 @@ package com.mycompany.proyect_2026.model;
  */
 public class Profesional extends Persona {
 
-    private int matricula;
+    private String matricula;
 
     public Profesional() {
         super();
-        this.matricula = 00000000;
+        this.matricula = null;
     }
 
-    public Profesional(String nombre, String apellido, String mail, String dni, String telefono, int matricula) {
-        super(nombre, apellido, mail, dni, telefono);
+    public Profesional(String nombre, String apellido, String mail, String telefono, String matricula) {
+        super(nombre, apellido, mail, telefono);
         this.matricula = matricula;
     }
 
     //matricula
-    public void setMatricula(int dato) {
+    public void setMatricula(String dato) {
         this.matricula = dato;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return this.matricula;
     }
     
