@@ -70,9 +70,10 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(117, 117, 117)
                         .addComponent(nombreCompañía))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(toPersona)
-                        .addGap(18, 18, 18)
+                        .addContainerGap()
+                        .addComponent(toPersona))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
@@ -81,11 +82,11 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(nombreCompañía, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toPersona)
-                    .addComponent(toStudios))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(toPersona)
+                .addGap(18, 18, 18)
+                .addComponent(toStudios)
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,7 +94,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void toPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toPersonaMouseClicked
         // TODO add your handling code here:
-        new CrearPersona().setVisible(true);
+        new PersonaMenu().setVisible(true);
     }//GEN-LAST:event_toPersonaMouseClicked
 
     /**

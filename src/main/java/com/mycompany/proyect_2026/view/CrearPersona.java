@@ -5,7 +5,9 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.coltroller.PacienteController;
 import java.util.ArrayList;
+import java.awt.BorderLayout;
 /**
  *
  * @author linzh
@@ -35,22 +37,20 @@ public class CrearPersona extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        personData = new javax.swing.JPanel();
+        personaData = new javax.swing.JPanel();
         nombreText = new javax.swing.JTextField();
         nombreLabel = new javax.swing.JLabel();
         apellidoLabel = new javax.swing.JLabel();
         apellidoText = new javax.swing.JTextField();
         eMailText = new javax.swing.JTextField();
         eMailLabel = new javax.swing.JLabel();
-        dniLabel = new javax.swing.JLabel();
-        dniText = new javax.swing.JTextField();
-        telefonoText = new javax.swing.JTextField();
         telLabel = new javax.swing.JLabel();
-        titleLabel = new javax.swing.JLabel();
-        specificData = new javax.swing.JPanel();
-        seleccionarLabel = new javax.swing.JLabel();
-        selectPacOPro = new javax.swing.JComboBox<>();
+        telFText = new javax.swing.JFormattedTextField();
+        personaType = new javax.swing.JPanel();
         commitPersona = new javax.swing.JToggleButton();
+        titleLabel = new javax.swing.JLabel();
+        selectPacOPro = new javax.swing.JComboBox<>();
+        seleccionarLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,107 +60,77 @@ public class CrearPersona extends javax.swing.JFrame {
 
         eMailLabel.setText("Correo elec.:");
 
-        dniLabel.setText("dni");
-
         telLabel.setText("Teléfono:");
+
+        javax.swing.GroupLayout personaDataLayout = new javax.swing.GroupLayout(personaData);
+        personaData.setLayout(personaDataLayout);
+        personaDataLayout.setHorizontalGroup(
+            personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personaDataLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(personaDataLayout.createSequentialGroup()
+                        .addComponent(telLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(telFText))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personaDataLayout.createSequentialGroup()
+                        .addComponent(eMailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(15, 15, 15)
+                        .addComponent(eMailText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(personaDataLayout.createSequentialGroup()
+                            .addComponent(apellidoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(apellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(personaDataLayout.createSequentialGroup()
+                            .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(15, 15, 15))
+        );
+        personaDataLayout.setVerticalGroup(
+            personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(personaDataLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(apellidoLabel)
+                    .addComponent(apellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(eMailLabel)
+                    .addComponent(eMailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(personaDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(telLabel)
+                    .addComponent(telFText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        personaType.setPreferredSize(new java.awt.Dimension(285, 162));
+        personaType.setLayout(new java.awt.BorderLayout());
+
+        commitPersona.setText("Agregar nueva persona");
+        commitPersona.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                commitPersonaMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         titleLabel.setText("Datos del persona: ");
 
-        javax.swing.GroupLayout personDataLayout = new javax.swing.GroupLayout(personData);
-        personData.setLayout(personDataLayout);
-        personDataLayout.setHorizontalGroup(
-            personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(personDataLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(personDataLayout.createSequentialGroup()
-                        .addComponent(telLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(telefonoText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(personDataLayout.createSequentialGroup()
-                        .addComponent(dniLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dniText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(personDataLayout.createSequentialGroup()
-                            .addComponent(eMailLabel)
-                            .addGap(15, 15, 15)
-                            .addComponent(eMailText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(personDataLayout.createSequentialGroup()
-                                .addComponent(apellidoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(apellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(personDataLayout.createSequentialGroup()
-                                .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(26, 26, 26))
-            .addGroup(personDataLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(titleLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        personDataLayout.setVerticalGroup(
-            personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(personDataLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(titleLabel)
-                .addGap(29, 29, 29)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombreLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(apellidoLabel)
-                    .addComponent(apellidoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eMailLabel)
-                    .addComponent(eMailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dniLabel)
-                    .addComponent(dniText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(personDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(telefonoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telLabel))
-                .addContainerGap(78, Short.MAX_VALUE))
-        );
-
-        seleccionarLabel.setText("Tipo de persona: ");
-
         selectPacOPro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>", "Paciente", "Profesional" }));
-        selectPacOPro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectPacOProActionPerformed(evt);
+        selectPacOPro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                selectPacOProItemStateChanged(evt);
             }
         });
 
-        javax.swing.GroupLayout specificDataLayout = new javax.swing.GroupLayout(specificData);
-        specificData.setLayout(specificDataLayout);
-        specificDataLayout.setHorizontalGroup(
-            specificDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(specificDataLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(seleccionarLabel)
-                .addGap(18, 18, 18)
-                .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        specificDataLayout.setVerticalGroup(
-            specificDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(specificDataLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(specificDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(seleccionarLabel)
-                    .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(294, Short.MAX_VALUE))
-        );
-
-        commitPersona.setText("Agregar nueva persona");
+        seleccionarLabel.setText("Tipo del persona: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,35 +139,77 @@ public class CrearPersona extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(personData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(specificData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addComponent(personaData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(titleLabel)
+                        .addGap(55, 55, 55)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addComponent(commitPersona)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(seleccionarLabel)
+                        .addGap(19, 19, 19)
+                        .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(personaType, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(commitPersona)
+                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(personData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(specificData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titleLabel)
+                    .addComponent(seleccionarLabel)
+                    .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(personaData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(personaType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(commitPersona)
-                .addGap(48, 48, 48))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void selectPacOProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectPacOProActionPerformed
+    private void commitPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commitPersonaMouseClicked
         // TODO add your handling code here:
         Paciente newPaciente = new Paciente();
+        PacienteController pControl = new PacienteController(newPaciente);
         
-    }//GEN-LAST:event_selectPacOProActionPerformed
+        pControl.setNombre(nombreText.getText());
+        pControl.setApellido(apellidoText.getText());
+        pControl.setMail(eMailText.getText());
+        pControl.setTelefono( telFText.getText() );
+        pControl.setNombre(nombreText.getText());
+        pControl.setNombre(nombreText.getText());
+        
+        listaPacientes.add(pControl.getPaciente() );
+        this.dispose();
+    }//GEN-LAST:event_commitPersonaMouseClicked
+
+    private void selectPacOProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectPacOProItemStateChanged
+        // TODO add your handling code here:
+        String selected = selectPacOPro.getSelectedItem().toString();
+        
+        personaType.removeAll();
+        if(selected.compareToIgnoreCase("Paciente")==0){
+            personaType.add(new TypePaciente(), BorderLayout.CENTER);
+        }
+        if(selected.compareToIgnoreCase("Profesional")==0){
+            personaType.add(new TypeProfesional(), BorderLayout.CENTER);
+        }
+        
+        personaType.revalidate();
+        personaType.repaint();
+        
+        
+    }//GEN-LAST:event_selectPacOProItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -239,18 +251,16 @@ public class CrearPersona extends javax.swing.JFrame {
     private javax.swing.JLabel apellidoLabel;
     private javax.swing.JTextField apellidoText;
     private javax.swing.JToggleButton commitPersona;
-    private javax.swing.JLabel dniLabel;
-    private javax.swing.JTextField dniText;
     private javax.swing.JLabel eMailLabel;
     private javax.swing.JTextField eMailText;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JTextField nombreText;
-    private javax.swing.JPanel personData;
+    private javax.swing.JPanel personaData;
+    private javax.swing.JPanel personaType;
     private javax.swing.JLabel seleccionarLabel;
     private javax.swing.JComboBox<String> selectPacOPro;
-    private javax.swing.JPanel specificData;
+    private javax.swing.JFormattedTextField telFText;
     private javax.swing.JLabel telLabel;
-    private javax.swing.JTextField telefonoText;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
