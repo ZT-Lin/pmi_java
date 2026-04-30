@@ -17,7 +17,9 @@ public class Proyect_2026 {
     private static final Analisis TIPO = new Analisis();
     
     public static void main(String[] args) {
+        Analisis.cargarAnalisisDesdeArchivo();
         MainView.start();
+        System.out.println("Cantidad de analisis cargados: " + Analisis.TIPO_ANALYSIS.size()); //Print de prueba para analisis.txt
     }
 
 }

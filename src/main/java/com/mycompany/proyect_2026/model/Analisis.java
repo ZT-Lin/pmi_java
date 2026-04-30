@@ -4,26 +4,32 @@
  */
 package com.mycompany.proyect_2026.model;
 import java.util.HashMap;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  *
  * @author linzh
  */
+
 public class Analisis {
     public static final HashMap<Integer,String> TIPO_ANALYSIS = new HashMap<>();
     
-    public Analisis(){
-        TIPO_ANALYSIS.put(1, "Hello");
-        TIPO_ANALYSIS.put(2, "Hello");
-        TIPO_ANALYSIS.put(3, "Hello");
-        TIPO_ANALYSIS.put(4, "Hello");
-        TIPO_ANALYSIS.put(5, "Hello");
-        TIPO_ANALYSIS.put(6, "Hello");
-        TIPO_ANALYSIS.put(7, "Hello");
-        TIPO_ANALYSIS.put(8, "Hello");
-        TIPO_ANALYSIS.put(9, "Hello");
-        TIPO_ANALYSIS.put(10, "Hello");
+    public static void cargarAnalisisDesdeArchivo(){
+        try{
+            File a = new File("data/analisis.txt");
+            Scanner lector = new Scanner(a);
+            while(lector.hasNext()){
+                int codigo = lector.nextInt();
+                String nombre = lector.next();
+                TIPO_ANALYSIS.put(codigo, nombre);
+            }
+            lector.close();
+        }catch(IOException e){
+            System.out.println("Error al cargar los analisis: " + e.getMessage());
+        }
     }
-    
-    
-    
 }
+
