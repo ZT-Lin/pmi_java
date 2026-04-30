@@ -73,6 +73,11 @@ public class PersonaMenu extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        profesionalList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                profesionalListValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(profesionalList);
 
         personaList.addTab("Profesional", jScrollPane2);
@@ -149,10 +154,19 @@ public class PersonaMenu extends javax.swing.JFrame {
         //String selectedValue = pacienteList.getSelectedValue();
         int selectedIndex = pacienteList.getSelectedIndex();
         areaParaMostrar.removeAll();
-        areaParaMostrar.add( new CartaPersona(selectedIndex), java.awt.BorderLayout.CENTER );
+        areaParaMostrar.add( new CartaPaciente(selectedIndex), java.awt.BorderLayout.CENTER );
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
     }//GEN-LAST:event_pacienteListValueChanged
+
+    private void profesionalListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_profesionalListValueChanged
+        // TODO add your handling code here:
+        int selectedIndex = profesionalList.getSelectedIndex();
+        areaParaMostrar.removeAll();
+        areaParaMostrar.add( new CartaProfesional(selectedIndex), java.awt.BorderLayout.CENTER );
+        areaParaMostrar.revalidate();
+        areaParaMostrar.repaint();
+    }//GEN-LAST:event_profesionalListValueChanged
 
     /**
      * @param args the command line arguments
