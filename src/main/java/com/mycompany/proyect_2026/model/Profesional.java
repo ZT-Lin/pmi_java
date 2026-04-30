@@ -15,27 +15,24 @@ import java.util.ArrayList;
  */
 public class Profesional extends Persona {
 
-    private int matricula;
+    private String matricula;
 
     public Profesional() {
-        this.nombre = null; 
-        this.apellido = null;
-        this.mail = null;
-        this.telefono = 0;
-        this.matricula = 00000000;
+        super();
+        this.matricula = null;
     }
 
-    public Profesional(String nombre, String apellido, String mail, int telefono, int matricula) {
-        super(nombre, apellido, mail, "N/A", telefono);
+    public Profesional(String nombre, String apellido, String mail, String telefono, String matricula) {
+        super(nombre, apellido, mail, telefono);
         this.matricula = matricula;
     }
 
     //matricula
-    public void setMatricula(int dato) {
+    public void setMatricula(String dato) {
         this.matricula = dato;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return this.matricula;
     }
     
@@ -48,8 +45,8 @@ public class Profesional extends Persona {
                 String nombre = lector.next();
                 String apellido = lector.next();
                 String mail = lector.next();
-                int telefono = lector.nextInt();
-                int matricula = lector.nextInt();
+                String telefono = lector.next();
+                String matricula = lector.next();
                 Profesional prof = new Profesional(nombre, apellido, mail, telefono, matricula);
                 lista.add(prof);
             }
