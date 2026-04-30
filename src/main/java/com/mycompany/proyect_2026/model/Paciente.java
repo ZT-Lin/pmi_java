@@ -4,6 +4,11 @@
  */
 package com.mycompany.proyect_2026.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author linzh
@@ -44,6 +49,27 @@ public class Paciente extends Persona {
     }
     public String getDNI(){
         return this.dni;
+    }
+    
+    public static ArrayList<Paciente> cargarPacientesDesdeArchivo(){
+        ArrayList<Paciente> lista = new ArrayList<>();
+        try{
+            File z = new File("data/pacientes.txt");
+            Scanner lector = new Scanner(z);
+            while(lector.hasNext()){
+                String nombre = lector.next();
+                String apellido = lector.next();
+                String mail = lector.next();
+                String telefono = lector.next();
+                String dni = lector.next();
+                Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
+                lista.add(paci);
+            }
+            lector.close();
+        }catch(IOException e){
+            System.out.println("Error al cargar pacientes: " + e.getMessage());
+        }
+        return lista;
     }
     
     // agreagado en 11/04/2026 - Lin
