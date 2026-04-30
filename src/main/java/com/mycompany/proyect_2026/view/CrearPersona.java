@@ -121,7 +121,7 @@ public class CrearPersona extends javax.swing.JFrame {
         });
 
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        titleLabel.setText("Datos del persona: ");
+        titleLabel.setText("Datos básicos");
 
         selectPacOPro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>", "Paciente", "Profesional" }));
         selectPacOPro.addItemListener(new java.awt.event.ItemListener() {
@@ -130,7 +130,7 @@ public class CrearPersona extends javax.swing.JFrame {
             }
         });
 
-        seleccionarLabel.setText("Tipo del persona: ");
+        seleccionarLabel.setText("Tipo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,7 +144,7 @@ public class CrearPersona extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(titleLabel)
-                        .addGap(55, 55, 55)))
+                        .addGap(75, 75, 75)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(seleccionarLabel)

@@ -16,6 +16,8 @@ import com.mycompany.proyect_2026.view.*;
 public class Proyect_2026 {
     
     public static void main(String[] args) {
+        
+        
         java.awt.EventQueue.invokeLater(() -> {
             new MainMenu().setVisible(true);
         });
