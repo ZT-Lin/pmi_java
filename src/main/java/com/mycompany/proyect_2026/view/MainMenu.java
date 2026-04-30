@@ -51,6 +51,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         toStudios.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\icons\\estudio_Icon.jpg")); // NOI18N
         toStudios.setText("Estudios");
+        toStudios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                toStudiosMouseClicked(evt);
+            }
+        });
 
         toPersona.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\icons\\persona_Icon.jpg")); // NOI18N
         toPersona.setText("Personas");
@@ -96,6 +101,11 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         new PersonaMenu().setVisible(true);
     }//GEN-LAST:event_toPersonaMouseClicked
+
+    private void toStudiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toStudiosMouseClicked
+        // TODO add your handling code here:
+        new EstudioMenu().setVisible(true);
+    }//GEN-LAST:event_toStudiosMouseClicked
 
     /**
      * @param args the command line arguments

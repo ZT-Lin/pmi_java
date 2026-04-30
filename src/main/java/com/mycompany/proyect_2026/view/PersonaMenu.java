@@ -91,6 +91,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
         });
 
+        eliminar.setForeground(new java.awt.Color(255, 0, 51));
         eliminar.setText("Eliminar");
 
         modificar.setText("Modificar");
