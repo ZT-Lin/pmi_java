@@ -16,6 +16,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     public PersonaMenu() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -27,6 +28,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         barraDeBusqueda = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
         personaList = new javax.swing.JTabbedPane();
@@ -34,10 +36,13 @@ public class PersonaMenu extends javax.swing.JFrame {
         pacienteList = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         profesionalList = new javax.swing.JList<>();
-        obraSocial = new javax.swing.JCheckBox();
         agregar = new javax.swing.JButton();
         eliminar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
+        obraSocialLabel = new javax.swing.JLabel();
+        obSi = new javax.swing.JRadioButton();
+        obNo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,8 +87,6 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         personaList.addTab("Profesional", jScrollPane2);
 
-        obraSocial.setText("Obra Social");
-
         agregar.setText("Agregar");
         agregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -96,6 +99,21 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         modificar.setText("Modificar");
 
+        volver.setText("←");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+
+        obraSocialLabel.setText("Obra Social");
+
+        buttonGroup1.add(obSi);
+        obSi.setText("Si");
+
+        buttonGroup1.add(obNo);
+        obNo.setText("No");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,19 +121,26 @@ public class PersonaMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(personaList, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                    .addComponent(personaList)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(barraDeBusqueda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(obraSocial)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(volver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(obraSocialLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(obSi)
+                        .addGap(18, 18, 18)
+                        .addComponent(obNo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -128,11 +153,17 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addComponent(eliminar)
                     .addComponent(modificar)
                     .addComponent(agregar)
-                    .addComponent(obraSocial))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(personaList)
-                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
+                    .addComponent(volver))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(obraSocialLabel)
+                            .addComponent(obSi)
+                            .addComponent(obNo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(personaList)))
                 .addGap(16, 16, 16))
         );
 
@@ -168,6 +199,12 @@ public class PersonaMenu extends javax.swing.JFrame {
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
     }//GEN-LAST:event_profesionalListValueChanged
+
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        // TODO add your handling code here:
+        new MainMenu().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_volverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,13 +246,17 @@ public class PersonaMenu extends javax.swing.JFrame {
     private javax.swing.JButton agregar;
     private javax.swing.JPanel areaParaMostrar;
     private javax.swing.JTextField barraDeBusqueda;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton eliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton modificar;
-    private javax.swing.JCheckBox obraSocial;
+    private javax.swing.JRadioButton obNo;
+    private javax.swing.JRadioButton obSi;
+    private javax.swing.JLabel obraSocialLabel;
     private javax.swing.JList<String> pacienteList;
     private javax.swing.JTabbedPane personaList;
     private javax.swing.JList<String> profesionalList;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

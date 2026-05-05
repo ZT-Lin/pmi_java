@@ -21,6 +21,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         initComponents();
         test = i;
         identPaciente.setText(String.valueOf(test));
+        jCheckBox1.setEnabled(false);
     }
 
     /**
@@ -58,7 +59,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         jCheckBox10 = new javax.swing.JCheckBox();
         jTextField6 = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(295, 428));
+        setPreferredSize(new java.awt.Dimension(280, 400));
 
         jTextField7.setEditable(false);
 
@@ -173,7 +174,8 @@ public class CartaEstudio extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel3)))
+                    .addComponent(jLabel3))
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

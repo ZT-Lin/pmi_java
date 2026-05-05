@@ -21,11 +21,14 @@ public class CrearPersona extends javax.swing.JFrame {
     public CrearPersona() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
     public CrearPersona(ArrayList<Paciente> lista) {
         this.listaPacientes = lista;
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -207,8 +210,6 @@ public class CrearPersona extends javax.swing.JFrame {
         
         personaType.revalidate();
         personaType.repaint();
-        
-        
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     /**

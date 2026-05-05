@@ -100,11 +100,13 @@ public class MainMenu extends javax.swing.JFrame {
     private void toPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toPersonaMouseClicked
         // TODO add your handling code here:
         new PersonaMenu().setVisible(true);
+        dispose();
     }//GEN-LAST:event_toPersonaMouseClicked
 
     private void toStudiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toStudiosMouseClicked
         // TODO add your handling code here:
         new EstudioMenu().setVisible(true);
+        dispose();
     }//GEN-LAST:event_toStudiosMouseClicked
 
     /**
