@@ -7,6 +7,7 @@ package com.mycompany.proyect_2026;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
+import com.mycompany.proyect_2026.coltroller.GestorArchivos;
 import com.mycompany.proyect_2026.view.*;
 
 
@@ -19,11 +20,11 @@ import com.mycompany.proyect_2026.view.*;
 public class Proyect_2026 {
     
     public static void main(String[] args) {
-        Analisis.cargarAnalisisDesdeArchivo();
+        GestorArchivos.cargarAnalisisDesdeArchivo();
         System.out.println("Cantidad de analisis cargados: " + Analisis.TIPO_ANALYSIS.size()); //Print de prueba para analisis.txt
-        java.util.ArrayList<Profesional> listaProfesionales = Profesional.cargarProfesionalesDesdeArchivo();
+        java.util.ArrayList<Profesional> listaProfesionales = GestorArchivos.cargarProfesionalesDesdeArchivo();
         System.out.println("Cantidad de profesionales cargados: " + listaProfesionales.size());
-        java.util.ArrayList<Paciente> listaPacientes = Paciente.cargarPacientesDesdeArchivo();
+        java.util.ArrayList<Paciente> listaPacientes = GestorArchivos.cargarPacientesDesdeArchivo();
         System.out.println("Cantidad de pacientes cargados: " + listaPacientes.size());
         java.awt.EventQueue.invokeLater(() -> {
             new MainMenu().setVisible(true);
