@@ -6,7 +6,7 @@ package com.mycompany.proyect_2026.model;
 
 /**
  *
- * @author Usuario
+ * @author Lucagame23
  */
 public class Estudio {
     private Fecha fecha;

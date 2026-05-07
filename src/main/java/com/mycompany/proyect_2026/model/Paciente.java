@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.model;
 
+
 /**
  *
  * @author linzh
