@@ -187,7 +187,7 @@ public class EstudioMenu extends javax.swing.JFrame {
 
     private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
         // TODO add your handling code here:
-        
+        new CrearEstudio().setVisible(true);
     }//GEN-LAST:event_agregarMouseClicked
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
