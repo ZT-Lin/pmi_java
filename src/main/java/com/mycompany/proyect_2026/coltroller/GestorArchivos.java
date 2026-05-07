@@ -219,4 +219,19 @@ public class GestorArchivos {
             System.out.println("Error al actualizar el archivo de estudios: " + ex.getMessage());
         }
     }
+    
+    public static void agregarPacienteFisico(Paciente p){
+        try{
+            FileWriter fw = new FileWriter("data/pacientes.txt", true);
+            String linea = p.getNombre() + " " +
+                            p.getApellido() + " " +
+                            p.getMail() + " " +
+                            p.getDNI() + " " +
+                            p.getTel() + "\n";
+            fw.write(linea);
+            fw.close();
+        }catch(IOException e){
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+    }
 }
