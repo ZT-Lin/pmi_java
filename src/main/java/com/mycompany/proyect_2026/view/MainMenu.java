@@ -5,30 +5,45 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import com.mycompany.proyect_2026.model.Estudio;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import com.mycompany.proyect_2026.coltroller.GestorArchivos;
 
 /**
  *
  * @author linzh
  */
 public class MainMenu extends javax.swing.JFrame {
-    ArrayList<Paciente> listaPacientes;
-
+    
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Estudio> listaEstudios;
+    
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
+        this.listaProfesionales = new ArrayList<>();
         this.listaPacientes = new ArrayList<>();
+        this.listaEstudios = new ArrayList<>();
         initComponents();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        configurarVentana(); //Aqui determinaremos CloseOperation
     }
-    public MainMenu(ArrayList<Paciente> lista) {
-        this.listaPacientes = lista;
+    public MainMenu(ArrayList<Paciente> pacientes,
+                    ArrayList<Profesional> profesional, 
+                    ArrayList<Estudio> estudios) {
+        this.listaProfesionales = profesional;
+        this.listaPacientes = pacientes;
+        this.listaEstudios = estudios;
         initComponents();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        configurarVentana(); //Aqui determinaremos CloseOperation
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,15 +112,32 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void configurarVentana() {
+        // Sobreescribir el comportamiento del botón X de la ventana
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // Guardar todo antes de cerrar
+                GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+                GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+                GestorArchivos.actualizarArchivoEstudios(listaEstudios);
+                
+                System.exit(0); // cerrar el programa
+            }
+        });
+    }
     private void toPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toPersonaMouseClicked
         // TODO add your handling code here:
-        new PersonaMenu().setVisible(true);
+        new PersonaMenu(listaPacientes,listaProfesionales,listaEstudios).setVisible(true);
         dispose();
+       
     }//GEN-LAST:event_toPersonaMouseClicked
 
     private void toStudiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toStudiosMouseClicked
         // TODO add your handling code here:
-        new EstudioMenu().setVisible(true);
+        new EstudioMenu(listaPaciente,listaProfesionales,listaEstudios).setVisible(true);
         dispose();
     }//GEN-LAST:event_toStudiosMouseClicked
 
