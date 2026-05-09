@@ -5,6 +5,8 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import com.mycompany.proyect_2026.model.Estudio;
 import java.util.ArrayList;
 
 /**
@@ -12,19 +14,23 @@ import java.util.ArrayList;
  * @author linzh
  */
 public class MainMenu extends javax.swing.JFrame {
-    ArrayList<Paciente> listaPacientes;
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Estudio> listaEstudios;
 
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         this.listaPacientes = new ArrayList<>();
+        this.listaProfesionales = new ArrayList<>();
+        this.listaEstudios = new ArrayList<>();
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    public MainMenu(ArrayList<Paciente> lista) {
-        this.listaPacientes = lista;
+    public MainMenu(ArrayList<Paciente> pacientes) {
+        this.listaPacientes = pacientes;
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -99,7 +105,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void toPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toPersonaMouseClicked
         // TODO add your handling code here:
-        new PersonaMenu().setVisible(true);
+        new PersonaMenu(listaPacientes).setVisible(true);
         dispose();
     }//GEN-LAST:event_toPersonaMouseClicked
 

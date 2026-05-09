@@ -192,7 +192,7 @@ public class CrearPersona extends javax.swing.JFrame {
         pControl.setNombre(nombreText.getText());
         pControl.setNombre(nombreText.getText());
         
-        listaPacientes.add(pControl.getPaciente() );
+        
         this.dispose();
     }//GEN-LAST:event_commitPersonaMouseClicked
 

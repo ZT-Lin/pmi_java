@@ -4,19 +4,53 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Paciente;
+import java.util.ArrayList;
+import com.mycompany.proyect_2026.coltroller.PacienteController;
+
+
 /**
  *
  * @author linzh
  */
 public class PersonaMenu extends javax.swing.JFrame {
-
+    private ArrayList<Paciente> listaPacientes;
+    
     /**
      * Creates new form PersonaForm
      */
     public PersonaMenu() {
+        this.listaPacientes = new ArrayList();
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+    
+    public PersonaMenu(ArrayList<Paciente> pacientes) {
+        this.listaPacientes = pacientes;
+        initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        
+        String[] nombreAMostrar = pNameArray(listaPacientes);
+        pacienteList.setListData(nombreAMostrar);
+    }
+    
+    private String[] pNameArray( ArrayList<Paciente> lista ){
+        String[] result = new String[lista.size()];
+        StringBuilder sb = new StringBuilder();
+        PacienteController pc;
+        
+        for(int i = 0; i < lista.size() ; i++){
+            pc = new PacienteController(lista.get(i) );
+            
+            sb.delete(0, sb.length());
+            sb.append(pc.getApellido())
+                    .append(" , ")
+                    .append(pc.getNombre());
+            result[i] = sb.toString();
+        }
+        return result;
     }
 
     /**
@@ -58,6 +92,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         areaParaMostrar.setLayout(new java.awt.BorderLayout());
 
         personaList.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        personaList.setName(""); // NOI18N
 
         pacienteList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -121,18 +156,17 @@ public class PersonaMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(personaList)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(volver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(obraSocialLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                         .addComponent(obSi)
                         .addGap(18, 18, 18)
-                        .addComponent(obNo)))
+                        .addComponent(obNo))
+                    .addComponent(personaList))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +188,7 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addComponent(modificar)
                     .addComponent(agregar)
                     .addComponent(volver))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(areaParaMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -164,7 +198,7 @@ public class PersonaMenu extends javax.swing.JFrame {
                             .addComponent(obNo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(personaList)))
-                .addGap(16, 16, 16))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,10 +217,11 @@ public class PersonaMenu extends javax.swing.JFrame {
         // Conseguir que valor seleccione
         // Buscar datos en la lista de paciente
         // Pasarlo al areaParaMostrar()
-        //String selectedValue = pacienteList.getSelectedValue();
-        int selectedIndex = pacienteList.getSelectedIndex();
+        
+        String pacienteName = pacienteList.getSelectedValue(); 
         areaParaMostrar.removeAll();
-        areaParaMostrar.add( new CartaPaciente(selectedIndex), java.awt.BorderLayout.CENTER );
+        areaParaMostrar.add( new CartaPaciente(listaPacientes, pacienteName), 
+                java.awt.BorderLayout.CENTER );
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
     }//GEN-LAST:event_pacienteListValueChanged
@@ -241,7 +276,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
     private javax.swing.JPanel areaParaMostrar;

@@ -21,6 +21,7 @@ public class PacienteController {
         this.paciente = paciente;
     }
     
+    //para Paciente
     //setter
     public void setNombre(String data){
         paciente.setNombre(data);
@@ -41,32 +42,27 @@ public class PacienteController {
     public void setObSocial(boolean data){
         paciente.setObraSocial(data);
     }
-    //getter
     public String getNombre(){
         return paciente.getNombre();
     }
-    public String hgetApellido(){
+    public String getApellido(){
         return paciente.getApellido();
-    }
-    
-    public String getDNI(){
-        return paciente.getDNI();
     }
     public String getMail(){
         return paciente.getMail();
     }
-    public String getTelefono(){
+    public String getTel(){
         return paciente.getTel();
     }
-    public boolean getObSocial(){
+    public String getDNI(){
+        return paciente.getDNI();
+    }
+    public boolean getOB(){
         return paciente.getObraSocial();
     }
     
-    public Paciente getPaciente(){
-        return paciente;
-    }
     
-    public String getString(){
-        return paciente.toString();
+    public Paciente getPersona(){
+        return paciente;
     }
 }
