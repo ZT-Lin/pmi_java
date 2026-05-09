@@ -4,21 +4,44 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author linzh
  */
 public class PersonaMenu extends javax.swing.JFrame {
-
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Estudio> listaEstudios;
     /**
      * Creates new form PersonaForm
      */
     public PersonaMenu() {
+        this.listaPacientes = new ArrayList<>();
+        this.listaProfesionales = new ArrayList<>();
+        this.listaEstudios = new ArrayList<>();
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        cargarListas();
+        configurarFiltros(); 
     }
-
+    
+    public PersonaMenu(ArrayList<Paciente> pacientes,ArrayList<Profesional> profesionales,ArrayList<Estudio> estudios){
+        this.listaPacientes = pacientes;
+        this.listaProfesionales = profesionales;
+        this.listaEstudios = estudios;
+        initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        cargarListas();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,6 +119,11 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         eliminar.setForeground(new java.awt.Color(255, 0, 51));
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         modificar.setText("Modificar");
 
@@ -169,14 +197,71 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void cargarListas() {
+        // --- Pacientes ---
+        DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
+        for (Paciente p : listaPacientes) {
+            // Lo que se muestra en cada fila del JList
+            modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre() + 
+                                       " - DNI: " + p.getDNI());
+        }
+        pacienteList.setModel(modeloPacientes);
 
+        // --- Profesionales ---
+        DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
+        for (Profesional pr : listaProfesionales) {
+            modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre() + 
+                                           " - Mat: " + pr.getMatricula());
+        }
+        profesionalList.setModel(modeloProfesionales);
+    }
     private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
-        // TODO add your handling code here:
-        new CrearPersona().setVisible(true);
+        // Le pasamos las listas Y una referencia a esta ventana (this)
+        // para que CrearPersona pueda avisarnos cuando termina
+        CrearPersona ventanaCrear = new CrearPersona(
+            listaPacientes, listaProfesionales, listaEstudios, this
+        );
+        ventanaCrear.setVisible(true);
     }//GEN-LAST:event_agregarMouseClicked
-
+    
+    // CrearPersona llama este método cuando termina de agregar
+    public void refrescarVista() {
+        cargarListas();
+    }
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
-        // TODO add your handling code here:
+
+        String texto = barraDeBusqueda.getText().trim().toLowerCase();
+        
+        if (texto.isEmpty()) {
+            cargarListas(); // si borra todo, vuelve a mostrar todos
+            return;
+        }
+
+        int tabActivo = personaList.getSelectedIndex();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        if (tabActivo == 0) {
+            for (Paciente p : listaPacientes) {
+                if (p.getNombre().toLowerCase().contains(texto) ||
+                    p.getApellido().toLowerCase().contains(texto) ||
+                    p.getDNI().contains(texto)) {
+                    modelo.addElement(p.getApellido() + ", " + p.getNombre() + 
+                                      " - DNI: " + p.getDNI());
+                }
+            }
+        } else {
+            for (Profesional pr : listaProfesionales) {
+                if (pr.getNombre().toLowerCase().contains(texto) ||
+                    pr.getApellido().toLowerCase().contains(texto)) {
+                    modelo.addElement(pr.getApellido() + ", " + pr.getNombre() + 
+                                      " - Mat: " + pr.getMatricula());
+                }
+            }
+        }
+        
+        if (tabActivo == 0) pacienteList.setModel(modelo);
+        else profesionalList.setModel(modelo);
+    
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
@@ -201,11 +286,95 @@ public class PersonaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_profesionalListValueChanged
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        // TODO add your handling code here:
-        new MainMenu().setVisible(true);
+        new MainMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
+ 
     }//GEN-LAST:event_volverActionPerformed
 
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+
+        // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
+        int tabActivo = personaList.getSelectedIndex();
+
+        if (tabActivo == 0) {
+            int idx = pacienteList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this, 
+                    "Seleccioná un paciente primero.", 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Paciente p = listaPacientes.get(idx);
+            if (pacienteTieneEstudios(p)) {
+                JOptionPane.showMessageDialog(this,
+                    "No se puede eliminar: " + p.getNombre() + " " + p.getApellido() +
+                    " tiene estudios asociados.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // Confirmar antes de eliminar
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                listaPacientes.remove(idx);
+                cargarListas(); // refrescar el JList
+            }
+
+        } else {
+            int idx = profesionalList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this,
+                    "Seleccioná un profesional primero.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Profesional pr = listaProfesionales.get(idx);
+            if (profesionalTieneEstudios(pr)) {
+                JOptionPane.showMessageDialog(this,
+                    "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido() +
+                    " tiene estudios asociados.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Eliminar a " + pr.getNombre() + " " + pr.getApellido() + "?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                listaProfesionales.remove(idx);
+                cargarListas();
+            }
+        }
+    
+    }//GEN-LAST:event_eliminarActionPerformed
+    
+    private boolean pacienteTieneEstudios(Paciente p) {
+    for (Estudio e : listaEstudios) {
+        if (e.getPaciente().getDNI().equals(p.getDNI())) return true;
+    }
+    return false;
+}
+
+private boolean profesionalTieneEstudios(Profesional pr) {
+    for (Estudio e : listaEstudios) {
+        if (e.getProfesional().getMatricula().equals(pr.getMatricula())) return true;
+    }
+    return false;
+}
+private void configurarFiltros() {
+    obSi.addActionListener(e -> filtrarPorObraSocial());
+    obNo.addActionListener(e -> filtrarPorObraSocial());
+}
+private void filtrarPorObraSocial() {
+    DefaultListModel<String> modelo = new DefaultListModel<>();
+    for (Paciente p : listaPacientes) {
+        if (obSi.isSelected() && !p.getObraSocial()) continue;
+        if (obNo.isSelected() && p.getObraSocial()) continue;
+        modelo.addElement(p.getApellido() + ", " + p.getNombre() +
+                          " - DNI: " + p.getDNI());
+    }
+    pacienteList.setModel(modelo);
+}
     /**
      * @param args the command line arguments
      */
