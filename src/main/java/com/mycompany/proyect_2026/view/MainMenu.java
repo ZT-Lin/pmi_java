@@ -137,7 +137,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void toStudiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toStudiosMouseClicked
         // TODO add your handling code here:
-        new EstudioMenu(listaPaciente,listaProfesionales,listaEstudios).setVisible(true);
+        new EstudioMenu(listaPacientes,listaProfesionales,listaEstudios).setVisible(true);
         dispose();
     }//GEN-LAST:event_toStudiosMouseClicked
 
