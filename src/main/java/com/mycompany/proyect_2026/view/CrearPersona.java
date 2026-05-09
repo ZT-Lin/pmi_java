@@ -8,13 +8,18 @@ import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.coltroller.PacienteController;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
+import com.mycompany.proyect_2026.coltroller.GestorArchivos;
+import com.mycompany.proyect_2026.coltroller.ProfesionalController;
+import com.mycompany.proyect_2026.model.Profesional;
 /**
  *
  * @author linzh
  */
 public class CrearPersona extends javax.swing.JFrame {
     ArrayList<Paciente> listaPacientes;
-
+    private TypePaciente panelP;
+    private TypeProfesional panelProf;
+    private ArrayList<Profesional> listaProfesionales;
     /**
      * Creates new form CrearPersona
      */
@@ -122,6 +127,11 @@ public class CrearPersona extends javax.swing.JFrame {
                 commitPersonaMouseClicked(evt);
             }
         });
+        commitPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commitPersonaActionPerformed(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         titleLabel.setText("Datos básicos");
@@ -181,19 +191,7 @@ public class CrearPersona extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void commitPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commitPersonaMouseClicked
-        // TODO add your handling code here:
-        Paciente newPaciente = new Paciente();
-        PacienteController pControl = new PacienteController(newPaciente);
-        
-        pControl.setNombre(nombreText.getText());
-        pControl.setApellido(apellidoText.getText());
-        pControl.setMail(eMailText.getText());
-        pControl.setTelefono( telFText.getText() );
-        pControl.setNombre(nombreText.getText());
-        pControl.setNombre(nombreText.getText());
-        
-        listaPacientes.add(pControl.getPaciente() );
-        this.dispose();
+
     }//GEN-LAST:event_commitPersonaMouseClicked
 
     private void selectPacOProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectPacOProItemStateChanged
@@ -202,15 +200,47 @@ public class CrearPersona extends javax.swing.JFrame {
         
         personaType.removeAll();
         if(selected.compareToIgnoreCase("Paciente")==0){
+            this.panelP = new TypePaciente();
             personaType.add(new TypePaciente(), BorderLayout.CENTER);
         }
         if(selected.compareToIgnoreCase("Profesional")==0){
+            this.panelProf = new TypeProfesional();
             personaType.add(new TypeProfesional(), BorderLayout.CENTER);
         }
         
         personaType.revalidate();
         personaType.repaint();
     }//GEN-LAST:event_selectPacOProItemStateChanged
+
+    private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
+        String seleccion = (String) selectPacOPro.getSelectedItem();
+        if(seleccion.equals("Paciente")){
+            PacienteController pc = new PacienteController();
+            pc.setNombre(nombreText.getText());
+            pc.setApellido(apellidoText.getText());
+            pc.setMail(eMailText.getText());
+            pc.setTelefono(telFText.getText());
+            
+            pc.setDNI(panelP.getDni());
+            pc.setObSocial(panelP.tieneObraSocial());
+            
+            pc.registrarEnSistema(this.listaPacientes);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
+            this.dispose();
+        }else if(seleccion.equals("Profesional")){
+            ProfesionalController prc = new ProfesionalController();
+            
+            prc.setNombre(nombreText.getText());
+            prc.setApellido(apellidoText.getText());
+            prc.setMail(eMailText.getText());
+            prc.setTelefono(telFText.getText());
+            prc.setMatricula(panelProf.getMatricula());
+            prc.registrarEnSistema(null);
+            javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
+            this.dispose();
+        }
+    }//GEN-LAST:event_commitPersonaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -234,4 +234,19 @@ public class GestorArchivos {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
     }
+    
+    public static void agregarProfesionalFisico(Profesional p){
+        try{
+            FileWriter fw = new FileWriter("data/profesionales.txt", true);
+            String linea = p.getNombre() + " " +
+                            p.getApellido() + " " + 
+                            p.getMail() + " " + 
+                            p.getTel() + " " + 
+                            p.getMatricula() + "\n";
+            fw.write(linea);
+            fw.close();
+        }catch(IOException e){
+            System.out.println("Error al escribir profesional: " + e.getMessage());
+        }
+    }
 }

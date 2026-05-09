@@ -21,6 +21,16 @@ public class CartaProfesional extends javax.swing.JPanel {
         temp = i;
         pNombre.setText(String.valueOf(i));
     }
+    public CartaProfesional(String nombre, String apellido, String correo, String tel, String matricula) {
+        initComponents(); // Dibuja la interfaz
+        
+        // Seteamos los textos en las cajitas (asumiendo los nombres de variables de tu diseño)
+        pNombre.setText(nombre);
+        pApellido.setText(apellido);
+        pCorreo.setText(correo);
+        pTelefono.setText(tel);
+        pTelefono1.setText(matricula); // En tu diseño pTelefono1 parece ser el de la matrícula
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
