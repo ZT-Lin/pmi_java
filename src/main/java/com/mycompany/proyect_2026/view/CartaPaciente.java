@@ -5,6 +5,7 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.coltroller.PacienteController;
 import java.util.ArrayList;
 
 /**
@@ -13,20 +14,29 @@ import java.util.ArrayList;
  */
 public class CartaPaciente extends javax.swing.JPanel {
     private ArrayList<Paciente> listaPacientes;
-    private String pName;
     /**
      * Creates new form CartaPersona
      */
     public CartaPaciente() {
         initComponents();
         this.listaPacientes = new ArrayList();
-        this.pName = new String();
     }
-    public CartaPaciente(ArrayList<Paciente> pacientes, String nombre) {
+    public CartaPaciente(ArrayList<Paciente> pacientes, int index) {
         initComponents();
         this.listaPacientes = pacientes;
-        this.pName = nombre;
+        PacienteController pc 
+                = new PacienteController(listaPacientes.get(index) );
         
+        pNombre.setText( pc.getNombre() );
+        pApellido.setText(pc.getApellido() );
+        pTelefono.setText(pc.getTel() );
+        pCorreo.setText(pc.getMail() );
+        pDNI.setText(pc.getDNI() );
+        if(pc.getOB() ){
+            obSi.setSelected(true);
+        }else{
+            obNo.setSelected(true);
+        }
         
     }
 
@@ -86,7 +96,6 @@ public class CartaPaciente extends javax.swing.JPanel {
         obSi.setEnabled(false);
 
         buttonGroup1.add(obNo);
-        obNo.setSelected(true);
         obNo.setText("No");
         obNo.setEnabled(false);
 

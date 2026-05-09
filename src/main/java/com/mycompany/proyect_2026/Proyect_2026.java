@@ -20,25 +20,28 @@ import java.util.ArrayList;
 public class Proyect_2026 {
     
     public static void main(String[] args){
-        ArrayList<Paciente> pacientes = new ArrayList();
         
         
         System.out.println("--- PRUEBA DE ESCRITURA ---");
         GestorArchivos.cargarAnalisisDesdeArchivo();
         System.out.println("Cantidad de analisis cargados: " + Analisis.TIPO_ANALYSIS.size()); //Print de prueba para analisis.txt
+        
         java.util.ArrayList<Profesional> listaProfesionales = GestorArchivos.cargarProfesionalesDesdeArchivo();
         System.out.println("Cantidad de profesionales cargados: " + listaProfesionales.size());
+        
         java.util.ArrayList<Paciente> listaPacientes = GestorArchivos.cargarPacientesDesdeArchivo();
         System.out.println("Cantidad de pacientes cargados: " + listaPacientes.size());
+        
         Fecha fechaPrueba = new com.mycompany.proyect_2026.model.Fecha(5, 5, 2026);
         Paciente pacientePrueba = new com.mycompany.proyect_2026.model.Paciente("Luca", "Masotti", "luca@mail.com", "45111222", "2664112233");
         Profesional profPrueba = new com.mycompany.proyect_2026.model.Profesional("Gregory", "House", "house@hospital.com", "11223344", "9999");
         Estudio estudioPrueba = new com.mycompany.proyect_2026.model.Estudio(fechaPrueba, "Resonancia_Magnetica", pacientePrueba, profPrueba);
+        
         GestorArchivos.guardarEstudioEnArchivo(estudioPrueba);
         System.out.println("Estudio de prueba guardado exitosamente!");
         
         java.awt.EventQueue.invokeLater(() -> {
-            new MainMenu(pacientes).setVisible(true);
+            new MainMenu(listaPacientes).setVisible(true);
         });
     }
 }

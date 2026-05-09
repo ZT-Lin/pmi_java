@@ -41,11 +41,11 @@ public class PersonaMenu extends javax.swing.JFrame {
         StringBuilder sb = new StringBuilder();
         PacienteController pc;
         
-        for(int i = 0; i < lista.size() ; i++){
+        for( int i = 0 ; i < lista.size() ; i++ ){
             pc = new PacienteController(lista.get(i) );
             
             sb.delete(0, sb.length());
-            sb.append(pc.getApellido())
+            sb.append(pc.getApellido() )
                     .append(" , ")
                     .append(pc.getNombre());
             result[i] = sb.toString();
@@ -82,11 +82,6 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         barraDeBusqueda.setToolTipText("Buscar...");
         barraDeBusqueda.setName(""); // NOI18N
-        barraDeBusqueda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barraDeBusquedaActionPerformed(evt);
-            }
-        });
 
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(392, 423));
         areaParaMostrar.setLayout(new java.awt.BorderLayout());
@@ -133,6 +128,11 @@ public class PersonaMenu extends javax.swing.JFrame {
         eliminar.setText("Eliminar");
 
         modificar.setText("Modificar");
+        modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modificarMouseClicked(evt);
+            }
+        });
 
         volver.setText("←");
         volver.addActionListener(new java.awt.event.ActionListener() {
@@ -209,18 +209,19 @@ public class PersonaMenu extends javax.swing.JFrame {
         new CrearPersona().setVisible(true);
     }//GEN-LAST:event_agregarMouseClicked
 
-    private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_barraDeBusquedaActionPerformed
-
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
         // Conseguir que valor seleccione
         // Buscar datos en la lista de paciente
         // Pasarlo al areaParaMostrar()
         
-        String pacienteName = pacienteList.getSelectedValue(); 
+        String pacienteName = pacienteList.getSelectedValue();
+        int index = pacienteList.getSelectedIndex();
+        //testing ↓
+        System.out.println("Valor elegido\t" + pacienteName);
+        System.out.println("Index conrresponde\t" + index);
+        //testing ↑
         areaParaMostrar.removeAll();
-        areaParaMostrar.add( new CartaPaciente(listaPacientes, pacienteName), 
+        areaParaMostrar.add( new CartaPaciente(listaPacientes, index ), 
                 java.awt.BorderLayout.CENTER );
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
@@ -237,9 +238,13 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         // TODO add your handling code here:
-        new MainMenu().setVisible(true);
+        new MainMenu(listaPacientes).setVisible(true);
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificarMouseClicked
 
     /**
      * @param args the command line arguments
