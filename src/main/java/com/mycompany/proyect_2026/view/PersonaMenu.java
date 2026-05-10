@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -11,8 +12,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-    PersonaMenu(ArrayList<Paciente> listaPacientes, ArrayList<Profesional> listaProfesionales, ArrayList<Estudio> listaEstudios) {
-    }
 
 /**
  *
@@ -321,34 +320,103 @@ public class PersonaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_modificarMouseClicked
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-                int tabActivo = personaList.getSelectedIndex();
+        
+    // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
+    int tabActivo = personaList.getSelectedIndex();
 
-        if (tabActivo == 0) {
-            int idx = pacienteList.getSelectedIndex();
-            if (idx < 0) {
-                JOptionPane.showMessageDialog(this, "Seleccioná un paciente primero.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            Paciente p = listaPacientes.get(idx);
-
-            // La vista pregunta al controlador, no decide sola
-            if (sistemaCtrl.pacienteTieneEstudios(p)) {
-                JOptionPane.showMessageDialog(this,
-                    "No se puede eliminar: " + p.getNombre() + " tiene estudios asociados.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            int ok = JOptionPane.showConfirmDialog(this,
-                "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
-                "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (ok == JOptionPane.YES_OPTION) {
-                listaPacientes.remove(idx);
-                cargarListas();
-            }
+    // ══════════════════════════════════════════
+    // RAMA PACIENTE
+    // ══════════════════════════════════════════
+    if (tabActivo == 0) {
+        
+        // Verificar que haya algo seleccionado
+        int idx = pacienteList.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un paciente primero.",
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        // ... análogo para profesional
+
+        // Obtener el paciente seleccionado de la lista real
+        Paciente p = listaPacientes.get(idx);
+
+        // Verificar restricción: no se puede eliminar si tiene estudios
+        // Usamos el método local de esta clase
+        if (pacienteTieneEstudios(p)) {
+            JOptionPane.showMessageDialog(this,
+                "No se puede eliminar: " + p.getNombre() + " " + p.getApellido() +
+                " tiene estudios asociados.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Pedir confirmación antes de eliminar
+        int confirmar = JOptionPane.showConfirmDialog(this,
+            "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            // Eliminar de la lista en memoria
+            listaPacientes.remove(idx);
+            
+            // Actualizar el archivo para que el cambio persista
+            GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+            
+            // Refrescar el JList para que deje de mostrarse
+            cargarListas();
+            
+            JOptionPane.showMessageDialog(this,
+                "Paciente eliminado correctamente.",
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    // ══════════════════════════════════════════
+    // RAMA PROFESIONAL
+    // ══════════════════════════════════════════
+    } else {
+        
+        // Verificar que haya algo seleccionado
+        int idx = profesionalList.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un profesional primero.",
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtener el profesional seleccionado de la lista real
+        Profesional pr = listaProfesionales.get(idx);
+
+        // Verificar restricción: no se puede eliminar si tiene estudios
+        if (profesionalTieneEstudios(pr)) {
+            JOptionPane.showMessageDialog(this,
+                "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido() +
+                " tiene estudios asociados.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Pedir confirmación antes de eliminar
+        int confirmar = JOptionPane.showConfirmDialog(this,
+            "¿Eliminar a " + pr.getNombre() + " " + pr.getApellido() + "?",
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            // Eliminar de la lista en memoria
+            listaProfesionales.remove(idx);
+            
+            // Actualizar el archivo para que el cambio persista
+            GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+            
+            // Refrescar el JList para que deje de mostrarse
+            cargarListas();
+            
+            JOptionPane.showMessageDialog(this,
+                "Profesional eliminado correctamente.",
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     }
         private boolean pacienteTieneEstudios(Paciente p) {
     for (Estudio e : listaEstudios) {
