@@ -9,31 +9,52 @@ import com.mycompany.proyect_2026.controller.PacienteController;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
 import com.mycompany.proyect_2026.controller.ProfesionalController;
+import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Profesional;
+
+
+
 /**
  *
  * @author linzh
  */
-public class CrearPersona extends javax.swing.JFrame {
-    ArrayList<Paciente> listaPacientes;
-    private TypePaciente panelP;
-    private TypeProfesional panelProf;
-    private ArrayList<Profesional> listaProfesionales;
-    /**
-     * Creates new form CrearPersona
-     */
-    public CrearPersona() {
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-    }
-    public CrearPersona(ArrayList<Paciente> lista) {
-        this.listaPacientes = lista;
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
-    }
+  
+
+    public class CrearPersona extends javax.swing.JFrame {
+
+        private ArrayList<Paciente> listaPacientes;
+        private ArrayList<Profesional> listaProfesionales;
+        private ArrayList<Estudio> listaEstudios;
+        private PersonaMenu ventanaPadre;
+        private TypePaciente panelP;
+        private TypeProfesional panelProf;
+    
+        /**
+         * Creates new form CrearPersona
+         */
+        public CrearPersona() {
+            this.listaPacientes = new ArrayList<>();
+            this.listaProfesionales = new ArrayList<>();
+            this.listaEstudios = new ArrayList<>();
+            this.ventanaPadre = new PersonaMenu();
+            initComponents();
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            setLocationRelativeTo(null);
+        }
+
+        public CrearPersona(ArrayList<Paciente> pacientes,
+                ArrayList<Profesional> profesionales,
+                ArrayList<Estudio> estudios,
+                PersonaMenu padre) {
+            this.listaPacientes = pacientes;
+            this.listaProfesionales = profesionales;
+            this.listaEstudios = estudios;
+            this.ventanaPadre = padre;
+            initComponents();
+            setLocationRelativeTo(null);
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,55 +214,54 @@ public class CrearPersona extends javax.swing.JFrame {
         // TODO add your handling code here:
         Paciente newPaciente = new Paciente();
         PacienteController pControl = new PacienteController(newPaciente);
-        
+
         pControl.setNombre(nombreText.getText());
         pControl.setApellido(apellidoText.getText());
         pControl.setMail(eMailText.getText());
-        pControl.setTelefono( telFText.getText() );
+        pControl.setTelefono(telFText.getText());
         pControl.setNombre(nombreText.getText());
         pControl.setNombre(nombreText.getText());
-        
-        
+
         this.dispose();
     }//GEN-LAST:event_commitPersonaMouseClicked
 
     private void selectPacOProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectPacOProItemStateChanged
         // TODO add your handling code here:
         String selected = selectPacOPro.getSelectedItem().toString();
-        
+
         personaType.removeAll();
-        if(selected.compareToIgnoreCase("Paciente")==0){
+        if (selected.compareToIgnoreCase("Paciente") == 0) {
             this.panelP = new TypePaciente();
             personaType.add(new TypePaciente(), BorderLayout.CENTER);
         }
-        if(selected.compareToIgnoreCase("Profesional")==0){
+        if (selected.compareToIgnoreCase("Profesional") == 0) {
             this.panelProf = new TypeProfesional();
             personaType.add(new TypeProfesional(), BorderLayout.CENTER);
         }
-        
+
         personaType.revalidate();
         personaType.repaint();
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
         String seleccion = (String) selectPacOPro.getSelectedItem();
-        if(seleccion.equals("Paciente")){
+        if (seleccion.equals("Paciente")) {
             PacienteController pc = new PacienteController();
             pc.setNombre(nombreText.getText());
             pc.setApellido(apellidoText.getText());
             pc.setMail(eMailText.getText());
             pc.setTelefono(telFText.getText());
-            
+
             pc.setDNI(panelP.getDni());
             pc.setObSocial(panelP.tieneObraSocial());
-            
+
             pc.registrarEnSistema(this.listaPacientes);
-            
+
             javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
             this.dispose();
-        }else if(seleccion.equals("Profesional")){
+        } else if (seleccion.equals("Profesional")) {
             ProfesionalController prc = new ProfesionalController();
-            
+
             prc.setNombre(nombreText.getText());
             prc.setApellido(apellidoText.getText());
             prc.setMail(eMailText.getText());
