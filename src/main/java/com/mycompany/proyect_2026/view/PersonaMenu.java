@@ -36,6 +36,7 @@ import javax.swing.JOptionPane;
             setLocationRelativeTo(null);
             cargarListas();
             configurarFiltros();
+            barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
         }
 
         public PersonaMenu(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales, ArrayList<Estudio> estudios) {
@@ -47,6 +48,7 @@ import javax.swing.JOptionPane;
             setLocationRelativeTo(null);
             cargarListas();
             configurarFiltros();
+            barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
         }
 
         /**
@@ -282,6 +284,7 @@ import javax.swing.JOptionPane;
         String pacienteName = pacienteList.getSelectedValue();
         int index = pacienteList.getSelectedIndex();
         //testing ↓
+        if (index < 0) return;
         System.out.println("Valor elegido\t" + pacienteName);
         System.out.println("Index conrresponde\t" + index);
         //testing ↑
