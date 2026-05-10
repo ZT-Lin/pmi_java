@@ -30,9 +30,9 @@ public class PersonaMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         cargarListas();
-        configurarFiltros(); 
+        configurarFiltros();
     }
-    
+
     public PersonaMenu(ArrayList<Paciente> pacientes,ArrayList<Profesional> profesionales,ArrayList<Estudio> estudios){
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
@@ -41,7 +41,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         cargarListas();
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,13 +164,13 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addComponent(personaList))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,7 +203,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
         for (Paciente p : listaPacientes) {
             // Lo que se muestra en cada fila del JList
-            modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre() + 
+            modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre() +
                                        " - DNI: " + p.getDNI());
         }
         pacienteList.setModel(modeloPacientes);
@@ -211,7 +211,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         // --- Profesionales ---
         DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
         for (Profesional pr : listaProfesionales) {
-            modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre() + 
+            modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre() +
                                            " - Mat: " + pr.getMatricula());
         }
         profesionalList.setModel(modeloProfesionales);
@@ -224,7 +224,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         );
         ventanaCrear.setVisible(true);
     }//GEN-LAST:event_agregarMouseClicked
-    
+
     // CrearPersona llama este método cuando termina de agregar
     public void refrescarVista() {
         cargarListas();
@@ -232,7 +232,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
 
         String texto = barraDeBusqueda.getText().trim().toLowerCase();
-        
+
         if (texto.isEmpty()) {
             cargarListas(); // si borra todo, vuelve a mostrar todos
             return;
@@ -246,7 +246,7 @@ public class PersonaMenu extends javax.swing.JFrame {
                 if (p.getNombre().toLowerCase().contains(texto) ||
                     p.getApellido().toLowerCase().contains(texto) ||
                     p.getDNI().contains(texto)) {
-                    modelo.addElement(p.getApellido() + ", " + p.getNombre() + 
+                    modelo.addElement(p.getApellido() + ", " + p.getNombre() +
                                       " - DNI: " + p.getDNI());
                 }
             }
@@ -254,22 +254,22 @@ public class PersonaMenu extends javax.swing.JFrame {
             for (Profesional pr : listaProfesionales) {
                 if (pr.getNombre().toLowerCase().contains(texto) ||
                     pr.getApellido().toLowerCase().contains(texto)) {
-                    modelo.addElement(pr.getApellido() + ", " + pr.getNombre() + 
+                    modelo.addElement(pr.getApellido() + ", " + pr.getNombre() +
                                       " - Mat: " + pr.getMatricula());
                 }
             }
         }
-        
+
         if (tabActivo == 0) pacienteList.setModel(modelo);
         else profesionalList.setModel(modelo);
-    
+
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
         // Conseguir que valor seleccione
         // Buscar datos en la lista de paciente
         // Pasarlo al areaParaMostrar()
-        
+
         String pacienteName = pacienteList.getSelectedValue();
         int index = pacienteList.getSelectedIndex();
         //testing ↓
@@ -277,7 +277,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         System.out.println("Index conrresponde\t" + index);
         //testing ↑
         areaParaMostrar.removeAll();
-        areaParaMostrar.add( new CartaPaciente(listaPacientes, index ), 
+        areaParaMostrar.add( new CartaPaciente(listaPacientes, index ),
                 java.awt.BorderLayout.CENTER );
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
@@ -287,19 +287,19 @@ public class PersonaMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!evt.getValueIsAdjusting()) {
             int indice = profesionalList.getSelectedIndex();
-            
+
             if (indice != -1) {
                 com.mycompany.proyect_2026.model.Profesional seleccionado = this.listaProfesionales.get(indice);
                 areaParaMostrar.removeAll();
-                
+
                 areaParaMostrar.add(new CartaProfesional(
-                        seleccionado.getNombre(), 
+                        seleccionado.getNombre(),
                         seleccionado.getApellido(),
                         seleccionado.getMail(),
                         seleccionado.getTel(),
                         seleccionado.getMatricula()
                 ), java.awt.BorderLayout.CENTER);
-                
+
                 areaParaMostrar.revalidate();
                 areaParaMostrar.repaint();
             }
@@ -309,71 +309,44 @@ public class PersonaMenu extends javax.swing.JFrame {
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         new MainMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
- 
+
     }//GEN-LAST:event_volverActionPerformed
 
     private void modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_modificarMouseClicked
 
-    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {                                         
-
-        // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
-        int tabActivo = personaList.getSelectedIndex();
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+                int tabActivo = personaList.getSelectedIndex();
 
         if (tabActivo == 0) {
             int idx = pacienteList.getSelectedIndex();
             if (idx < 0) {
-                JOptionPane.showMessageDialog(this, 
-                    "Seleccioná un paciente primero.", 
+                JOptionPane.showMessageDialog(this, "Seleccioná un paciente primero.",
                     "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             Paciente p = listaPacientes.get(idx);
-            if (pacienteTieneEstudios(p)) {
+
+            // La vista pregunta al controlador, no decide sola
+            if (sistemaCtrl.pacienteTieneEstudios(p)) {
                 JOptionPane.showMessageDialog(this,
-                    "No se puede eliminar: " + p.getNombre() + " " + p.getApellido() +
-                    " tiene estudios asociados.",
+                    "No se puede eliminar: " + p.getNombre() + " tiene estudios asociados.",
                     "Error", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-            // Confirmar antes de eliminar
-            int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
-                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            if (confirmar == JOptionPane.YES_OPTION) {
-                listaPacientes.remove(idx);
-                cargarListas(); // refrescar el JList
             }
 
-        } else {
-            int idx = profesionalList.getSelectedIndex();
-            if (idx < 0) {
-                JOptionPane.showMessageDialog(this,
-                    "Seleccioná un profesional primero.",
-                    "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            Profesional pr = listaProfesionales.get(idx);
-            if (profesionalTieneEstudios(pr)) {
-                JOptionPane.showMessageDialog(this,
-                    "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido() +
-                    " tiene estudios asociados.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            int confirmar = JOptionPane.showConfirmDialog(this,
-                "¿Eliminar a " + pr.getNombre() + " " + pr.getApellido() + "?",
-                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            if (confirmar == JOptionPane.YES_OPTION) {
-                listaProfesionales.remove(idx);
+            int ok = JOptionPane.showConfirmDialog(this,
+                "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (ok == JOptionPane.YES_OPTION) {
+                listaPacientes.remove(idx);
                 cargarListas();
             }
         }
-    
-    }                                        
-    
-    private boolean pacienteTieneEstudios(Paciente p) {
+        // ... análogo para profesional
+    }
+        private boolean pacienteTieneEstudios(Paciente p) {
     for (Estudio e : listaEstudios) {
         if (e.getPaciente().getDNI().equals(p.getDNI())) return true;
     }
@@ -400,28 +373,14 @@ private void filtrarPorObraSocial() {
     }
     pacienteList.setModel(modelo);
 }
-    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        int indice = profesionalList.getSelectedIndex();
-
-        if (indice == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un profesional de la lista.");
-            return;
-        }
-
-        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this, 
-                "¿Está seguro de que desea eliminar a este profesional?", 
-                "Confirmar eliminación", javax.swing.JOptionPane.YES_NO_OPTION);
-
-        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
-            this.listaProfesionales.remove(indice);
-
-            com.mycompany.proyect_2026.coltroller.GestorArchivos.actualizarArchivoProfesionales(this.listaProfesionales);
-
-            refrescarListaProfesionales(this.listaProfesionales);
-            
-            javax.swing.JOptionPane.showMessageDialog(this, "Profesional eliminado correctamente.");
-        }
+    
+    
+    
+    
     }//GEN-LAST:event_eliminarActionPerformed
+
+
+
 
     /**
      * @param args the command line arguments
@@ -430,7 +389,7 @@ private void filtrarPorObraSocial() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -458,7 +417,7 @@ private void filtrarPorObraSocial() {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
     private javax.swing.JPanel areaParaMostrar;
