@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
+    PersonaMenu(ArrayList<Paciente> listaPacientes, ArrayList<Profesional> listaProfesionales, ArrayList<Estudio> listaEstudios) {
+    }
+
 /**
  *
  * @author linzh
@@ -41,6 +44,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         cargarListas();
+        configurarFiltros();
     }
 
     /**
