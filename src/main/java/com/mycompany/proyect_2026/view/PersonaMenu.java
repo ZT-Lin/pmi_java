@@ -67,28 +67,6 @@ public class PersonaMenu extends javax.swing.JFrame {
             result[i] = sb.toString();
         }
         return result;
-    private java.util.ArrayList<com.mycompany.proyect_2026.model.Profesional> listaProfesionales;
-    
-    public PersonaMenu(){
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
-        this.listaProfesionales = com.mycompany.proyect_2026.coltroller.GestorArchivos.cargarProfesionalesDesdeArchivo();
-        refrescarListaProfesionales(this.listaProfesionales);
-    }
-    
-    public void refrescarListaProfesionales(java.util.ArrayList<com.mycompany.proyect_2026.model.Profesional> lista){
-        javax.swing.DefaultListModel<String> modelo = new javax.swing.DefaultListModel<>();
-        
-        if(lista != null){
-            for(com.mycompany.proyect_2026.model.Profesional prof : lista){
-                String visual = prof.getMatricula() + " - " + prof.getApellido() + ", " + prof.getNombre();
-                modelo.addElement(visual);
-            }
-        }
-        profesionalList.setModel(modelo);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -363,7 +341,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_modificarMouseClicked
 
-    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {                                         
 
         // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
         int tabActivo = personaList.getSelectedIndex();
@@ -418,7 +396,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
         }
     
-    }//GEN-LAST:event_eliminarActionPerformed
+    }                                        
     
     private boolean pacienteTieneEstudios(Paciente p) {
     for (Estudio e : listaEstudios) {
