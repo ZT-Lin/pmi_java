@@ -42,31 +42,6 @@ public class PersonaMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         cargarListas();
     }    
-    public PersonaMenu(ArrayList<Paciente> pacientes) {
-        this.listaPacientes = pacientes;
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        
-        String[] nombreAMostrar = pNameArray(listaPacientes);
-        pacienteList.setListData(nombreAMostrar);
-    }
-    
-    private String[] pNameArray( ArrayList<Paciente> lista ){
-        String[] result = new String[lista.size()];
-        StringBuilder sb = new StringBuilder();
-        PacienteController pc;
-        
-        for( int i = 0 ; i < lista.size() ; i++ ){
-            pc = new PacienteController(lista.get(i) );
-            
-            sb.delete(0, sb.length());
-            sb.append(pc.getApellido() )
-                    .append(" , ")
-                    .append(pc.getNombre());
-            result[i] = sb.toString();
-        }
-        return result;
 
     /**
      * This method is called from within the constructor to initialize the form.
