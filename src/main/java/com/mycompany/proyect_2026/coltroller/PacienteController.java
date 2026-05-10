@@ -5,6 +5,7 @@
 package com.mycompany.proyect_2026.coltroller;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import java.util.ArrayList;
 
 /**
  *
@@ -42,11 +43,16 @@ public class PacienteController {
     public void setObSocial(boolean data){
         paciente.setObraSocial(data);
     }
+    
+    //getter
     public String getNombre(){
         return paciente.getNombre();
     }
     public String getApellido(){
         return paciente.getApellido();
+    }
+    public String getDNI(){
+        return paciente.getDNI();
     }
     public String getMail(){
         return paciente.getMail();
@@ -60,9 +66,18 @@ public class PacienteController {
     public boolean getOB(){
         return paciente.getObraSocial();
     }
-    
-    
-    public Paciente getPersona(){
+    public Paciente getPaciente(){
         return paciente;
+    }
+    public String getString(){
+        return paciente.toString();
+    }
+    
+    
+    public void registrarEnSistema(ArrayList<Paciente> listaMemoria){
+        if(listaMemoria != null){
+            listaMemoria.add(this.paciente);
+        }
+        GestorArchivos.agregarPacienteFisico(this.paciente);
     }
 }

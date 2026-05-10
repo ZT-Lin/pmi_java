@@ -16,6 +16,9 @@ public class TypeProfesional extends javax.swing.JPanel {
     public TypeProfesional() {
         initComponents();
     }
+    public String getMatricula(){
+        return matriculaText.getText();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

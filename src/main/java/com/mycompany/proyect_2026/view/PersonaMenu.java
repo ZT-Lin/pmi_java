@@ -67,6 +67,27 @@ public class PersonaMenu extends javax.swing.JFrame {
             result[i] = sb.toString();
         }
         return result;
+    private java.util.ArrayList<com.mycompany.proyect_2026.model.Profesional> listaProfesionales;
+    
+    public PersonaMenu(){
+        initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        
+        this.listaProfesionales = com.mycompany.proyect_2026.coltroller.GestorArchivos.cargarProfesionalesDesdeArchivo();
+        refrescarListaProfesionales(this.listaProfesionales);
+    }
+    
+    public void refrescarListaProfesionales(java.util.ArrayList<com.mycompany.proyect_2026.model.Profesional> lista){
+        javax.swing.DefaultListModel<String> modelo = new javax.swing.DefaultListModel<>();
+        
+        if(lista != null){
+            for(com.mycompany.proyect_2026.model.Profesional prof : lista){
+                String visual = prof.getMatricula() + " - " + prof.getApellido() + ", " + prof.getNombre();
+                modelo.addElement(visual);
+            }
+        }
+        profesionalList.setModel(modelo);
     }
 
     /**
@@ -311,11 +332,25 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     private void profesionalListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_profesionalListValueChanged
         // TODO add your handling code here:
-        int selectedIndex = profesionalList.getSelectedIndex();
-        areaParaMostrar.removeAll();
-        areaParaMostrar.add( new CartaProfesional(selectedIndex), java.awt.BorderLayout.CENTER );
-        areaParaMostrar.revalidate();
-        areaParaMostrar.repaint();
+        if (!evt.getValueIsAdjusting()) {
+            int indice = profesionalList.getSelectedIndex();
+            
+            if (indice != -1) {
+                com.mycompany.proyect_2026.model.Profesional seleccionado = this.listaProfesionales.get(indice);
+                areaParaMostrar.removeAll();
+                
+                areaParaMostrar.add(new CartaProfesional(
+                        seleccionado.getNombre(), 
+                        seleccionado.getApellido(),
+                        seleccionado.getMail(),
+                        seleccionado.getTel(),
+                        seleccionado.getMatricula()
+                ), java.awt.BorderLayout.CENTER);
+                
+                areaParaMostrar.revalidate();
+                areaParaMostrar.repaint();
+            }
+        }
     }//GEN-LAST:event_profesionalListValueChanged
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
@@ -412,6 +447,29 @@ private void filtrarPorObraSocial() {
     }
     pacienteList.setModel(modelo);
 }
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        int indice = profesionalList.getSelectedIndex();
+
+        if (indice == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un profesional de la lista.");
+            return;
+        }
+
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro de que desea eliminar a este profesional?", 
+                "Confirmar eliminación", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+            this.listaProfesionales.remove(indice);
+
+            com.mycompany.proyect_2026.coltroller.GestorArchivos.actualizarArchivoProfesionales(this.listaProfesionales);
+
+            refrescarListaProfesionales(this.listaProfesionales);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Profesional eliminado correctamente.");
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */

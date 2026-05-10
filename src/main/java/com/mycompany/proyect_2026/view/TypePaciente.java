@@ -16,6 +16,12 @@ public class TypePaciente extends javax.swing.JPanel {
     public TypePaciente() {
         initComponents();
     }
+    public String getDni(){
+        return dniText.getText();
+    }
+    public boolean tieneObraSocial(){
+        return osSi.isSelected();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
