@@ -5,11 +5,10 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
-import com.mycompany.proyect_2026.coltroller.PacienteController;
+import com.mycompany.proyect_2026.controller.PacienteController;
 import java.util.ArrayList;
 import java.awt.BorderLayout;
-import com.mycompany.proyect_2026.coltroller.GestorArchivos;
-import com.mycompany.proyect_2026.coltroller.ProfesionalController;
+import com.mycompany.proyect_2026.controller.ProfesionalController;
 import com.mycompany.proyect_2026.model.Profesional;
 /**
  *

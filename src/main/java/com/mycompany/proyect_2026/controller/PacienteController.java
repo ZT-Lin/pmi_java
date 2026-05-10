@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.proyect_2026.coltroller;
+package com.mycompany.proyect_2026.controller;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Paciente;
 import java.util.ArrayList;
 
@@ -59,9 +60,6 @@ public class PacienteController {
     }
     public String getTel(){
         return paciente.getTel();
-    }
-    public String getDNI(){
-        return paciente.getDNI();
     }
     public boolean getOB(){
         return paciente.getObraSocial();

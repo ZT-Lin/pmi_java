@@ -4,12 +4,12 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 import com.mycompany.proyect_2026.model.Estudio;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import com.mycompany.proyect_2026.coltroller.GestorArchivos;
 
 /**
  *

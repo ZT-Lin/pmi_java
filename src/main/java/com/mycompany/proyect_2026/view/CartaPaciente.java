@@ -5,7 +5,7 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Paciente;
-import com.mycompany.proyect_2026.coltroller.PacienteController;
+import com.mycompany.proyect_2026.controller.PacienteController;
 import java.util.ArrayList;
 
 /**

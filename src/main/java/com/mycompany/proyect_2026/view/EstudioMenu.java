@@ -4,16 +4,32 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import java.util.ArrayList;
+
 /**
  *
  * @author linzh
  */
 public class EstudioMenu extends javax.swing.JFrame {
-
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Estudio> listaEstudios;
     /**
      * Creates new form EstudioMenu
      */
     public EstudioMenu() {
+        initComponents();
+        setLocationRelativeTo(null);
+    }
+    public EstudioMenu(ArrayList<Paciente> pacientes,
+                    ArrayList<Profesional> profesional, 
+                    ArrayList<Estudio> estudios) {
+        this.listaProfesionales = profesional;
+        this.listaPacientes = pacientes;
+        this.listaEstudios = estudios;
         initComponents();
         setLocationRelativeTo(null);
     }

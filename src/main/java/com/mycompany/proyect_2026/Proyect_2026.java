@@ -4,8 +4,8 @@
 
 package com.mycompany.proyect_2026;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.*;
-import com.mycompany.proyect_2026.coltroller.GestorArchivos;
 import com.mycompany.proyect_2026.view.*;
 import java.util.ArrayList;
 
