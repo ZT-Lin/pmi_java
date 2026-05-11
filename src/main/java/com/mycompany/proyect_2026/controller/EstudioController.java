@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 /**
  *
- * @author lamas Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
+ * @author lamas 
+ * Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
  *
  */
 public class EstudioController {

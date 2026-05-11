@@ -206,11 +206,6 @@ public class CrearPersona extends javax.swing.JFrame {
         personaType.setLayout(new java.awt.BorderLayout());
 
         commitPersona.setText("Agregar nueva persona");
-        commitPersona.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                commitPersonaMouseClicked(evt);
-            }
-        });
         commitPersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 commitPersonaActionPerformed(evt);
@@ -274,21 +269,6 @@ public class CrearPersona extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void commitPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commitPersonaMouseClicked
-        // TODO add your handling code here:
-        Paciente newPaciente = new Paciente();
-        PacienteController pControl = new PacienteController(newPaciente);
-
-        pControl.setNombre(nombreText.getText());
-        pControl.setApellido(apellidoText.getText());
-        pControl.setMail(eMailText.getText());
-        pControl.setTelefono(telFText.getText());
-        pControl.setNombre(nombreText.getText());
-        pControl.setNombre(nombreText.getText());
-
-        this.dispose();
-    }//GEN-LAST:event_commitPersonaMouseClicked
-
     private void selectPacOProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selectPacOProItemStateChanged
         // TODO add your handling code here:
         String selected = selectPacOPro.getSelectedItem().toString();
@@ -308,7 +288,7 @@ public class CrearPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
-String seleccion = (String) selectPacOPro.getSelectedItem();
+    String seleccion = (String) selectPacOPro.getSelectedItem();
 
     if (seleccion.equals("Paciente")) {
         if (panelP == null) {

@@ -114,9 +114,9 @@ public class PersonaMenu extends javax.swing.JFrame {
         personaList.addTab("Profesional", jScrollPane2);
 
         agregar.setText("Agregar");
-        agregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                agregarMouseClicked(evt);
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
             }
         });
 
@@ -205,36 +205,27 @@ public class PersonaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void cargarListas() {
-            // --- Pacientes ---
-            DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
-            for (Paciente p : listaPacientes) {
-                // Lo que se muestra en cada fila del JList
-                modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre()
-                        + " - DNI: " + p.getDNI());
-            }
-            pacienteList.setModel(modeloPacientes);
-
-            // --- Profesionales ---
-            DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
-            for (Profesional pr : listaProfesionales) {
-                modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre()
-                        + " - Mat: " + pr.getMatricula());
-            }
-            profesionalList.setModel(modeloProfesionales);
+        // --- Pacientes ---
+        DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
+        for (Paciente p : listaPacientes) {
+            // Lo que se muestra en cada fila del JList
+            modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre()
+                    + " - DNI: " + p.getDNI());
         }
-    private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
-        // Le pasamos las listas Y una referencia a esta ventana (this)
-        // para que CrearPersona pueda avisarnos cuando termina
-        CrearPersona ventanaCrear = new CrearPersona(
-                listaPacientes, listaProfesionales, listaEstudios, this
-        );
-        ventanaCrear.setVisible(true);
-    }//GEN-LAST:event_agregarMouseClicked
+        pacienteList.setModel(modeloPacientes);
 
-        // CrearPersona llama este método cuando termina de agregar
-        public void refrescarVista() {
-            cargarListas();
+        // --- Profesionales ---
+        DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
+        for (Profesional pr : listaProfesionales) {
+            modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre()
+                    + " - Mat: " + pr.getMatricula());
         }
+        profesionalList.setModel(modeloProfesionales);
+    }
+    // CrearPersona llama este método cuando termina de agregar
+    public void refrescarVista() {
+        cargarListas();
+    }
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
 
         String texto = barraDeBusqueda.getText().trim().toLowerCase();
@@ -260,7 +251,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             for (Profesional pr : listaProfesionales) {
                 if (pr.getNombre().toLowerCase().contains(texto)
                         || pr.getApellido().toLowerCase().contains(texto)
-                        || pr.getMatricula().contains(texto) ) {
+                        || pr.getMatricula().contains(texto)) {
                     modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
                             + " - Mat: " + pr.getMatricula());
                 }
@@ -277,34 +268,34 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
 
-    int index = pacienteList.getSelectedIndex();
+        int index = pacienteList.getSelectedIndex();
 
-    if (index < 0) {
-        return;
-    }
+        if (index < 0) {
+            return;
+        }
 
-    Paciente p = listaPacientes.get(index);
-    int cantidadEstudios = contarEstudiosDePaciente(p);
+        Paciente p = listaPacientes.get(index);
+        int cantidadEstudios = contarEstudiosDePaciente(p);
 
-    // Panel que combina la CartaPaciente con la info de estudios
-    javax.swing.JPanel panelCombinado = new javax.swing.JPanel();
-    panelCombinado.setLayout(new java.awt.BorderLayout());
+        // Panel que combina la CartaPaciente con la info de estudios
+        javax.swing.JPanel panelCombinado = new javax.swing.JPanel();
+        panelCombinado.setLayout(new java.awt.BorderLayout());
 
-    // La carta del paciente arriba
-    panelCombinado.add(new CartaPaciente(listaPacientes, index), java.awt.BorderLayout.CENTER);
+        // La carta del paciente arriba
+        panelCombinado.add(new CartaPaciente(listaPacientes, index), java.awt.BorderLayout.CENTER);
 
-    // Etiqueta con cantidad de estudios abajo
-    javax.swing.JLabel labelEstudios = new javax.swing.JLabel(
-        "  Estudios registrados: " + cantidadEstudios
-    );
-    labelEstudios.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
-    labelEstudios.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-    panelCombinado.add(labelEstudios, java.awt.BorderLayout.SOUTH);
+        // Etiqueta con cantidad de estudios abajo
+        javax.swing.JLabel labelEstudios = new javax.swing.JLabel(
+                "  Estudios registrados: " + cantidadEstudios
+        );
+        labelEstudios.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        labelEstudios.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        panelCombinado.add(labelEstudios, java.awt.BorderLayout.SOUTH);
 
-    areaParaMostrar.removeAll();
-    areaParaMostrar.add(panelCombinado, java.awt.BorderLayout.CENTER);
-    areaParaMostrar.revalidate();
-    areaParaMostrar.repaint();
+        areaParaMostrar.removeAll();
+        areaParaMostrar.add(panelCombinado, java.awt.BorderLayout.CENTER);
+        areaParaMostrar.revalidate();
+        areaParaMostrar.repaint();
 
     }//GEN-LAST:event_pacienteListValueChanged
 
@@ -339,218 +330,228 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
 
-            // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
-            int tabActivo = personaList.getSelectedIndex();
+        // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
+        int tabActivo = personaList.getSelectedIndex();
+
+        // ══════════════════════════════════════════
+        // RAMA PACIENTE
+        // ══════════════════════════════════════════
+        if (tabActivo == 0) {
+
+            // Verificar que haya algo seleccionado
+            int idx = pacienteList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccioná un paciente primero.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Obtener el paciente seleccionado de la lista real
+            Paciente p = listaPacientes.get(idx);
+
+            // Verificar restricción: no se puede eliminar si tiene estudios
+            // Usamos el método local de esta clase
+            if (pacienteTieneEstudios(p)) {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede eliminar: " + p.getNombre() + " " + p.getApellido()
+                        + " tiene estudios asociados.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Pedir confirmación antes de eliminar
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                    "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                // Eliminar de la lista en memoria
+                listaPacientes.remove(idx);
+
+                // Actualizar el archivo para que el cambio persista
+                GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+
+                // Refrescar el JList para que deje de mostrarse
+                cargarListas();
+
+                JOptionPane.showMessageDialog(this,
+                        "Paciente eliminado correctamente.",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
 
             // ══════════════════════════════════════════
-            // RAMA PACIENTE
+            // RAMA PROFESIONAL
             // ══════════════════════════════════════════
-            if (tabActivo == 0) {
+        } else {
 
-                // Verificar que haya algo seleccionado
-                int idx = pacienteList.getSelectedIndex();
-                if (idx < 0) {
-                    JOptionPane.showMessageDialog(this,
-                            "Seleccioná un paciente primero.",
-                            "Aviso", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+            // Verificar que haya algo seleccionado
+            int idx = profesionalList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccioná un profesional primero.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-                // Obtener el paciente seleccionado de la lista real
-                Paciente p = listaPacientes.get(idx);
+            // Obtener el profesional seleccionado de la lista real
+            Profesional pr = listaProfesionales.get(idx);
 
-                // Verificar restricción: no se puede eliminar si tiene estudios
-                // Usamos el método local de esta clase
-                if (pacienteTieneEstudios(p)) {
-                    JOptionPane.showMessageDialog(this,
-                            "No se puede eliminar: " + p.getNombre() + " " + p.getApellido()
-                            + " tiene estudios asociados.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+            // Verificar restricción: no se puede eliminar si tiene estudios
+            if (profesionalTieneEstudios(pr)) {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido()
+                        + " tiene estudios asociados.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-                // Pedir confirmación antes de eliminar
-                int confirmar = JOptionPane.showConfirmDialog(this,
-                        "¿Eliminar a " + p.getNombre() + " " + p.getApellido() + "?",
-                        "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            // Pedir confirmación antes de eliminar
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                    "¿Eliminar a " + pr.getNombre() + " " + pr.getApellido() + "?",
+                    "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    // Eliminar de la lista en memoria
-                    listaPacientes.remove(idx);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                // Eliminar de la lista en memoria
+                listaProfesionales.remove(idx);
 
-                    // Actualizar el archivo para que el cambio persista
-                    GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+                // Actualizar el archivo para que el cambio persista
+                GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
 
-                    // Refrescar el JList para que deje de mostrarse
-                    cargarListas();
+                // Refrescar el JList para que deje de mostrarse
+                cargarListas();
 
-                    JOptionPane.showMessageDialog(this,
-                            "Paciente eliminado correctamente.",
-                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                }
-
-                // ══════════════════════════════════════════
-                // RAMA PROFESIONAL
-                // ══════════════════════════════════════════
-            } else {
-
-                // Verificar que haya algo seleccionado
-                int idx = profesionalList.getSelectedIndex();
-                if (idx < 0) {
-                    JOptionPane.showMessageDialog(this,
-                            "Seleccioná un profesional primero.",
-                            "Aviso", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                // Obtener el profesional seleccionado de la lista real
-                Profesional pr = listaProfesionales.get(idx);
-
-                // Verificar restricción: no se puede eliminar si tiene estudios
-                if (profesionalTieneEstudios(pr)) {
-                    JOptionPane.showMessageDialog(this,
-                            "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido()
-                            + " tiene estudios asociados.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Pedir confirmación antes de eliminar
-                int confirmar = JOptionPane.showConfirmDialog(this,
-                        "¿Eliminar a " + pr.getNombre() + " " + pr.getApellido() + "?",
-                        "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    // Eliminar de la lista en memoria
-                    listaProfesionales.remove(idx);
-
-                    // Actualizar el archivo para que el cambio persista
-                    GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
-
-                    // Refrescar el JList para que deje de mostrarse
-                    cargarListas();
-
-                    JOptionPane.showMessageDialog(this,
-                            "Profesional eliminado correctamente.",
-                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(this,
+                        "Profesional eliminado correctamente.",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+    }
 
-        private boolean pacienteTieneEstudios(Paciente p) {
-            for (Estudio e : listaEstudios) {
-                if (e.getPaciente().getDNI().equals(p.getDNI())) {
-                    return true;
-                }
+    private boolean pacienteTieneEstudios(Paciente p) {
+        for (Estudio e : listaEstudios) {
+            if (e.getPaciente().getDNI().equals(p.getDNI())) {
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        private boolean profesionalTieneEstudios(Profesional pr) {
-            for (Estudio e : listaEstudios) {
-                if (e.getProfesional().getMatricula().equals(pr.getMatricula())) {
-                    return true;
-                }
+    private boolean profesionalTieneEstudios(Profesional pr) {
+        for (Estudio e : listaEstudios) {
+            if (e.getProfesional().getMatricula().equals(pr.getMatricula())) {
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        private void configurarFiltros() {
-            obSi.addActionListener(e -> filtrarPorObraSocial());
-            obNo.addActionListener(e -> filtrarPorObraSocial());
-        }
+    private void configurarFiltros() {
+        obSi.addActionListener(e -> filtrarPorObraSocial());
+        obNo.addActionListener(e -> filtrarPorObraSocial());
+    }
 
-        private void filtrarPorObraSocial() {
-            DefaultListModel<String> modelo = new DefaultListModel<>();
-            for (Paciente p : listaPacientes) {
-                if (obSi.isSelected() && !p.getObraSocial()) {
-                    continue;
-                }
-                if (obNo.isSelected() && p.getObraSocial()) {
-                    continue;
-                }
-                modelo.addElement(p.getApellido() + ", " + p.getNombre()
-                        + " - DNI: " + p.getDNI());
+    private void filtrarPorObraSocial() {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (Paciente p : listaPacientes) {
+            if (obSi.isSelected() && !p.getObraSocial()) {
+                continue;
             }
-            pacienteList.setModel(modelo);
+            if (obNo.isSelected() && p.getObraSocial()) {
+                continue;
+            }
+            modelo.addElement(p.getApellido() + ", " + p.getNombre()
+                    + " - DNI: " + p.getDNI());
+        }
+        pacienteList.setModel(modelo);
 
     }//GEN-LAST:event_eliminarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         int tabActivo = personaList.getSelectedIndex();
-    
-    if (tabActivo == 0) {
-        // Tab Paciente
-        int idx = pacienteList.getSelectedIndex();
-        if (idx < 0) {
-            JOptionPane.showMessageDialog(this,
-                "Seleccioná un paciente primero.",
-                "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Paciente p = listaPacientes.get(idx);
-        new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idx)
-            .setVisible(true);
-            
-    } else {
-        // Tab Profesional
-        int idx = profesionalList.getSelectedIndex();
-        if (idx < 0) {
-            JOptionPane.showMessageDialog(this,
-                "Seleccioná un profesional primero.",
-                "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Profesional pr = listaProfesionales.get(idx);
-        new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idx)
-            .setVisible(true);
-    }
-    }//GEN-LAST:event_modificarActionPerformed
-    
-    private int contarEstudiosDePaciente(Paciente p) {
-    int contador = 0;
-    for (Estudio e : listaEstudios) {
-        if (e.getPaciente().getDNI().equals(p.getDNI())) {
-            contador++;
-        }
-    }
-    return contador;
-}
-        /**
-         * @param args the command line arguments
-         */
-        public static void main(String args[]) {
-            /* Set the Nimbus look and feel */
-            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-             */
-            try {
-                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                    if ("Nimbus".equals(info.getName())) {
-                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }
-                }
-            } catch (ClassNotFoundException ex) {
-                java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-            //</editor-fold>
-            //</editor-fold>
 
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new PersonaMenu().setVisible(true);
-                }
-            });
+        if (tabActivo == 0) {
+            // Tab Paciente
+            int idx = pacienteList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccioná un paciente primero.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Paciente p = listaPacientes.get(idx);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idx)
+                    .setVisible(true);
+
+        } else {
+            // Tab Profesional
+            int idx = profesionalList.getSelectedIndex();
+            if (idx < 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Seleccioná un profesional primero.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            Profesional pr = listaProfesionales.get(idx);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idx)
+                    .setVisible(true);
         }
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        // Le pasamos las listas Y una referencia a esta ventana (this)
+        // para que CrearPersona pueda avisarnos cuando termina
+        CrearPersona ventanaCrear = new CrearPersona(
+                listaPacientes, listaProfesionales, listaEstudios, this
+        );
+        ventanaCrear.setVisible(true);
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private int contarEstudiosDePaciente(Paciente p) {
+        int contador = 0;
+        for (Estudio e : listaEstudios) {
+            if (e.getPaciente().getDNI().equals(p.getDNI())) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PersonaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PersonaMenu().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;

@@ -71,7 +71,7 @@
         <Property name="text" type="java.lang.String" value="Estudios"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toStudiosMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toStudiosActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="toPersona">
@@ -79,7 +79,7 @@
         <Property name="text" type="java.lang.String" value="Personas"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toPersonaMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toPersonaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

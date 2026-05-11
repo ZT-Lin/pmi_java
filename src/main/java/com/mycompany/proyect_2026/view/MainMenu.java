@@ -16,11 +16,11 @@ import javax.swing.JFrame;
  * @author linzh
  */
 public class MainMenu extends javax.swing.JFrame {
-    
+
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
-    
+
     /**
      * Creates new form MainMenu
      */
@@ -32,18 +32,18 @@ public class MainMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
     }
+
     public MainMenu(ArrayList<Paciente> pacientes,
-                    ArrayList<Profesional> profesional, 
-                    ArrayList<Estudio> estudios) {
+            ArrayList<Profesional> profesional,
+            ArrayList<Estudio> estudios) {
         this.listaProfesionales = profesional;
         this.listaPacientes = pacientes;
         this.listaEstudios = estudios;
         initComponents();
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
-        
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,19 +64,17 @@ public class MainMenu extends javax.swing.JFrame {
         nombreCompañía.setText("Laboratorio de Análisis Clínicos Java SRL");
         nombreCompañía.setToolTipText("");
 
-        toStudios.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\icons\\estudio_Icon.jpg")); // NOI18N
         toStudios.setText("Estudios");
-        toStudios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                toStudiosMouseClicked(evt);
+        toStudios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toStudiosActionPerformed(evt);
             }
         });
 
-        toPersona.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\icons\\persona_Icon.jpg")); // NOI18N
         toPersona.setText("Personas");
-        toPersona.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                toPersonaMouseClicked(evt);
+        toPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toPersonaActionPerformed(evt);
             }
         });
 
@@ -115,7 +113,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void configurarVentana() {
         // Sobreescribir el comportamiento del botón X de la ventana
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        
+
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -123,23 +121,20 @@ public class MainMenu extends javax.swing.JFrame {
                 GestorArchivos.actualizarArchivoPacientes(listaPacientes);
                 GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
                 GestorArchivos.actualizarArchivoEstudios(listaEstudios);
-                
+
                 System.exit(0); // cerrar el programa
             }
         });
     }
-    private void toPersonaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toPersonaMouseClicked
-        // TODO add your handling code here:
-        new PersonaMenu(listaPacientes,listaProfesionales,listaEstudios).setVisible(true);
+    private void toStudiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toStudiosActionPerformed
+        new EstudioMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
-       
-    }//GEN-LAST:event_toPersonaMouseClicked
+    }//GEN-LAST:event_toStudiosActionPerformed
 
-    private void toStudiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toStudiosMouseClicked
-        // TODO add your handling code here:
-        new EstudioMenu(listaPacientes,listaProfesionales,listaEstudios).setVisible(true);
+    private void toPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toPersonaActionPerformed
+        new PersonaMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
-    }//GEN-LAST:event_toStudiosMouseClicked
+    }//GEN-LAST:event_toPersonaActionPerformed
 
     /**
      * @param args the command line arguments
