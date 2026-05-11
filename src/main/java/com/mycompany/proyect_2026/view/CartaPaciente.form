@@ -28,38 +28,46 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Component id="jSeparator1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nombreLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="apellidoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="TelLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="mailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="dniLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="obLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="pDNI" min="-2" pref="128" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="pCorreo" min="-2" pref="128" max="-2" attributes="0"/>
-                                  <Component id="pApellido" min="-2" pref="128" max="-2" attributes="0"/>
-                                  <Component id="pNombre" min="-2" pref="128" max="-2" attributes="0"/>
-                                  <Component id="pTelefono" min="-2" pref="128" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Group type="102" attributes="0">
-                              <Component id="obSi" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="apellidoLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="nombreLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="mailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="telLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="obLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dniLabel" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Component id="obSi" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="obNo" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Component id="pDNI" alignment="1" min="-2" pref="190" max="-2" attributes="0"/>
+                              <Component id="pTelefono" min="-2" pref="190" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="pCorreo" min="-2" pref="190" max="-2" attributes="0"/>
+                          <Component id="pApellido" min="-2" pref="190" max="-2" attributes="0"/>
+                          <Component id="pNombre" min="-2" pref="190" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -79,12 +87,12 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="pCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TelLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="mailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="pTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="mailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="telLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -99,39 +107,12 @@
                   <Component id="obNo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="obLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="150" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JList" name="estudioRelacionado">
-          <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JTextField" name="pNombre">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
@@ -202,14 +183,14 @@
         <Property name="text" type="java.lang.String" value="Apellido"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="TelLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="mailLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Correo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="telLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="dniLabel">

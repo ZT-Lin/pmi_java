@@ -259,7 +259,8 @@ public class PersonaMenu extends javax.swing.JFrame {
         } else {
             for (Profesional pr : listaProfesionales) {
                 if (pr.getNombre().toLowerCase().contains(texto)
-                        || pr.getApellido().toLowerCase().contains(texto)) {
+                        || pr.getApellido().toLowerCase().contains(texto)
+                        || pr.getMatricula().contains(texto) ) {
                     modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
                             + " - Mat: " + pr.getMatricula());
                 }
@@ -281,13 +282,11 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         String pacienteName = pacienteList.getSelectedValue();
         int index = pacienteList.getSelectedIndex();
-        //testing ↓
+
         if (index < 0) {
             return;
         }
-        System.out.println("Valor elegido\t" + pacienteName);
-        System.out.println("Index conrresponde\t" + index);
-        //testing ↑
+
         areaParaMostrar.removeAll();
         areaParaMostrar.add(new CartaPaciente(listaPacientes, index),
                 java.awt.BorderLayout.CENTER);
@@ -326,6 +325,8 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     private void modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarMouseClicked
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_modificarMouseClicked
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
