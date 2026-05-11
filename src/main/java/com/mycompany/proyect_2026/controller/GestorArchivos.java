@@ -118,24 +118,15 @@ public class GestorArchivos {
         return listaEstudios;
     }
     
-    public static void guardarEstudioEnArchivo(Estudio nuevoEst){
-        try{
-            FileWriter fw = new FileWriter("data/estudios.txt", true);
-            int dia = nuevoEst.getFecha().getDia();
-            int mes = nuevoEst.getFecha().getMes();
-            int anio = nuevoEst.getFecha().getAnio();
-            String dniPaciente = nuevoEst.getPaciente().getDNI();
-            String matriculaProf = nuevoEst.getProfesional().getMatricula();
-            String linea = dia + " " + mes + " " + anio + " " +
-                            nuevoEst.getNombreEstudio() + " " +
-                            dniPaciente + " " +
-                            matriculaProf + "\n";
-            fw.write(linea);
-            fw.close();
-        }catch(IOException e){
-            System.out.println("Error al guardar el estudio: " + e.getMessage());
-        }
+    public static void guardarEstudioEnArchivo(Estudio e) {
+    try {
+        FileWriter fw = new FileWriter("data/estudios.txt", true);
+        fw.write(formatearEstudio(e) + "\n");
+        fw.close();
+    } catch (IOException ex) {
+        System.out.println("Error al guardar estudio: " + ex.getMessage());
     }
+}
     
     public static void actualizarArchivoPacientes(ArrayList<Paciente> listaPacientes){
         try{
@@ -172,26 +163,17 @@ public class GestorArchivos {
         }
     }
     
-    public static void actualizarArchivoEstudios(ArrayList<Estudio> listaEstudios){
-        try{
-            FileWriter fw = new FileWriter("data/estudios.txt");
-            for(Estudio e : listaEstudios){
-                int dia = e.getFecha().getDia();
-                int mes = e.getFecha().getMes();
-                int anio = e.getFecha().getAnio();
-                String dniPaciente = e.getPaciente().getDNI();
-                String matriculaProf = e.getProfesional().getMatricula();
-                String linea = dia + " " + mes + " " + anio + " " +
-                               e.getNombreEstudio() + " " +
-                               dniPaciente + " " +
-                               matriculaProf + "\n";
-                fw.write(linea);
-            }
-            fw.close();
-        }catch(IOException ex){
-            System.out.println("Error al actualizar el archivo de estudios: " + ex.getMessage());
+    public static void actualizarArchivoEstudios(ArrayList<Estudio> lista) {
+    try {
+        FileWriter fw = new FileWriter("data/estudios.txt");
+        for (Estudio e : lista) {
+            fw.write(formatearEstudio(e) + "\n");
         }
+        fw.close();
+    } catch (IOException ex) {
+        System.out.println("Error al actualizar estudios: " + ex.getMessage());
     }
+}
     
     public static void agregarPacienteFisico(Paciente p){
         try{
@@ -222,4 +204,29 @@ public class GestorArchivos {
             System.out.println("Error al escribir profesional: " + e.getMessage());
         }
     }
+    
+    // Método auxiliar privado:
+private static String formatearEstudio(Estudio e) {
+    // Fecha entrega: guardamos "null" si no tiene
+    String fechaEntrega = (e.getFechaEntrega() != null)
+        ? e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes()
+          + "/" + e.getFechaEntrega().getAnio()
+        : "null";
+
+    // Análisis: unimos con coma
+    String analisis = "";
+    if (e.getAnalisis() != null && e.getAnalisis().length > 0) {
+        analisis = String.join(",", e.getAnalisis());
+    }
+
+    return e.getFecha().getDia() + "|"
+         + e.getFecha().getMes() + "|"
+         + e.getFecha().getAnio() + "|"
+         + e.getNombreEstudio() + "|"
+         + e.getPaciente().getDNI() + "|"
+         + e.getProfesional().getMatricula() + "|"
+         + e.getEstado() + "|"
+         + fechaEntrega + "|"
+         + analisis;
+}
 }
