@@ -63,6 +63,37 @@ private void mostrarDatos(Estudio estudio) {
         jTextField8.setText("Sin asignar");
     }
     
+    // ── Análisis ────────────────────────────────────
+    // Juntamos los 10 checkboxes en un array para iterar
+    // El orden debe coincidir con las claves 1-10 del HashMap
+    javax.swing.JCheckBox[] checks = {
+        jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
+        jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+    };
+
+    // Ponemos el nombre de cada análisis como texto del checkbox
+    // y lo desmarcamos por defecto
+    for (int i = 0; i < checks.length; i++) {
+        int clave = i + 1; // las claves van de 1 a 10
+        String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(clave, "Análisis " + clave);
+        checks[i].setText(nombre);
+        checks[i].setSelected(false);   // desmarcado por defecto
+        checks[i].setEnabled(false);    // solo lectura, no se puede cambiar acá
+    }
+
+    // Marcamos los que el estudio tiene
+    String[] analisisDelEstudio = estudio.getAnalisis();
+    if (analisisDelEstudio != null) {
+        for (String nombreAnalisis : analisisDelEstudio) {
+            for (javax.swing.JCheckBox cb : checks) {
+                if (cb.getText().equals(nombreAnalisis)) {
+                    cb.setSelected(true);
+                    break;
+                }
+            }
+        }
+    }
+} // cierre de mostrarDatos()
 }
     /**
      * This method is called from within the constructor to initialize the form.
