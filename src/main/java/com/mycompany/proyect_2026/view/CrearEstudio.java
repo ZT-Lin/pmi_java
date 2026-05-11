@@ -10,6 +10,7 @@ import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
+import com.mycompany.proyect_2026.controller.EstudioController;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -463,18 +464,14 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Validar selección de paciente ──────────────────
         int idxPaciente = comboPaciente.getSelectedIndex();
         if (idxPaciente <= 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Seleccioná un paciente.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Seleccioná un paciente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // ── Validar selección de profesional ───────────────
         int idxProfesional = comboProfesional.getSelectedIndex();
         if (idxProfesional <= 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Seleccioná un profesional.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Seleccioná un profesional.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -483,9 +480,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         try {
             fechaRealizacion = parsearFecha(jTextField6.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Fecha de realización inválida: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Fecha de realización inválida: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -498,9 +493,7 @@ public class CrearEstudio extends javax.swing.JFrame {
             try {
                 fechaEntrega = parsearFecha(textoEntrega);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,
-                        "Fecha de entrega inválida: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Fecha de entrega inválida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -508,9 +501,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Validar que haya al menos un análisis ──────────
         String[] analisisSeleccionados = obtenerAnalisisSeleccionados();
         if (analisisSeleccionados.length == 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Seleccioná al menos un análisis.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Seleccioná al menos un análisis.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -520,35 +511,28 @@ public class CrearEstudio extends javax.swing.JFrame {
         Profesional profesional = listaProfesionales.get(idxProfesional - 1);
 
         // ── Crear el objeto Estudio ────────────────────────
-        Estudio nuevoEstudio = new Estudio(
-                fechaRealizacion,
-                "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
-                paciente,
-                profesional
-        );
-
-        // Setear los campos adicionales
-        nuevoEstudio.setFechaEntrega(fechaEntrega);
-        nuevoEstudio.setEstado("En Elaboración"); // estado inicial siempre
-        nuevoEstudio.setAnalisis(analisisSeleccionados);
-
-        // ── Agregar a la lista en memoria ──────────────────
-        listaEstudios.add(nuevoEstudio);
-
-        // ── Guardar en archivo ─────────────────────────────
-        GestorArchivos.guardarEstudioEnArchivo(nuevoEstudio);
-
-        // ── Avisar a EstudioMenu que refresque ─────────────
-        if (ventanaPadre != null) {
-            ventanaPadre.refrescarVista();
+        try {
+            EstudioController ec = new EstudioController(
+                    fechaRealizacion, 
+                    "Estudio_" + paciente.getDNI(), 
+                    paciente, 
+                    profesional
+            );
+            
+            ec.setFechaEntrega(fechaEntrega);
+            ec.setEstado("En Elaboración");
+            ec.setAnalisis(analisisSeleccionados);
+            
+            ec.registrarEnSistema(this.listaEstudios);
+            
+            if (ventanaPadre != null) {
+                ventanaPadre.refrescarVista();
+            }
+            JOptionPane.showMessageDialog(this, "Estudio creado y guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage());
         }
-
-        JOptionPane.showMessageDialog(this,
-                "Estudio creado correctamente.",
-                "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        dispose();
-
     }//GEN-LAST:event_confirmarActionPerformed
 
     /**

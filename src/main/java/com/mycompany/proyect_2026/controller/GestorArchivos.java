@@ -20,6 +20,32 @@ import java.util.Scanner;
  * @author lucam
  */
 public class GestorArchivos {
+    // Método auxiliar para buscar un Paciente en la memoria por su DNI
+    private static Paciente buscarPaciente(ArrayList<Paciente> pacientes, String dniBuscado) {
+        if (pacientes != null) {
+            // Recorremos la lista usando un for-each clásico
+            for (Paciente p : pacientes) {
+                // Usamos .trim() y .equals() para comparar los Strings de forma segura
+                if (p.getDNI().trim().equals(dniBuscado.trim())) {
+                    return p; // Lo encontramos, lo devolvemos
+                }
+            }
+        }
+        return null; // Si termina el ciclo y no lo encontró, devuelve null
+    }
+
+    // Método auxiliar para buscar un Profesional en la memoria por su Matrícula
+    private static Profesional buscarProfesional(ArrayList<Profesional> profesionales, String matriculaBuscada) {
+        if (profesionales != null) {
+            for (Profesional prof : profesionales) {
+                if (prof.getMatricula().trim().equals(matriculaBuscada.trim())) {
+                    return prof; // Lo encontramos, lo devolvemos
+                }
+            }
+        }
+        return null; // Si no lo encuentra, devuelve null
+    }
+    
     public static void cargarAnalisisDesdeArchivo() {
         try {
             File a = new File("data/analisis.txt");
@@ -78,89 +104,87 @@ public class GestorArchivos {
         return lista;
     }
 
-    public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(ArrayList<Paciente> listaPacientes, ArrayList<Profesional> listaProfesionales) {
+    public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales) {
         ArrayList<Estudio> lista = new ArrayList<>();
-        try {
-            File archivo = new File("data/estudios.txt");
-            if (!archivo.exists()) return lista;
+        File f = new File("data/estudios.txt");
+    
+        if (!f.exists()) return lista;
 
-            Scanner lector = new Scanner(archivo);
+        try {
+            Scanner lector = new Scanner(f);
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine();
                 if (linea.trim().isEmpty()) continue;
 
-                String[] partes = linea.split(";");
+                String[] datos = linea.split(";");
+            
+                // datos[0]: Fecha Realiz, [1]: Nombre, [2]: DNI Pac, [3]: Mat Prof
+                // datos[4]: Fecha Ent, [5]: Estado, [6]: Analisis
 
-                int diaR = Integer.parseInt(partes[0]);
-                int mesR = Integer.parseInt(partes[1]);
-                int anioR = Integer.parseInt(partes[2]);
-                Fecha fechaRealizacion = new Fecha(diaR, mesR, anioR);
+                // Parsear Fecha Realización
+                String[] f1 = datos[0].split("/");
+                Fecha fechaRealiz = new Fecha(Integer.parseInt(f1[0]), Integer.parseInt(f1[1]), Integer.parseInt(f1[2]));
 
-                String nombreEstudio = partes[3];
-                String dniPac = partes[4];
-                String matProf = partes[5];
+                // Buscar Paciente y Profesional en las listas de RAM
+                Paciente pac = buscarPaciente(pacientes, datos[2]);
+                Profesional prof = buscarProfesional(profesionales, datos[3]);
 
-                int diaE = Integer.parseInt(partes[6]);
-                int mesE = Integer.parseInt(partes[7]);
-                int anioE = Integer.parseInt(partes[8]);
-                Fecha fechaEntrega = null;
-                if (diaE != 0) {
-                    fechaEntrega = new Fecha(diaE, mesE, anioE);
-                }
-
-                String estado = partes[9];
-                String analisisCSV = partes[10];
-
-                Paciente pacEncontrado = null;
-                for (Paciente p : listaPacientes) {
-                    if (p.getDNI().equals(dniPac)) {
-                        pacEncontrado = p;
-                        break;
+                if (pac != null && prof != null) {
+                    Estudio nuevo = new Estudio(fechaRealiz, datos[1], pac, prof);
+                
+                    // Cargar Fecha de Entrega si no es "null"
+                    if (!datos[4].equals("null")) {
+                        String[] f2 = datos[4].split("/");
+                        nuevo.setFechaEntrega(new Fecha(Integer.parseInt(f2[0]), Integer.parseInt(f2[1]), Integer.parseInt(f2[2])));
                     }
-                }
+                
+                    nuevo.setEstado(datos[5]);
+                
+                    // Cargar Análisis (de String separado por coma a String[])
+                    String[] analisisArray = datos[6].split(",");
+                    nuevo.setAnalisis(analisisArray);
 
-                Profesional profEncontrado = null;
-                for (Profesional p : listaProfesionales) {
-                    if (p.getMatricula().equals(matProf)) {
-                        profEncontrado = p;
-                        break;
-                    }
-                }
-
-                if (pacEncontrado != null && profEncontrado != null) {
-                    Estudio nuevoEstudio = new Estudio(fechaRealizacion, nombreEstudio, pacEncontrado, profEncontrado);
-                    nuevoEstudio.setFechaEntrega(fechaEntrega);
-                    nuevoEstudio.setEstado(estado);
-                    if (!analisisCSV.equals("Ninguno")) {
-                        nuevoEstudio.setAnalisis(analisisCSV.split(","));
-                    }
-                    lista.add(nuevoEstudio);
+                    lista.add(nuevo);
                 }
             }
-            lector.close();
-        } catch (Exception ex) {
-            System.out.println("Error al cargar estudios: " + ex.getMessage());
+            lector.close(); // Cierre manual purista
+        } catch (IOException e) {
+            System.out.println("Error al cargar estudios: " + e.getMessage());
         }
         return lista;
     }
 
     private static String formatearLineaEstudio(Estudio e) {
-        String fEntrega = "0;0;0";
-        if (e.getFechaEntrega() != null) {
-            fEntrega = e.getFechaEntrega().getDia() + ";" + e.getFechaEntrega().getMes() + ";" + e.getFechaEntrega().getAnio();
+    // 1. Fecha de realización (siempre está)
+    String fRealizacion = e.getFecha().getDia() + "/" + e.getFecha().getMes() + "/" + e.getFecha().getAnio();
+
+    // 2. Fecha de entrega (puede ser null)
+    String fEntrega = "null";
+    if (e.getFechaEntrega() != null) {
+        fEntrega = e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes() + "/" + e.getFechaEntrega().getAnio();
+    }
+
+    // 3. Análisis (Convertir String[] a "Analisis1,Analisis2")
+    String strAnalisis = "";
+    String[] arrayAn = e.getAnalisis();
+    if (arrayAn != null && arrayAn.length > 0) {
+        for (int i = 0; i < arrayAn.length; i++) {
+            strAnalisis += arrayAn[i];
+            if (i < arrayAn.length - 1) strAnalisis += ","; // Sub-delimitador
         }
-        String estado = (e.getEstado() != null) ? e.getEstado() : "Pendiente";
-        String analisisCSV = "Ninguno";
-        if (e.getAnalisis() != null && e.getAnalisis().length > 0) {
-            analisisCSV = String.join(",", e.getAnalisis());
-        }
-        return e.getFecha().getDia() + ";" + e.getFecha().getMes() + ";" + e.getFecha().getAnio() + ";" +
-               e.getNombreEstudio() + ";" +
-               e.getPaciente().getDNI() + ";" +
-               e.getProfesional().getMatricula() + ";" +
-               fEntrega + ";" +
-               estado + ";" +
-               analisisCSV;
+    } else {
+        strAnalisis = "Sin_Analisis";
+    }
+
+    // 4. Unimos todo con el delimitador principal ;
+    // Orden: FechaRealiz ; Nombre ; DNIPac ; MatProf ; FechaEnt ; Estado ; Analisis
+    return fRealizacion + ";" + 
+           e.getNombreEstudio() + ";" + 
+           e.getPaciente().getDNI() + ";" + 
+           e.getProfesional().getMatricula() + ";" +
+           fEntrega + ";" +
+           e.getEstado() + ";" +
+           strAnalisis;
     }
 
     public static void actualizarArchivoPacientes(ArrayList<Paciente> listaPacientes) {

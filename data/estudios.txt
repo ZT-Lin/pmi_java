@@ -1,0 +1,2 @@
+23;6;2006;Estudio_40111222;40111222;1003;24;11;2005;En Elaboración;Hemograma_completo,Glucemia,Tu_mama,Urea
+25;11;2005;Estudio_41222333;41222333;1003;25;4;2006;En Elaboración;Colesterol,Tu_mama,Urea,Creatinina
