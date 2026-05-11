@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  * @author linzh
  */
 public class CrearEstudio extends javax.swing.JFrame {
+
     // Las tres listas que vienen de EstudioMenu
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Profesional> listaProfesionales;
@@ -30,6 +31,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     // Los agregamos acá porque el form no los tiene
     private javax.swing.JComboBox<String> comboPaciente;
     private javax.swing.JComboBox<String> comboProfesional;
+
     // Constructor vacío — por compatibilidad con NetBeans
     public CrearEstudio() {
         this.listaPacientes = new ArrayList<>();
@@ -44,9 +46,9 @@ public class CrearEstudio extends javax.swing.JFrame {
 
     // Constructor real — recibe listas y referencia a EstudioMenu
     public CrearEstudio(ArrayList<Paciente> pacientes,
-                        ArrayList<Profesional> profesionales,
-                        ArrayList<Estudio> estudios,
-                        EstudioMenu padre) {
+            ArrayList<Profesional> profesionales,
+            ArrayList<Estudio> estudios,
+            EstudioMenu padre) {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
@@ -56,7 +58,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
     }
-    
+
     private void configurarFormulario() {
 
         // ── Hacer editables los campos de fecha ────────────
@@ -74,8 +76,8 @@ public class CrearEstudio extends javax.swing.JFrame {
         comboPaciente.addItem("<Seleccionar paciente>");
         for (Paciente p : listaPacientes) {
             comboPaciente.addItem(
-                p.getApellido() + ", " + p.getNombre()
-                + " - DNI: " + p.getDNI()
+                    p.getApellido() + ", " + p.getNombre()
+                    + " - DNI: " + p.getDNI()
             );
         }
 
@@ -86,14 +88,14 @@ public class CrearEstudio extends javax.swing.JFrame {
         // El panel del form usa GroupLayout, así que usamos un JPanel auxiliar
         // y lo ponemos en la posición de identPaciente
         identPaciente.setVisible(false); // ocultamos el campo viejo
-        
+
         // Agregamos el combo al contentPane con setBounds
         // como el form usa GroupLayout, lo más simple es agregarlo manualmente
         comboPaciente.setBounds(
-            identPaciente.getX(),
-            identPaciente.getY(),
-            identPaciente.getWidth() + 50,
-            identPaciente.getHeight()
+                identPaciente.getX(),
+                identPaciente.getY(),
+                identPaciente.getWidth() + 50,
+                identPaciente.getHeight()
         );
         getContentPane().add(comboPaciente);
 
@@ -102,27 +104,26 @@ public class CrearEstudio extends javax.swing.JFrame {
         comboProfesional.addItem("<Seleccionar profesional>");
         for (Profesional pr : listaProfesionales) {
             comboProfesional.addItem(
-                pr.getApellido() + ", " + pr.getNombre()
-                + " - Mat: " + pr.getMatricula()
+                    pr.getApellido() + ", " + pr.getNombre()
+                    + " - Mat: " + pr.getMatricula()
             );
         }
         comboProfesional.addActionListener(evt -> onProfesionalSeleccionado());
 
         jTextField3.setVisible(false); // ocultamos el campo viejo
         comboProfesional.setBounds(
-            jTextField3.getX(),
-            jTextField3.getY(),
-            jTextField3.getWidth() + 50,
-            jTextField3.getHeight()
+                jTextField3.getX(),
+                jTextField3.getY(),
+                jTextField3.getWidth() + 50,
+                jTextField3.getHeight()
         );
         getContentPane().add(comboProfesional);
 
         // ── Cargar checkboxes con nombres reales ───────────
         cargarCheckboxes();
 
-
     }
-    
+
     private void cargarCheckboxes() {
         // Array con los 10 checkboxes en orden
         javax.swing.JCheckBox[] checks = {
@@ -134,17 +135,17 @@ public class CrearEstudio extends javax.swing.JFrame {
         for (int i = 0; i < checks.length; i++) {
             int clave = i + 1;
             String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(
-                clave, "Análisis " + clave
+                    clave, "Análisis " + clave
             );
             checks[i].setText(nombre);
             checks[i].setSelected(false); // desmarcados por defecto
             checks[i].setEnabled(true);   // habilitados para que el usuario elija
         }
     }
-    
+
     private void onPacienteSeleccionado() {
         int idx = comboPaciente.getSelectedIndex();
-        
+
         // Índice 0 es "<Seleccionar paciente>" — limpiar campos
         if (idx <= 0) {
             identPaciente.setText("");
@@ -174,7 +175,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         jTextField3.setText(pr.getNombre() + " " + pr.getApellido());
         jTextField7.setText(pr.getMatricula());
     }
-    
+
     private Fecha parsearFecha(String texto) throws Exception {
         // Esperamos formato dd/mm/aaaa
         String[] partes = texto.split("/");
@@ -184,14 +185,20 @@ public class CrearEstudio extends javax.swing.JFrame {
         }
 
         try {
-            int dia  = Integer.parseInt(partes[0].trim());
-            int mes  = Integer.parseInt(partes[1].trim());
+            int dia = Integer.parseInt(partes[0].trim());
+            int mes = Integer.parseInt(partes[1].trim());
             int anio = Integer.parseInt(partes[2].trim());
 
             // Validaciones básicas
-            if (dia < 1 || dia > 31) throw new Exception("Día inválido");
-            if (mes < 1 || mes > 12) throw new Exception("Mes inválido");
-            if (anio < 2000 || anio > 2100) throw new Exception("Año inválido");
+            if (dia < 1 || dia > 31) {
+                throw new Exception("Día inválido");
+            }
+            if (mes < 1 || mes > 12) {
+                throw new Exception("Mes inválido");
+            }
+            if (anio < 2000 || anio > 2100) {
+                throw new Exception("Año inválido");
+            }
 
             return new Fecha(dia, mes, anio);
 
@@ -199,7 +206,7 @@ public class CrearEstudio extends javax.swing.JFrame {
             throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
         }
     }
-    
+
     private String[] obtenerAnalisisSeleccionados() {
         javax.swing.JCheckBox[] checks = {
             jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
@@ -209,7 +216,9 @@ public class CrearEstudio extends javax.swing.JFrame {
         // Primero contamos cuántos están marcados
         int cantidad = 0;
         for (javax.swing.JCheckBox cb : checks) {
-            if (cb.isSelected()) cantidad++;
+            if (cb.isSelected()) {
+                cantidad++;
+            }
         }
 
         // Creamos el array con el tamaño exacto
@@ -225,9 +234,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -453,13 +460,12 @@ public class CrearEstudio extends javax.swing.JFrame {
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
 
-
         // ── Validar selección de paciente ──────────────────
         int idxPaciente = comboPaciente.getSelectedIndex();
         if (idxPaciente <= 0) {
             JOptionPane.showMessageDialog(this,
-                "Seleccioná un paciente.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Seleccioná un paciente.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -467,8 +473,8 @@ public class CrearEstudio extends javax.swing.JFrame {
         int idxProfesional = comboProfesional.getSelectedIndex();
         if (idxProfesional <= 0) {
             JOptionPane.showMessageDialog(this,
-                "Seleccioná un profesional.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Seleccioná un profesional.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -478,8 +484,8 @@ public class CrearEstudio extends javax.swing.JFrame {
             fechaRealizacion = parsearFecha(jTextField6.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Fecha de realización inválida: " + e.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Fecha de realización inválida: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -493,8 +499,8 @@ public class CrearEstudio extends javax.swing.JFrame {
                 fechaEntrega = parsearFecha(textoEntrega);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,
-                    "Fecha de entrega inválida: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                        "Fecha de entrega inválida: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -503,8 +509,8 @@ public class CrearEstudio extends javax.swing.JFrame {
         String[] analisisSeleccionados = obtenerAnalisisSeleccionados();
         if (analisisSeleccionados.length == 0) {
             JOptionPane.showMessageDialog(this,
-                "Seleccioná al menos un análisis.",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Seleccioná al menos un análisis.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -515,10 +521,10 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         // ── Crear el objeto Estudio ────────────────────────
         Estudio nuevoEstudio = new Estudio(
-            fechaRealizacion,
-            "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
-            paciente,
-            profesional
+                fechaRealizacion,
+                "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
+                paciente,
+                profesional
         );
 
         // Setear los campos adicionales
@@ -533,14 +539,16 @@ public class CrearEstudio extends javax.swing.JFrame {
         GestorArchivos.guardarEstudioEnArchivo(nuevoEstudio);
 
         // ── Avisar a EstudioMenu que refresque ─────────────
-        if (ventanaPadre != null) ventanaPadre.refrescarVista();
+        if (ventanaPadre != null) {
+            ventanaPadre.refrescarVista();
+        }
 
         JOptionPane.showMessageDialog(this,
-            "Estudio creado correctamente.",
-            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                "Estudio creado correctamente.",
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         dispose();
-    
+
     }//GEN-LAST:event_confirmarActionPerformed
 
     /**

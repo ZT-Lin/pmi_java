@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyect_2026.controller;
+
 import com.mycompany.proyect_2026.model.Profesional;
 import java.util.ArrayList;
 
@@ -10,19 +11,33 @@ import java.util.ArrayList;
  *
  * @author lucam
  */
-
 public class ProfesionalController {
+
     private final Profesional profesional;
 
     public ProfesionalController() {
         this.profesional = new Profesional();
     }
 
-    public void setNombre(String d) { profesional.setNombre(d); }
-    public void setApellido(String d) { profesional.setApellido(d); }
-    public void setMail(String d) { profesional.setMail(d); }
-    public void setTelefono(String d) { profesional.setTel(d); }
-    public void setMatricula(String d) { profesional.setMatricula(d); }
+    public void setNombre(String d) {
+        profesional.setNombre(d);
+    }
+
+    public void setApellido(String d) {
+        profesional.setApellido(d);
+    }
+
+    public void setMail(String d) {
+        profesional.setMail(d);
+    }
+
+    public void setTelefono(String d) {
+        profesional.setTel(d);
+    }
+
+    public void setMatricula(String d) {
+        profesional.setMatricula(d);
+    }
 
     public void registrarEnSistema(ArrayList<Profesional> listaMemoria) {
         if (listaMemoria != null) {

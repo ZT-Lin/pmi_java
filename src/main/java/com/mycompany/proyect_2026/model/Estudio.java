@@ -98,9 +98,10 @@ public class Estudio {
         this.analisis = new String[analisis.length];
         System.arraycopy(analisis, 0, this.analisis, 0, analisis.length);
     }
+
     public String[] getAnalisis() {
-    return analisis;
-}
+        return analisis;
+    }
 
     //Metodo toString
     @Override

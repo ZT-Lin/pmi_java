@@ -17,13 +17,15 @@ import javax.swing.JOptionPane;
  * @author linzh
  */
 public class EstudioMenu extends javax.swing.JFrame {
+
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
+
     /**
      * Creates new form EstudioMenu
      */
-   public EstudioMenu() {
+    public EstudioMenu() {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
@@ -36,8 +38,8 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     public EstudioMenu(ArrayList<Paciente> pacientes,
-                       ArrayList<Profesional> profesionales,
-                       ArrayList<Estudio> estudios) {
+            ArrayList<Profesional> profesionales,
+            ArrayList<Estudio> estudios) {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
@@ -48,76 +50,80 @@ public class EstudioMenu extends javax.swing.JFrame {
         cargarCombosProfesional();
         configurarFiltros();
     }
+
     private void cargarLista() {
         DefaultListModel<String> modelo = new DefaultListModel<>();
         for (Estudio e : listaEstudios) {
             // Mostramos: nombre del estudio | paciente | estado
             // así el usuario puede identificar cada estudio de un vistazo
             modelo.addElement(
-                e.getNombreEstudio()
-                + " | " + e.getPaciente().getApellido()
-                + ", " + e.getPaciente().getNombre()
-                + " | " + e.getEstado()
-            );
-        }
-        estudioList.setModel(modelo);
-    }
-    private void cargarCombosProfesional() {
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-        
-        // Primera opción: sin filtro, muestra todos
-        modelo.addElement("<Todos>");
-        
-        for (Profesional pr : listaProfesionales) {
-            modelo.addElement(
-                pr.getApellido() + ", " + pr.getNombre()
-                + " - Mat: " + pr.getMatricula()
-            );
-        }
-        profesionalSelector.setModel(modelo);
-    }
-    // CrearEstudio llama este método cuando termina de agregar
-    public void refrescarVista() {
-        cargarLista();
-    }
-    
-    private void filtrarPorEstado() {
-        String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        
-        for (Estudio e : listaEstudios) {
-            // Comparamos ignorando mayúsculas/minúsculas por seguridad
-            if (e.getEstado().equalsIgnoreCase(estadoSeleccionado)) {
-                modelo.addElement(
                     e.getNombreEstudio()
                     + " | " + e.getPaciente().getApellido()
                     + ", " + e.getPaciente().getNombre()
                     + " | " + e.getEstado()
+            );
+        }
+        estudioList.setModel(modelo);
+    }
+
+    private void cargarCombosProfesional() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+
+        // Primera opción: sin filtro, muestra todos
+        modelo.addElement("<Todos>");
+
+        for (Profesional pr : listaProfesionales) {
+            modelo.addElement(
+                    pr.getApellido() + ", " + pr.getNombre()
+                    + " - Mat: " + pr.getMatricula()
+            );
+        }
+        profesionalSelector.setModel(modelo);
+    }
+
+    // CrearEstudio llama este método cuando termina de agregar
+    public void refrescarVista() {
+        cargarLista();
+    }
+
+    private void filtrarPorEstado() {
+        String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (Estudio e : listaEstudios) {
+            // Comparamos ignorando mayúsculas/minúsculas por seguridad
+            if (e.getEstado().equalsIgnoreCase(estadoSeleccionado)) {
+                modelo.addElement(
+                        e.getNombreEstudio()
+                        + " | " + e.getPaciente().getApellido()
+                        + ", " + e.getPaciente().getNombre()
+                        + " | " + e.getEstado()
                 );
             }
         }
         estudioList.setModel(modelo);
-        
+
         // Avisar si no hay resultados
         if (modelo.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "No hay estudios con estado: " + estadoSeleccionado,
-                "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+                    "No hay estudios con estado: " + estadoSeleccionado,
+                    "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
     private void filtrarPorProfesional() {
         int idx = profesionalSelector.getSelectedIndex();
-        
+
         // Índice 0 es "<Todos>" → mostramos todo sin filtrar
         if (idx <= 0) {
             cargarLista();
             return;
         }
-        
+
         // idx - 1 porque el índice 0 del combo es "<Todos>"
         // pero el índice 0 de listaProfesionales es el primer profesional real
         Profesional prSeleccionado = listaProfesionales.get(idx - 1);
-        
+
         DefaultListModel<String> modelo = new DefaultListModel<>();
         for (Estudio e : listaEstudios) {
             // Comparamos por matrícula, no por referencia
@@ -125,73 +131,73 @@ public class EstudioMenu extends javax.swing.JFrame {
             if (e.getProfesional().getMatricula()
                     .equals(prSeleccionado.getMatricula())) {
                 modelo.addElement(
-                    e.getNombreEstudio()
-                    + " | " + e.getPaciente().getApellido()
-                    + ", " + e.getPaciente().getNombre()
-                    + " | " + e.getEstado()
-                );
-            }
-        }
-        estudioList.setModel(modelo);
-        
-        if (modelo.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "No hay estudios para ese profesional.",
-                "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    private void filtrarPorFecha() {
-        try {
-            // Parseamos los tres campos — pueden lanzar NumberFormatException
-            int dia  = Integer.parseInt(jTextField1.getText().trim());
-            int mes  = Integer.parseInt(jTextField4.getText().trim());
-            int anio = Integer.parseInt(jTextField5.getText().trim());
-            
-            DefaultListModel<String> modelo = new DefaultListModel<>();
-            for (Estudio e : listaEstudios) {
-                if (e.getFecha().getDia()  == dia
-                 && e.getFecha().getMes()  == mes
-                 && e.getFecha().getAnio() == anio) {
-                    modelo.addElement(
                         e.getNombreEstudio()
                         + " | " + e.getPaciente().getApellido()
                         + ", " + e.getPaciente().getNombre()
                         + " | " + e.getEstado()
+                );
+            }
+        }
+        estudioList.setModel(modelo);
+
+        if (modelo.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No hay estudios para ese profesional.",
+                    "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void filtrarPorFecha() {
+        try {
+            // Parseamos los tres campos — pueden lanzar NumberFormatException
+            int dia = Integer.parseInt(jTextField1.getText().trim());
+            int mes = Integer.parseInt(jTextField4.getText().trim());
+            int anio = Integer.parseInt(jTextField5.getText().trim());
+
+            DefaultListModel<String> modelo = new DefaultListModel<>();
+            for (Estudio e : listaEstudios) {
+                if (e.getFecha().getDia() == dia
+                        && e.getFecha().getMes() == mes
+                        && e.getFecha().getAnio() == anio) {
+                    modelo.addElement(
+                            e.getNombreEstudio()
+                            + " | " + e.getPaciente().getApellido()
+                            + ", " + e.getPaciente().getNombre()
+                            + " | " + e.getEstado()
                     );
                 }
             }
             estudioList.setModel(modelo);
-            
+
             if (modelo.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                    "No hay estudios para la fecha "
-                    + dia + "/" + mes + "/" + anio,
-                    "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+                        "No hay estudios para la fecha "
+                        + dia + "/" + mes + "/" + anio,
+                        "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
             }
-            
+
         } catch (NumberFormatException ex) {
             // Si el usuario escribió letras en los campos de fecha
             JOptionPane.showMessageDialog(this,
-                "Ingresá una fecha válida (solo números).",
-                "Error", JOptionPane.ERROR_MESSAGE);
+                    "Ingresá una fecha válida (solo números).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void configurarFiltros() {
         // Al cambiar el estado en el combo, filtra automáticamente
         estadoSelector.addActionListener(evt -> filtrarPorEstado());
-        
+
         // Al cambiar el profesional en el combo, filtra automáticamente
         profesionalSelector.addActionListener(evt -> filtrarPorProfesional());
-        
+
         // Al presionar Enter en el campo año, busca por fecha
         // El usuario completa día, mes, año y presiona Enter
         jTextField5.addActionListener(evt -> filtrarPorFecha());
     }
+
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -345,17 +351,20 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void estudioListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_estudioListValueChanged
-          // Evitar doble disparo mientras el usuario arrastra
-        if (evt.getValueIsAdjusting()) return;
-        
+        // Evitar doble disparo mientras el usuario arrastra
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
+
         int idx = estudioList.getSelectedIndex();
-        if (idx < 0) return; // nada seleccionado
-        
+        if (idx < 0) {
+            return; // nada seleccionado
+        }
         // Obtener el estudio real de la lista
         Estudio seleccionado = listaEstudios.get(idx);
-        
+
         areaParaMostrar.removeAll();
         areaParaMostrar.add(new CartaEstudio(seleccionado),
                 java.awt.BorderLayout.CENTER);
