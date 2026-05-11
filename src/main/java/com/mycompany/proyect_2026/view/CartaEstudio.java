@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Estudio;
+
 /**
  *
  * @author linzh
@@ -11,6 +13,7 @@ package com.mycompany.proyect_2026.view;
 public class CartaEstudio extends javax.swing.JPanel {
 
     private int test;
+    
     /**
      * Creates new form CartaEstudio
      */
@@ -23,6 +26,11 @@ public class CartaEstudio extends javax.swing.JPanel {
         identPaciente.setText(String.valueOf(test));
         jCheckBox1.setEnabled(false);
     }
+    // Agregar este constructor nuevo:
+public CartaEstudio(Estudio estudio) {
+    initComponents();
+    mostrarDatos(estudio);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
