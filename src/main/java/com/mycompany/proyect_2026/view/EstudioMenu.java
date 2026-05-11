@@ -347,10 +347,18 @@ public class EstudioMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void estudioListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_estudioListValueChanged
-        // TODO add your handling code here:
-        int selected = estudioList.getSelectedIndex();
+          // Evitar doble disparo mientras el usuario arrastra
+        if (evt.getValueIsAdjusting()) return;
+        
+        int idx = estudioList.getSelectedIndex();
+        if (idx < 0) return; // nada seleccionado
+        
+        // Obtener el estudio real de la lista
+        Estudio seleccionado = listaEstudios.get(idx);
+        
         areaParaMostrar.removeAll();
-        areaParaMostrar.add(new CartaEstudio(selected), java.awt.BorderLayout.CENTER);
+        areaParaMostrar.add(new CartaEstudio(seleccionado),
+                java.awt.BorderLayout.CENTER);
         areaParaMostrar.revalidate();
         areaParaMostrar.repaint();
     }//GEN-LAST:event_estudioListValueChanged
