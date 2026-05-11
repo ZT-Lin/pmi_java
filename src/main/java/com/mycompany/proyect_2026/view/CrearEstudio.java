@@ -52,6 +52,73 @@ public class CrearEstudio extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
     }
+    
+    private void configurarFormulario() {
+
+        // ── Hacer editables los campos de fecha ────────────
+        // initComponents los pone como non-editable,
+        // los sobreescribimos acá
+        jTextField6.setEditable(true);  // fecha de realización
+        jTextField6.setText("dd/mm/aaaa");
+
+        jTextField8.setEditable(true);  // fecha de entrega
+        jTextField8.setText("dd/mm/aaaa");
+
+        // ── Agregar combo de pacientes ─────────────────────
+        // Lo creamos programáticamente porque el form no lo tiene
+        comboPaciente = new javax.swing.JComboBox<>();
+        comboPaciente.addItem("<Seleccionar paciente>");
+        for (Paciente p : listaPacientes) {
+            comboPaciente.addItem(
+                p.getApellido() + ", " + p.getNombre()
+                + " - DNI: " + p.getDNI()
+            );
+        }
+
+        // Cuando cambia la selección, poblar los campos de solo lectura
+        comboPaciente.addActionListener(evt -> onPacienteSeleccionado());
+
+        // Lo insertamos encima de identPaciente usando BorderLayout
+        // El panel del form usa GroupLayout, así que usamos un JPanel auxiliar
+        // y lo ponemos en la posición de identPaciente
+        identPaciente.setVisible(false); // ocultamos el campo viejo
+        
+        // Agregamos el combo al contentPane con setBounds
+        // como el form usa GroupLayout, lo más simple es agregarlo manualmente
+        comboPaciente.setBounds(
+            identPaciente.getX(),
+            identPaciente.getY(),
+            identPaciente.getWidth() + 50,
+            identPaciente.getHeight()
+        );
+        getContentPane().add(comboPaciente);
+
+        // ── Agregar combo de profesionales ─────────────────
+        comboProfesional = new javax.swing.JComboBox<>();
+        comboProfesional.addItem("<Seleccionar profesional>");
+        for (Profesional pr : listaProfesionales) {
+            comboProfesional.addItem(
+                pr.getApellido() + ", " + pr.getNombre()
+                + " - Mat: " + pr.getMatricula()
+            );
+        }
+        comboProfesional.addActionListener(evt -> onProfesionalSeleccionado());
+
+        jTextField3.setVisible(false); // ocultamos el campo viejo
+        comboProfesional.setBounds(
+            jTextField3.getX(),
+            jTextField3.getY(),
+            jTextField3.getWidth() + 50,
+            jTextField3.getHeight()
+        );
+        getContentPane().add(comboProfesional);
+
+        // ── Cargar checkboxes con nombres reales ───────────
+        cargarCheckboxes();
+
+        // ── Conectar botón confirmar ───────────────────────
+        confirmar.addActionListener(evt -> confirmarActionPerformed());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
