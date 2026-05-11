@@ -31,7 +31,17 @@ public CartaEstudio(Estudio estudio) {
     initComponents();
     mostrarDatos(estudio);
 }
+private void mostrarDatos(Estudio estudio) {
 
+    // ── Datos del Paciente ─────────────────────────
+    // identPaciente → nombre y apellido del paciente
+    identPaciente.setText(
+        estudio.getPaciente().getNombre() + " "
+        + estudio.getPaciente().getApellido()
+    );
+    // jTextField2 → DNI del paciente
+    jTextField2.setText(estudio.getPaciente().getDNI());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
