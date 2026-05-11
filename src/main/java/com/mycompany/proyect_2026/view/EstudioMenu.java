@@ -364,13 +364,15 @@ public class EstudioMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_estudioListValueChanged
 
     private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
-        // TODO add your handling code here:
-        new CrearEstudio().setVisible(true);
+        // Pasamos las listas y referencia a esta ventana
+        // para que CrearEstudio pueda avisarnos cuando termina
+        new CrearEstudio(listaPacientes, listaProfesionales, listaEstudios, this)
+                .setVisible(true);
     }//GEN-LAST:event_agregarMouseClicked
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        // TODO add your handling code here:
-        new MainMenu().setVisible(true);
+        // Pasamos las listas actualizadas a MainMenu
+        new MainMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
     }//GEN-LAST:event_volverActionPerformed
 
