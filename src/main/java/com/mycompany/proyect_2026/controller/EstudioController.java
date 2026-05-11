@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author lamas 
- * Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
+ * @author lamas Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
  *
  */
 public class EstudioController {
@@ -165,5 +164,40 @@ public class EstudioController {
     // GETTER
     public ArrayList<Estudio> getListaEstudios() {
         return listaEstudios;
+    }
+
+    public boolean pacienteTieneEstudios(Paciente paciente) {
+        if (paciente == null) {
+            return false;
+        }
+        for (Estudio e : listaEstudios) {
+            if (e.getPaciente().getDNI().equals(paciente.getDNI())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean profesionalTieneEstudios(Profesional profesional) {
+        if (profesional == null) {
+            return false;
+        }
+        for (Estudio e : listaEstudios) {
+            if (e.getProfesional().getMatricula().equals(profesional.getMatricula())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Paciente> filtrarPorObraSocial(
+            ArrayList<Paciente> todos, boolean tieneOS) {
+        ArrayList<Paciente> resultado = new ArrayList<>();
+        for (Paciente p : todos) {
+            if (p.getObraSocial() == tieneOS) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
     }
 }
