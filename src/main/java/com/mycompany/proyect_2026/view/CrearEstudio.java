@@ -139,6 +139,39 @@ public class CrearEstudio extends javax.swing.JFrame {
             checks[i].setEnabled(true);   // habilitados para que el usuario elija
         }
     }
+    
+    private void onPacienteSeleccionado() {
+        int idx = comboPaciente.getSelectedIndex();
+        
+        // Índice 0 es "<Seleccionar paciente>" — limpiar campos
+        if (idx <= 0) {
+            identPaciente.setText("");
+            jTextField2.setText("");
+            return;
+        }
+
+        // idx - 1 porque el índice 0 del combo es el placeholder
+        Paciente p = listaPacientes.get(idx - 1);
+
+        // Mostramos los datos del paciente seleccionado
+        // en los campos de solo lectura como confirmación visual
+        identPaciente.setText(p.getNombre() + " " + p.getApellido());
+        jTextField2.setText(p.getDNI());
+    }
+
+    private void onProfesionalSeleccionado() {
+        int idx = comboProfesional.getSelectedIndex();
+
+        if (idx <= 0) {
+            jTextField3.setText("");
+            jTextField7.setText("");
+            return;
+        }
+
+        Profesional pr = listaProfesionales.get(idx - 1);
+        jTextField3.setText(pr.getNombre() + " " + pr.getApellido());
+        jTextField7.setText(pr.getMatricula());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
