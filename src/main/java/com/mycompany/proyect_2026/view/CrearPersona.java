@@ -267,7 +267,7 @@ import com.mycompany.proyect_2026.model.Profesional;
             prc.setMail(eMailText.getText());
             prc.setTelefono(telFText.getText());
             prc.setMatricula(panelProf.getMatricula());
-            prc.registrarEnSistema(null);
+            prc.registrarEnSistema(this.listaProfesionales);
             javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
             this.dispose();
         }
