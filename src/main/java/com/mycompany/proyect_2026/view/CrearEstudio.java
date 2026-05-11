@@ -26,9 +26,31 @@ public class CrearEstudio extends javax.swing.JFrame {
     // Los agregamos acá porque el form no los tiene
     private javax.swing.JComboBox<String> comboPaciente;
     private javax.swing.JComboBox<String> comboProfesional;
+    // Constructor vacío — por compatibilidad con NetBeans
     public CrearEstudio() {
+        this.listaPacientes = new ArrayList<>();
+        this.listaProfesionales = new ArrayList<>();
+        this.listaEstudios = new ArrayList<>();
+        this.ventanaPadre = null;
         initComponents();
-        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        configurarFormulario();
+    }
+
+    // Constructor real — recibe listas y referencia a EstudioMenu
+    public CrearEstudio(ArrayList<Paciente> pacientes,
+                        ArrayList<Profesional> profesionales,
+                        ArrayList<Estudio> estudios,
+                        EstudioMenu padre) {
+        this.listaPacientes = pacientes;
+        this.listaProfesionales = profesionales;
+        this.listaEstudios = estudios;
+        this.ventanaPadre = padre;
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        configurarFormulario();
     }
 
     /**
