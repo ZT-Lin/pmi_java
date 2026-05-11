@@ -308,24 +308,65 @@ public class CrearPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
-        String seleccion = (String) selectPacOPro.getSelectedItem();
-        if (seleccion.equals("Paciente")) {
+String seleccion = (String) selectPacOPro.getSelectedItem();
+
+    if (seleccion.equals("Paciente")) {
+        if (panelP == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de paciente no cargado.");
+            return;
+        }
+
+        if (modoEdicion) {
+            // Modo edición: modificar el objeto existente
+            Paciente p = listaPacientes.get(indiceEdicion);
+            p.setNombre(nombreText.getText());
+            p.setApellido(apellidoText.getText());
+            p.setMail(eMailText.getText());
+            p.setTel(telFText.getText());
+            p.setObraSocial(panelP.tieneObraSocial());
+            // DNI no se modifica (es identificador)
+
+            // Actualizar archivo con la lista completa
+            com.mycompany.proyect_2026.controller.GestorArchivos
+                .actualizarArchivoPacientes(listaPacientes);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
+        } else {
+            // Modo creación: igual que antes
             PacienteController pc = new PacienteController();
             pc.setNombre(nombreText.getText());
             pc.setApellido(apellidoText.getText());
             pc.setMail(eMailText.getText());
             pc.setTelefono(telFText.getText());
-
             pc.setDNI(panelP.getDni());
             pc.setObSocial(panelP.tieneObraSocial());
-
             pc.registrarEnSistema(this.listaPacientes);
-
             javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
-            this.dispose();
-        } else if (seleccion.equals("Profesional")) {
-            ProfesionalController prc = new ProfesionalController();
+        }
 
+        if (ventanaPadre != null) ventanaPadre.refrescarVista();
+        this.dispose();
+
+    } else if (seleccion.equals("Profesional")) {
+        if (panelProf == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de profesional no cargado.");
+            return;
+        }
+
+        if (modoEdicion) {
+            Profesional pr = listaProfesionales.get(indiceEdicion);
+            pr.setNombre(nombreText.getText());
+            pr.setApellido(apellidoText.getText());
+            pr.setMail(eMailText.getText());
+            pr.setTel(telFText.getText());
+            // Matrícula no se modifica (es identificadora)
+
+            com.mycompany.proyect_2026.controller.GestorArchivos
+                .actualizarArchivoProfesionales(listaProfesionales);
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
+        } else {
+            ProfesionalController prc = new ProfesionalController();
             prc.setNombre(nombreText.getText());
             prc.setApellido(apellidoText.getText());
             prc.setMail(eMailText.getText());
@@ -333,8 +374,11 @@ public class CrearPersona extends javax.swing.JFrame {
             prc.setMatricula(panelProf.getMatricula());
             prc.registrarEnSistema(this.listaProfesionales);
             javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
-            this.dispose();
         }
+
+        if (ventanaPadre != null) ventanaPadre.refrescarVista();
+        this.dispose();
+    }
     }//GEN-LAST:event_commitPersonaActionPerformed
 
         /**
