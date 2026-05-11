@@ -41,6 +41,15 @@ private void mostrarDatos(Estudio estudio) {
     );
     // jTextField2 → DNI del paciente
     jTextField2.setText(estudio.getPaciente().getDNI());
+    
+    // ── Datos del Profesional ──────────────────────
+    // jTextField3 → nombre y apellido del profesional
+    jTextField3.setText(
+        estudio.getProfesional().getNombre() + " "
+        + estudio.getProfesional().getApellido()
+    );
+    // jTextField7 → matrícula del profesional
+    jTextField7.setText(estudio.getProfesional().getMatricula());
 }
     /**
      * This method is called from within the constructor to initialize the form.
