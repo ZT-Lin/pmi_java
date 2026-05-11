@@ -21,6 +21,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
+    private ArrayList<Estudio> listaFiltrada; // lista que refleja lo que se ve en pantalla
 
     /**
      * Creates new form EstudioMenu
@@ -52,6 +53,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void cargarLista() {
+        listaFiltrada = new ArrayList<>(listaEstudios); // copia completa
         DefaultListModel<String> modelo = new DefaultListModel<>();
         for (Estudio e : listaEstudios) {
             // Mostramos: nombre del estudio | paciente | estado
@@ -98,6 +100,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         for (Estudio e : listaEstudios) {
             // Comparamos ignorando mayúsculas/minúsculas por seguridad
             if (e.getEstado().equalsIgnoreCase(estadoSeleccionado)) {
+                listaFiltrada.add(e); //guardar referencia real;
                 modelo.addElement(
                         e.getNombreEstudio()
                         + " | " + e.getPaciente().getApellido()
@@ -128,7 +131,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         // idx - 1 porque el índice 0 del combo es "<Todos>"
         // pero el índice 0 de listaProfesionales es el primer profesional real
         Profesional prSeleccionado = listaProfesionales.get(idx - 1);
-
+        listaFiltrada = new ArrayList<>(); // reseteamos
         DefaultListModel<String> modelo = new DefaultListModel<>();
         for (Estudio e : listaEstudios) {
             // Comparamos por matrícula, no por referencia
@@ -167,7 +170,8 @@ public class EstudioMenu extends javax.swing.JFrame {
                         "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-
+            
+            listaFiltrada = new ArrayList<>(); //reseteamos;
             DefaultListModel<String> modelo = new DefaultListModel<>();
             for (Estudio e : listaEstudios) {
                 if (e.getFecha().getDia() == dia
@@ -379,7 +383,7 @@ public class EstudioMenu extends javax.swing.JFrame {
             return; // nada seleccionado
         }
         // Obtener el estudio real de la lista
-        Estudio seleccionado = listaEstudios.get(idx);
+        Estudio seleccionado = listaFiltrada.get(idx);
 
         areaParaMostrar.removeAll();
         areaParaMostrar.add(new CartaEstudio(seleccionado),
