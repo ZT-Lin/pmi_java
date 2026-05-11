@@ -120,8 +120,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Cargar checkboxes con nombres reales ───────────
         cargarCheckboxes();
 
-        // ── Conectar botón confirmar ───────────────────────
-        confirmar.addActionListener(evt -> confirmarActionPerformed());
+
     }
     
     private void cargarCheckboxes() {
