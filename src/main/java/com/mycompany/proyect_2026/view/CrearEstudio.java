@@ -4,24 +4,237 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
+import com.mycompany.proyect_2026.model.Analisis;
+import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Fecha;
+import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author linzh
  */
 public class CrearEstudio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CrearEstudio
-     */
+    // Las tres listas que vienen de EstudioMenu
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Estudio> listaEstudios;
+
+    // Referencia a EstudioMenu para avisarle cuando terminamos
+    private EstudioMenu ventanaPadre;
+
+    // Combos para seleccionar paciente y profesional
+    // Los agregamos acá porque el form no los tiene
+    private javax.swing.JComboBox<String> comboPaciente;
+    private javax.swing.JComboBox<String> comboProfesional;
+
+    // Constructor vacío — por compatibilidad con NetBeans
     public CrearEstudio() {
+        this.listaPacientes = new ArrayList<>();
+        this.listaProfesionales = new ArrayList<>();
+        this.listaEstudios = new ArrayList<>();
+        this.ventanaPadre = null;
         initComponents();
-        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        configurarFormulario();
+    }
+
+    // Constructor real — recibe listas y referencia a EstudioMenu
+    public CrearEstudio(ArrayList<Paciente> pacientes,
+            ArrayList<Profesional> profesionales,
+            ArrayList<Estudio> estudios,
+            EstudioMenu padre) {
+        this.listaPacientes = pacientes;
+        this.listaProfesionales = profesionales;
+        this.listaEstudios = estudios;
+        this.ventanaPadre = padre;
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        configurarFormulario();
+    }
+
+    private void configurarFormulario() {
+
+        // ── Hacer editables los campos de fecha ────────────
+        // initComponents los pone como non-editable,
+        // los sobreescribimos acá
+        jTextField6.setEditable(true);  // fecha de realización
+        jTextField6.setText("dd/mm/aaaa");
+
+        jTextField8.setEditable(true);  // fecha de entrega
+        jTextField8.setText("dd/mm/aaaa");
+
+        // ── Agregar combo de pacientes ─────────────────────
+        // Lo creamos programáticamente porque el form no lo tiene
+        comboPaciente = new javax.swing.JComboBox<>();
+        comboPaciente.addItem("<Seleccionar paciente>");
+        for (Paciente p : listaPacientes) {
+            comboPaciente.addItem(
+                    p.getApellido() + ", " + p.getNombre()
+                    + " - DNI: " + p.getDNI()
+            );
+        }
+
+        // Cuando cambia la selección, poblar los campos de solo lectura
+        comboPaciente.addActionListener(evt -> onPacienteSeleccionado());
+
+        // Lo insertamos encima de identPaciente usando BorderLayout
+        // El panel del form usa GroupLayout, así que usamos un JPanel auxiliar
+        // y lo ponemos en la posición de identPaciente
+        identPaciente.setVisible(false); // ocultamos el campo viejo
+
+        // Agregamos el combo al contentPane con setBounds
+        // como el form usa GroupLayout, lo más simple es agregarlo manualmente
+        comboPaciente.setBounds(
+                identPaciente.getX(),
+                identPaciente.getY(),
+                identPaciente.getWidth() + 50,
+                identPaciente.getHeight()
+        );
+        getContentPane().add(comboPaciente);
+
+        // ── Agregar combo de profesionales ─────────────────
+        comboProfesional = new javax.swing.JComboBox<>();
+        comboProfesional.addItem("<Seleccionar profesional>");
+        for (Profesional pr : listaProfesionales) {
+            comboProfesional.addItem(
+                    pr.getApellido() + ", " + pr.getNombre()
+                    + " - Mat: " + pr.getMatricula()
+            );
+        }
+        comboProfesional.addActionListener(evt -> onProfesionalSeleccionado());
+
+        jTextField3.setVisible(false); // ocultamos el campo viejo
+        comboProfesional.setBounds(
+                jTextField3.getX(),
+                jTextField3.getY(),
+                jTextField3.getWidth() + 50,
+                jTextField3.getHeight()
+        );
+        getContentPane().add(comboProfesional);
+
+        // ── Cargar checkboxes con nombres reales ───────────
+        cargarCheckboxes();
+
+    }
+
+    private void cargarCheckboxes() {
+        // Array con los 10 checkboxes en orden
+        javax.swing.JCheckBox[] checks = {
+            jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
+            jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+        };
+
+        // Poner el nombre real de cada análisis desde el HashMap
+        for (int i = 0; i < checks.length; i++) {
+            int clave = i + 1;
+            String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(
+                    clave, "Análisis " + clave
+            );
+            checks[i].setText(nombre);
+            checks[i].setSelected(false); // desmarcados por defecto
+            checks[i].setEnabled(true);   // habilitados para que el usuario elija
+        }
+    }
+
+    private void onPacienteSeleccionado() {
+        int idx = comboPaciente.getSelectedIndex();
+
+        // Índice 0 es "<Seleccionar paciente>" — limpiar campos
+        if (idx <= 0) {
+            identPaciente.setText("");
+            jTextField2.setText("");
+            return;
+        }
+
+        // idx - 1 porque el índice 0 del combo es el placeholder
+        Paciente p = listaPacientes.get(idx - 1);
+
+        // Mostramos los datos del paciente seleccionado
+        // en los campos de solo lectura como confirmación visual
+        identPaciente.setText(p.getNombre() + " " + p.getApellido());
+        jTextField2.setText(p.getDNI());
+    }
+
+    private void onProfesionalSeleccionado() {
+        int idx = comboProfesional.getSelectedIndex();
+
+        if (idx <= 0) {
+            jTextField3.setText("");
+            jTextField7.setText("");
+            return;
+        }
+
+        Profesional pr = listaProfesionales.get(idx - 1);
+        jTextField3.setText(pr.getNombre() + " " + pr.getApellido());
+        jTextField7.setText(pr.getMatricula());
+    }
+
+    private Fecha parsearFecha(String texto) throws Exception {
+        // Esperamos formato dd/mm/aaaa
+        String[] partes = texto.split("/");
+
+        if (partes.length != 3) {
+            throw new Exception("Formato incorrecto. Usá dd/mm/aaaa");
+        }
+
+        try {
+            int dia = Integer.parseInt(partes[0].trim());
+            int mes = Integer.parseInt(partes[1].trim());
+            int anio = Integer.parseInt(partes[2].trim());
+
+            // Validaciones básicas
+            if (dia < 1 || dia > 31) {
+                throw new Exception("Día inválido");
+            }
+            if (mes < 1 || mes > 12) {
+                throw new Exception("Mes inválido");
+            }
+            if (anio < 2000 || anio > 2100) {
+                throw new Exception("Año inválido");
+            }
+
+            return new Fecha(dia, mes, anio);
+
+        } catch (NumberFormatException e) {
+            throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
+        }
+    }
+
+    private String[] obtenerAnalisisSeleccionados() {
+        javax.swing.JCheckBox[] checks = {
+            jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
+            jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+        };
+
+        // Primero contamos cuántos están marcados
+        int cantidad = 0;
+        for (javax.swing.JCheckBox cb : checks) {
+            if (cb.isSelected()) {
+                cantidad++;
+            }
+        }
+
+        // Creamos el array con el tamaño exacto
+        String[] seleccionados = new String[cantidad];
+        int idx = 0;
+        for (javax.swing.JCheckBox cb : checks) {
+            if (cb.isSelected()) {
+                seleccionados[idx++] = cb.getText();
+            }
+        }
+
+        return seleccionados;
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -111,6 +324,11 @@ public class CrearEstudio extends javax.swing.JFrame {
         jLabel2.setText("D.N.I. :");
 
         confirmar.setText("confirmar");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,6 +457,99 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
+
+        // ── Validar selección de paciente ──────────────────
+        int idxPaciente = comboPaciente.getSelectedIndex();
+        if (idxPaciente <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccioná un paciente.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar selección de profesional ───────────────
+        int idxProfesional = comboProfesional.getSelectedIndex();
+        if (idxProfesional <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccioná un profesional.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar y parsear fecha de realización ─────────
+        Fecha fechaRealizacion;
+        try {
+            fechaRealizacion = parsearFecha(jTextField6.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Fecha de realización inválida: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar y parsear fecha de entrega ─────────────
+        // La fecha de entrega es opcional — si el usuario dejó
+        // el placeholder o la dejó vacía, se guarda como null
+        Fecha fechaEntrega = null;
+        String textoEntrega = jTextField8.getText().trim();
+        if (!textoEntrega.isEmpty() && !textoEntrega.equals("dd/mm/aaaa")) {
+            try {
+                fechaEntrega = parsearFecha(textoEntrega);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Fecha de entrega inválida: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // ── Validar que haya al menos un análisis ──────────
+        String[] analisisSeleccionados = obtenerAnalisisSeleccionados();
+        if (analisisSeleccionados.length == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccioná al menos un análisis.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Obtener paciente y profesional seleccionados ───
+        // idx - 1 porque el índice 0 de los combos es el placeholder
+        Paciente paciente = listaPacientes.get(idxPaciente - 1);
+        Profesional profesional = listaProfesionales.get(idxProfesional - 1);
+
+        // ── Crear el objeto Estudio ────────────────────────
+        Estudio nuevoEstudio = new Estudio(
+                fechaRealizacion,
+                "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
+                paciente,
+                profesional
+        );
+
+        // Setear los campos adicionales
+        nuevoEstudio.setFechaEntrega(fechaEntrega);
+        nuevoEstudio.setEstado("En Elaboración"); // estado inicial siempre
+        nuevoEstudio.setAnalisis(analisisSeleccionados);
+
+        // ── Agregar a la lista en memoria ──────────────────
+        listaEstudios.add(nuevoEstudio);
+
+        // ── Guardar en archivo ─────────────────────────────
+        GestorArchivos.guardarEstudioEnArchivo(nuevoEstudio);
+
+        // ── Avisar a EstudioMenu que refresque ─────────────
+        if (ventanaPadre != null) {
+            ventanaPadre.refrescarVista();
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Estudio creado correctamente.",
+                "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        dispose();
+
+    }//GEN-LAST:event_confirmarActionPerformed
 
     /**
      * @param args the command line arguments
