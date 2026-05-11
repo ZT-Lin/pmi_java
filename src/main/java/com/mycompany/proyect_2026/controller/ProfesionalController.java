@@ -24,6 +24,11 @@ public class ProfesionalController {
     public void setMail(String d) { profesional.setMail(d); }
     public void setTelefono(String d) { profesional.setTel(d); }
     public void setMatricula(String d) { profesional.setMatricula(d); }
+    public String getNombre() { return profesional.getNombre(); }
+    public String getApellido() { return profesional.getApellido(); }
+    public String getMail() { return profesional.getMail(); }
+    public String getTelefono() { return profesional.getTel(); }
+    public String getMatricula() { return profesional.getMatricula(); }
 
     public void registrarEnSistema(ArrayList<Profesional> listaMemoria) {
         if (listaMemoria != null) {
