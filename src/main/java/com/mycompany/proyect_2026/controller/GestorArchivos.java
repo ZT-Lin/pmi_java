@@ -118,37 +118,6 @@ public class GestorArchivos {
         return listaEstudios;
     }
     
-    public static void guardarPacienteEnArchivo(Paciente nuevoPaciente){
-        try {
-            FileWriter fw = new FileWriter("data/pacientes.txt", true);
-            String linea = nuevoPaciente.getNombre() + " " +
-                           nuevoPaciente.getApellido() + " " +
-                           nuevoPaciente.getMail() + " " +
-                           nuevoPaciente.getDNI() + " " +
-                           nuevoPaciente.getTel() + "\n ";
-                          
-            fw.write(linea);
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error al guardar el paciente: " + e.getMessage());
-        }
-    }
-    
-    public static void guardarProfesionalEnArchivo(Profesional nuevoProf){
-        try{
-            FileWriter fw = new FileWriter("data/profesionales.txt", true);
-            String linea = nuevoProf.getNombre() + " " +
-                            nuevoProf.getApellido() + " " +
-                            nuevoProf.getMail() + " " +
-                            nuevoProf.getTel() + " " +
-                            nuevoProf.getMatricula() + "\n";
-            fw.write(linea);
-            fw.close();
-        }catch(IOException e){
-            System.out.println("Error al guardar el profesional: " + e.getMessage());
-        }
-    }
-    
     public static void guardarEstudioEnArchivo(Estudio nuevoEst){
         try{
             FileWriter fw = new FileWriter("data/estudios.txt", true);
@@ -175,8 +144,9 @@ public class GestorArchivos {
                 String linea = p.getNombre() + " " +
                                 p.getApellido() + " " +
                                 p.getMail() + " " +
-                                p.getTel() + " " +
-                                p.getDNI() + "\n";
+                                p.getDNI() + " " +
+                                p.getTel() + "\n";
+                                
                 fw.write(linea);
             }
             fw.close();
