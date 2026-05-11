@@ -124,8 +124,9 @@ public class GestorArchivos {
             String linea = nuevoPaciente.getNombre() + " " +
                            nuevoPaciente.getApellido() + " " +
                            nuevoPaciente.getMail() + " " +
-                           nuevoPaciente.getTel() + " " +
-                           nuevoPaciente.getDNI() + "\n";
+                           nuevoPaciente.getDNI() + " " +
+                           nuevoPaciente.getTel() + "\n ";
+                          
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
@@ -139,6 +140,7 @@ public class GestorArchivos {
             String linea = nuevoProf.getNombre() + " " +
                             nuevoProf.getApellido() + " " +
                             nuevoProf.getMail() + " " +
+                            nuevoProf.getTel() + " " +
                             nuevoProf.getMatricula() + "\n";
             fw.write(linea);
             fw.close();
