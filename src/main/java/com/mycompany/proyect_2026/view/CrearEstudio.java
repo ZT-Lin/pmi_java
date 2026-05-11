@@ -4,15 +4,28 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
+import java.util.ArrayList;
+
 /**
  *
  * @author linzh
  */
 public class CrearEstudio extends javax.swing.JFrame {
+    // Las tres listas que vienen de EstudioMenu
+    private ArrayList<Paciente> listaPacientes;
+    private ArrayList<Profesional> listaProfesionales;
+    private ArrayList<Estudio> listaEstudios;
 
-    /**
-     * Creates new form CrearEstudio
-     */
+    // Referencia a EstudioMenu para avisarle cuando terminamos
+    private EstudioMenu ventanaPadre;
+
+    // Combos para seleccionar paciente y profesional
+    // Los agregamos acá porque el form no los tiene
+    private javax.swing.JComboBox<String> comboPaciente;
+    private javax.swing.JComboBox<String> comboProfesional;
     public CrearEstudio() {
         initComponents();
         super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
