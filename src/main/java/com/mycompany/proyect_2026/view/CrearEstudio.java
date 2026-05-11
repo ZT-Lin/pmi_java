@@ -6,6 +6,7 @@ package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 import java.util.ArrayList;
@@ -171,6 +172,31 @@ public class CrearEstudio extends javax.swing.JFrame {
         Profesional pr = listaProfesionales.get(idx - 1);
         jTextField3.setText(pr.getNombre() + " " + pr.getApellido());
         jTextField7.setText(pr.getMatricula());
+    }
+    
+    private Fecha parsearFecha(String texto) throws Exception {
+        // Esperamos formato dd/mm/aaaa
+        String[] partes = texto.split("/");
+
+        if (partes.length != 3) {
+            throw new Exception("Formato incorrecto. Usá dd/mm/aaaa");
+        }
+
+        try {
+            int dia  = Integer.parseInt(partes[0].trim());
+            int mes  = Integer.parseInt(partes[1].trim());
+            int anio = Integer.parseInt(partes[2].trim());
+
+            // Validaciones básicas
+            if (dia < 1 || dia > 31) throw new Exception("Día inválido");
+            if (mes < 1 || mes > 12) throw new Exception("Mes inválido");
+            if (anio < 2000 || anio > 2100) throw new Exception("Año inválido");
+
+            return new Fecha(dia, mes, anio);
+
+        } catch (NumberFormatException e) {
+            throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
+        }
     }
 
     /**
