@@ -150,11 +150,12 @@
     <Component class="javax.swing.JComboBox" name="estadoSelector">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="En Elaboraci&#xf3;n"/>
-            <StringItem index="1" value="Finalizado"/>
-            <StringItem index="2" value="Retirado"/>
-            <StringItem index="3" value="Enviado"/>
+          <StringArray count="5">
+            <StringItem index="0" value="&lt;Todos&gt;"/>
+            <StringItem index="1" value="En Elaboraci&#xf3;n"/>
+            <StringItem index="2" value="Finalizado"/>
+            <StringItem index="3" value="Retirado"/>
+            <StringItem index="4" value="Enviado"/>
           </StringArray>
         </Property>
       </Properties>

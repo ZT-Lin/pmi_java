@@ -89,6 +89,11 @@ public class EstudioMenu extends javax.swing.JFrame {
     private void filtrarPorEstado() {
         String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
         DefaultListModel<String> modelo = new DefaultListModel<>();
+        
+        if(estadoSeleccionado.equalsIgnoreCase("<Todos>")){
+            cargarLista();
+            return ;
+        }
 
         for (Estudio e : listaEstudios) {
             // Comparamos ignorando mayúsculas/minúsculas por seguridad
@@ -247,7 +252,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(estudioList);
 
-        estadoSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "En Elaboración", "Finalizado", "Retirado", "Enviado" }));
+        estadoSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado" }));
 
         estadoLabel.setText("Estado:");
 

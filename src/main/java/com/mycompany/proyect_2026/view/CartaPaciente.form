@@ -30,31 +30,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jSeparator1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="apellidoLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="nombreLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="mailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="telLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="obLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dniLabel" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="apellidoLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="mailLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="telLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="obLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="dniLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="93" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Component id="obSi" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="obNo" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
