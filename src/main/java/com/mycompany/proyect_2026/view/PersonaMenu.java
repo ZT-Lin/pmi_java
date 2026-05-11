@@ -276,22 +276,36 @@ public class PersonaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
-        // Conseguir que valor seleccione
-        // Buscar datos en la lista de paciente
-        // Pasarlo al areaParaMostrar()
 
-        String pacienteName = pacienteList.getSelectedValue();
-        int index = pacienteList.getSelectedIndex();
+    int index = pacienteList.getSelectedIndex();
 
-        if (index < 0) {
-            return;
-        }
+    if (index < 0) {
+        return;
+    }
 
-        areaParaMostrar.removeAll();
-        areaParaMostrar.add(new CartaPaciente(listaPacientes, index),
-                java.awt.BorderLayout.CENTER);
-        areaParaMostrar.revalidate();
-        areaParaMostrar.repaint();
+    Paciente p = listaPacientes.get(index);
+    int cantidadEstudios = contarEstudiosDePaciente(p);
+
+    // Panel que combina la CartaPaciente con la info de estudios
+    javax.swing.JPanel panelCombinado = new javax.swing.JPanel();
+    panelCombinado.setLayout(new java.awt.BorderLayout());
+
+    // La carta del paciente arriba
+    panelCombinado.add(new CartaPaciente(listaPacientes, index), java.awt.BorderLayout.CENTER);
+
+    // Etiqueta con cantidad de estudios abajo
+    javax.swing.JLabel labelEstudios = new javax.swing.JLabel(
+        "  Estudios registrados: " + cantidadEstudios
+    );
+    labelEstudios.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+    labelEstudios.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
+    panelCombinado.add(labelEstudios, java.awt.BorderLayout.SOUTH);
+
+    areaParaMostrar.removeAll();
+    areaParaMostrar.add(panelCombinado, java.awt.BorderLayout.CENTER);
+    areaParaMostrar.revalidate();
+    areaParaMostrar.repaint();
+
     }//GEN-LAST:event_pacienteListValueChanged
 
     private void profesionalListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_profesionalListValueChanged
@@ -492,7 +506,16 @@ public class PersonaMenu extends javax.swing.JFrame {
             .setVisible(true);
     }
     }//GEN-LAST:event_modificarActionPerformed
-
+    
+    private int contarEstudiosDePaciente(Paciente p) {
+    int contador = 0;
+    for (Estudio e : listaEstudios) {
+        if (e.getPaciente().getDNI().equals(p.getDNI())) {
+            contador++;
+        }
+    }
+    return contador;
+}
         /**
          * @param args the command line arguments
          */

@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -22,6 +23,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
     private ArrayList<Estudio> listaFiltrada; // lista que refleja lo que se ve en pantalla
+    private EstudioController estudioController;
 
     /**
      * Creates new form EstudioMenu
@@ -30,6 +32,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
+        this.estudioController = new EstudioController();
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -44,6 +47,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
+        this.estudioController = new EstudioController(listaEstudios);
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -52,21 +56,10 @@ public class EstudioMenu extends javax.swing.JFrame {
         configurarFiltros();
     }
 
-    private void cargarLista() {
-        listaFiltrada = new ArrayList<>(listaEstudios); // copia completa
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (Estudio e : listaEstudios) {
-            // Mostramos: nombre del estudio | paciente | estado
-            // así el usuario puede identificar cada estudio de un vistazo
-            modelo.addElement(
-                    e.getNombreEstudio()
-                    + " | " + e.getPaciente().getApellido()
-                    + ", " + e.getPaciente().getNombre()
-                    + " | " + e.getEstado()
-            );
-        }
-        estudioList.setModel(modelo);
-    }
+private void cargarLista() {
+    listaFiltrada = new ArrayList<>(listaEstudios);
+    actualizarJList(listaFiltrada);
+}
 
     private void cargarCombosProfesional() {
         DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
@@ -89,118 +82,87 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void filtrarPorEstado() {
-        String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        
-        if(estadoSeleccionado.equalsIgnoreCase("<Todos>")){
-            cargarLista();
-            return ;
-        }
+    String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
 
-        for (Estudio e : listaEstudios) {
-            // Comparamos ignorando mayúsculas/minúsculas por seguridad
-            if (e.getEstado().equalsIgnoreCase(estadoSeleccionado)) {
-                listaFiltrada.add(e); //guardar referencia real;
-                modelo.addElement(
-                        e.getNombreEstudio()
-                        + " | " + e.getPaciente().getApellido()
-                        + ", " + e.getPaciente().getNombre()
-                        + " | " + e.getEstado()
-                );
-            }
-        }
-        estudioList.setModel(modelo);
-
-        // Avisar si no hay resultados
-        if (modelo.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "No hay estudios con estado: " + estadoSeleccionado,
-                    "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
-        }
+    if (estadoSeleccionado.equalsIgnoreCase("<Todos>")) {
+        cargarLista();
+        return;
     }
 
-    private void filtrarPorProfesional() {
-        int idx = profesionalSelector.getSelectedIndex();
+    // Delegar lógica al controller
+    listaFiltrada = estudioController.filtrarPorEstado(estadoSeleccionado);
+    actualizarJList(listaFiltrada);
 
-        // Índice 0 es "<Todos>" → mostramos todo sin filtrar
-        if (idx <= 0) {
-            cargarLista();
+    if (listaFiltrada.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+            "No hay estudios con estado: " + estadoSeleccionado,
+            "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+
+private void filtrarPorProfesional() {
+    int idx = profesionalSelector.getSelectedIndex();
+
+    if (idx <= 0) {
+        cargarLista();
+        return;
+    }
+
+    Profesional prSeleccionado = listaProfesionales.get(idx - 1);
+
+    // Delegar lógica al controller
+    listaFiltrada = estudioController.filtrarPorProfesional(prSeleccionado);
+    actualizarJList(listaFiltrada);
+
+    if (listaFiltrada.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+            "No hay estudios para ese profesional.",
+            "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+private void actualizarJList(ArrayList<Estudio> lista) {
+    DefaultListModel<String> modelo = new DefaultListModel<>();
+    for (Estudio e : lista) {
+        modelo.addElement(
+            e.getNombreEstudio()
+            + " | " + e.getPaciente().getApellido()
+            + ", " + e.getPaciente().getNombre()
+            + " | " + e.getEstado()
+        );
+    }
+    estudioList.setModel(modelo);
+}
+
+private void filtrarPorFecha() {
+    try {
+        int dia = Integer.parseInt(diaTField.getText().trim());
+        int mes = Integer.parseInt(mesTField.getText().trim());
+        int anio = Integer.parseInt(anioTField.getText().trim());
+
+        if ((dia < 1 || dia > 31) || (mes < 1 || mes > 12) || anio < 1999) {
+            JOptionPane.showMessageDialog(this,
+                "La fecha " + dia + "/" + mes + "/" + anio + " es inválida",
+                "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        // idx - 1 porque el índice 0 del combo es "<Todos>"
-        // pero el índice 0 de listaProfesionales es el primer profesional real
-        Profesional prSeleccionado = listaProfesionales.get(idx - 1);
-        listaFiltrada = new ArrayList<>(); // reseteamos
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (Estudio e : listaEstudios) {
-            // Comparamos por matrícula, no por referencia
-            // porque si los objetos se recargaron del archivo son instancias distintas
-            if (e.getProfesional().getMatricula()
-                    .equals(prSeleccionado.getMatricula())) {
-                modelo.addElement(
-                        e.getNombreEstudio()
-                        + " | " + e.getPaciente().getApellido()
-                        + ", " + e.getPaciente().getNombre()
-                        + " | " + e.getEstado()
-                );
-            }
-        }
-        estudioList.setModel(modelo);
+        // Delegar lógica al controller
+        listaFiltrada = estudioController.filtrarPorFecha(dia, mes, anio);
+        actualizarJList(listaFiltrada);
 
-        if (modelo.isEmpty()) {
+        if (listaFiltrada.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "No hay estudios para ese profesional.",
-                    "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+                "No hay estudios para la fecha " + dia + "/" + mes + "/" + anio,
+                "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
         }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this,
+            "Ingresá una fecha válida (solo números).",
+            "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
-    private void filtrarPorFecha() {
-        try {
-            // Parseamos los tres campos — pueden lanzar NumberFormatException
-            int dia = Integer.parseInt(diaTField.getText().trim());
-            int mes = Integer.parseInt(mesTField.getText().trim());
-            int anio = Integer.parseInt(anioTField.getText().trim());
-            
-            /*caso ingresar fecha rara*/
-            if((dia<01 || dia>31) || (mes<1 || mes >12) || (anio<1999)){
-                JOptionPane.showMessageDialog(this,
-                        "la fecha "
-                        + dia + "/" + mes + "/" + anio+" es invalida",
-                        "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
-            listaFiltrada = new ArrayList<>(); //reseteamos;
-            DefaultListModel<String> modelo = new DefaultListModel<>();
-            for (Estudio e : listaEstudios) {
-                if (e.getFecha().getDia() == dia
-                        && e.getFecha().getMes() == mes
-                        && e.getFecha().getAnio() == anio) {
-                    modelo.addElement(
-                            e.getNombreEstudio()
-                            + " | " + e.getPaciente().getApellido()
-                            + ", " + e.getPaciente().getNombre()
-                            + " | " + e.getEstado()
-                    );
-                }
-            }
-            estudioList.setModel(modelo);
-
-            if (modelo.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "No hay estudios para la fecha "
-                        + dia + "/" + mes + "/" + anio,
-                        "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } catch (NumberFormatException ex) {
-            // Si el usuario escribió letras en los campos de fecha
-            JOptionPane.showMessageDialog(this,
-                    "Ingresá una fecha válida (solo números).",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     private void configurarFiltros() {
         // Al cambiar el estado en el combo, filtra automáticamente
