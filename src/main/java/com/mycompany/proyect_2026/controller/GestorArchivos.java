@@ -65,8 +65,8 @@ public class GestorArchivos {
                 String nombre = lector.next();
                 String apellido = lector.next();
                 String mail = lector.next();
-                String telefono = lector.next();
                 String dni = lector.next();
+                String telefono = lector.next();
                 Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
                 lista.add(paci);
             }
@@ -77,46 +77,72 @@ public class GestorArchivos {
         return lista;
     }
     
-    public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(ArrayList<Paciente> listaPacientes, ArrayList<Profesional> listaProfesionales){
-        ArrayList<Estudio> listaEstudios = new ArrayList<>();
-        try{
-            File e = new File("data/estudios.txt");
-            Scanner lector = new Scanner(e);
-            while(lector.hasNext()){
-                int dia = lector.nextInt();
-                int mes = lector.nextInt();
-                int anio = lector.nextInt();
-                String nombreEstudio = lector.next();
-                String dniBusqueda = lector.next();
-                String matriculaBusqueda = lector.next();
-                Paciente pacienteEncontrado = null;
-                for(Paciente p : listaPacientes){
-                    if(p.getDNI().equals(dniBusqueda)){
-                        pacienteEncontrado = p;
-                        break;
-                    }
-                }
-                Profesional profesionalEncontrado = null;
-                for(Profesional prof : listaProfesionales){
-                    if(prof.getMatricula().equals(matriculaBusqueda)){
-                        profesionalEncontrado = prof;
-                        break;
-                    }
-                }
-                if(pacienteEncontrado != null && profesionalEncontrado != null){
-                    Fecha fecha = new Fecha(dia, mes, anio);
-                    Estudio nuevoEstudio = new Estudio(fecha, nombreEstudio, pacienteEncontrado, profesionalEncontrado);
-                    listaEstudios.add(nuevoEstudio);
-                }else{
-                    System.out.println("Advertencia: No se pudo cargar el estudio '" + nombreEstudio + "' porque falta el paciente o el profesional en los registros.");
-                }
+public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(
+        ArrayList<Paciente> listaPacientes,
+        ArrayList<Profesional> listaProfesionales) {
+
+    ArrayList<Estudio> listaEstudios = new ArrayList<>();
+    try {
+        File f = new File("data/estudios.txt");
+        Scanner lector = new Scanner(f);
+        while (lector.hasNextLine()) {
+            String linea = lector.nextLine().trim();
+            if (linea.isEmpty()) continue;
+
+            String[] partes = linea.split("\\|");
+            // partes: [0]dia [1]mes [2]anio [3]nombre [4]dni [5]matricula
+            //         [6]estado [7]fechaEntrega [8]analisis (puede faltar)
+
+            int dia  = Integer.parseInt(partes[0]);
+            int mes  = Integer.parseInt(partes[1]);
+            int anio = Integer.parseInt(partes[2]);
+            String nombreEstudio     = partes[3];
+            String dniBusqueda       = partes[4];
+            String matriculaBusqueda = partes[5];
+            String estado            = partes[6];
+            String fechaEntregaStr   = partes[7];
+
+            // Buscar paciente y profesional
+            Paciente paciente = null;
+            for (Paciente p : listaPacientes)
+                if (p.getDNI().equals(dniBusqueda)) { paciente = p; break; }
+
+            Profesional profesional = null;
+            for (Profesional pr : listaProfesionales)
+                if (pr.getMatricula().equals(matriculaBusqueda)) { profesional = pr; break; }
+
+            if (paciente == null || profesional == null) {
+                System.out.println("Advertencia: no se pudo cargar '" + nombreEstudio + "'");
+                continue;
             }
-            lector.close();
-        }catch(IOException ex){
-            System.out.println("Error al cargar los estudios: " + ex.getMessage());
+
+            Estudio est = new Estudio(new Fecha(dia, mes, anio),
+                                      nombreEstudio, paciente, profesional);
+            est.setEstado(estado);
+
+            // Fecha de entrega
+            if (!fechaEntregaStr.equals("null")) {
+                String[] fe = fechaEntregaStr.split("/");
+                est.setFechaEntrega(new Fecha(
+                    Integer.parseInt(fe[0]),
+                    Integer.parseInt(fe[1]),
+                    Integer.parseInt(fe[2])
+                ));
+            }
+
+            // Análisis
+            if (partes.length > 8 && !partes[8].isEmpty()) {
+                est.setAnalisis(partes[8].split(","));
+            }
+
+            listaEstudios.add(est);
         }
-        return listaEstudios;
+        lector.close();
+    } catch (IOException ex) {
+        System.out.println("Error al cargar estudios: " + ex.getMessage());
     }
+    return listaEstudios;
+}
     
     public static void guardarEstudioEnArchivo(Estudio e) {
     try {
