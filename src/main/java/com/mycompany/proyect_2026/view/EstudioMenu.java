@@ -150,9 +150,18 @@ public class EstudioMenu extends javax.swing.JFrame {
     private void filtrarPorFecha() {
         try {
             // Parseamos los tres campos — pueden lanzar NumberFormatException
-            int dia = Integer.parseInt(jTextField1.getText().trim());
-            int mes = Integer.parseInt(jTextField4.getText().trim());
-            int anio = Integer.parseInt(jTextField5.getText().trim());
+            int dia = Integer.parseInt(diaTField.getText().trim());
+            int mes = Integer.parseInt(mesTField.getText().trim());
+            int anio = Integer.parseInt(anioTField.getText().trim());
+            
+            /*caso ingresar fecha rara*/
+            if((dia<01 || dia>31) || (mes<1 || mes >12) || (anio<1999)){
+                JOptionPane.showMessageDialog(this,
+                        "la fecha "
+                        + dia + "/" + mes + "/" + anio+" es invalida",
+                        "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
 
             DefaultListModel<String> modelo = new DefaultListModel<>();
             for (Estudio e : listaEstudios) {
@@ -193,7 +202,9 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         // Al presionar Enter en el campo año, busca por fecha
         // El usuario completa día, mes, año y presiona Enter
-        jTextField5.addActionListener(evt -> filtrarPorFecha());
+        anioTField.addActionListener(evt -> filtrarPorFecha());
+        mesTField.addActionListener(evt -> filtrarPorFecha());
+        diaTField.addActionListener(evt -> filtrarPorFecha());
     }
 
     /**
@@ -210,11 +221,11 @@ public class EstudioMenu extends javax.swing.JFrame {
         profesionalLabel = new javax.swing.JLabel();
         profesionalSelector = new javax.swing.JComboBox<>();
         fechaLabel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        diaTField = new javax.swing.JTextField();
         fechaLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        mesTField = new javax.swing.JTextField();
         fechaLabel4 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        anioTField = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
         agregar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
@@ -246,16 +257,16 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         fechaLabel.setText("dia");
 
-        jTextField1.setText("01");
+        diaTField.setText("01");
 
         fechaLabel3.setText("mes");
 
-        jTextField4.setText("01");
+        mesTField.setText("01");
 
         fechaLabel4.setText("año");
 
-        jTextField5.setText("2004");
-        jTextField5.setPreferredSize(new java.awt.Dimension(70, 23));
+        anioTField.setText("2004");
+        anioTField.setPreferredSize(new java.awt.Dimension(70, 23));
 
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(295, 428));
         areaParaMostrar.setLayout(new java.awt.BorderLayout());
@@ -297,15 +308,15 @@ public class EstudioMenu extends javax.swing.JFrame {
                             .addComponent(estadoSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(profesionalSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(diaTField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(fechaLabel3)
                                 .addGap(1, 1, 1)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mesTField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(fechaLabel4)
                                 .addGap(0, 0, 0)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(anioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -330,11 +341,11 @@ public class EstudioMenu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(fechaLabel)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(diaTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fechaLabel3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mesTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fechaLabel4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(anioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(volver))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -422,7 +433,9 @@ public class EstudioMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
+    private javax.swing.JTextField anioTField;
     private javax.swing.JPanel areaParaMostrar;
+    private javax.swing.JTextField diaTField;
     private javax.swing.JLabel estadoLabel;
     private javax.swing.JComboBox<String> estadoSelector;
     private javax.swing.JList<String> estudioList;
@@ -430,9 +443,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     private javax.swing.JLabel fechaLabel3;
     private javax.swing.JLabel fechaLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField mesTField;
     private javax.swing.JButton modificar;
     private javax.swing.JLabel profesionalLabel;
     private javax.swing.JComboBox<String> profesionalSelector;
