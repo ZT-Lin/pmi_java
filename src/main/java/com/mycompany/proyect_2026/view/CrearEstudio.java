@@ -198,6 +198,30 @@ public class CrearEstudio extends javax.swing.JFrame {
             throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
         }
     }
+    
+    private String[] obtenerAnalisisSeleccionados() {
+        javax.swing.JCheckBox[] checks = {
+            jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
+            jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+        };
+
+        // Primero contamos cuántos están marcados
+        int cantidad = 0;
+        for (javax.swing.JCheckBox cb : checks) {
+            if (cb.isSelected()) cantidad++;
+        }
+
+        // Creamos el array con el tamaño exacto
+        String[] seleccionados = new String[cantidad];
+        int idx = 0;
+        for (javax.swing.JCheckBox cb : checks) {
+            if (cb.isSelected()) {
+                seleccionados[idx++] = cb.getText();
+            }
+        }
+
+        return seleccionados;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
