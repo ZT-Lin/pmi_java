@@ -129,9 +129,9 @@ public class PersonaMenu extends javax.swing.JFrame {
         });
 
         modificar.setText("Modificar");
-        modificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                modificarMouseClicked(evt);
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
             }
         });
 
@@ -323,12 +323,6 @@ public class PersonaMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_volverActionPerformed
 
-    private void modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modificarMouseClicked
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_modificarMouseClicked
-
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
 
             // Detectar qué tab está activo: 0 = Paciente, 1 = Profesional
@@ -467,6 +461,37 @@ public class PersonaMenu extends javax.swing.JFrame {
             pacienteList.setModel(modelo);
 
     }//GEN-LAST:event_eliminarActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        int tabActivo = personaList.getSelectedIndex();
+    
+    if (tabActivo == 0) {
+        // Tab Paciente
+        int idx = pacienteList.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un paciente primero.",
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Paciente p = listaPacientes.get(idx);
+        new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idx)
+            .setVisible(true);
+            
+    } else {
+        // Tab Profesional
+        int idx = profesionalList.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un profesional primero.",
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Profesional pr = listaProfesionales.get(idx);
+        new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idx)
+            .setVisible(true);
+    }
+    }//GEN-LAST:event_modificarActionPerformed
 
         /**
          * @param args the command line arguments
