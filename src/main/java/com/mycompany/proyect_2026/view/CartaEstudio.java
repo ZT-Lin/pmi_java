@@ -33,7 +33,7 @@ public CartaEstudio(Estudio estudio) {
 }
 private void mostrarDatos(Estudio estudio) {
 
-    // ── Datos del Paciente ─────────────────────────
+    // ── Datos del Paciente
     // identPaciente → nombre y apellido del paciente
     identPaciente.setText(
         estudio.getPaciente().getNombre() + " "
@@ -42,7 +42,7 @@ private void mostrarDatos(Estudio estudio) {
     // jTextField2 → DNI del paciente
     jTextField2.setText(estudio.getPaciente().getDNI());
     
-    // ── Datos del Profesional ──────────────────────
+    // ── Datos del Profesional 
     // jTextField3 → nombre y apellido del profesional
     jTextField3.setText(
         estudio.getProfesional().getNombre() + " "
@@ -50,6 +50,19 @@ private void mostrarDatos(Estudio estudio) {
     );
     // jTextField7 → matrícula del profesional
     jTextField7.setText(estudio.getProfesional().getMatricula());
+    
+    // ── Fechas 
+    // jTextField6 → fecha de realización
+    jTextField6.setText(estudio.getFecha().toString());
+
+    // jTextField8 → fecha de entrega
+    // puede ser null si todavía no se asignó
+    if (estudio.getFechaEntrega() != null) {
+        jTextField8.setText(estudio.getFechaEntrega().toString());
+    } else {
+        jTextField8.setText("Sin asignar");
+    }
+    
 }
     /**
      * This method is called from within the constructor to initialize the form.
