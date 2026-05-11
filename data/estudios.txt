@@ -1,1 +1,3 @@
-10 12 2026 Estudio_4223344 4223344 1001
+10|4|2026|Estudio_12345678|12345678|1001|En Elaboración|null|Hemograma_Completo,Glucemia
+05|4|2026|Estudio_87654321|87654321|1002|Finalizado|20/4/2026|Colesterol_Total
+01|5|2026|Estudio_33445566|33445566|1003|En Elaboración|null|Orina_Completa,Urea
