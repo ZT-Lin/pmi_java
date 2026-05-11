@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
@@ -23,6 +24,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Estudio> listaEstudios;
+    private EstudioController estudioController;
 
     // Referencia a EstudioMenu para avisarle cuando terminamos
     private EstudioMenu ventanaPadre;
@@ -37,6 +39,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
+        this.estudioController = new EstudioController();
         this.ventanaPadre = null;
         initComponents();
         setLocationRelativeTo(null);
@@ -52,6 +55,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
+        this.estudioController = new EstudioController(listaEstudios);
         this.ventanaPadre = padre;
         initComponents();
         setLocationRelativeTo(null);
@@ -518,25 +522,20 @@ public class CrearEstudio extends javax.swing.JFrame {
         // idx - 1 porque el índice 0 de los combos es el placeholder
         Paciente paciente = listaPacientes.get(idxPaciente - 1);
         Profesional profesional = listaProfesionales.get(idxProfesional - 1);
-
-        // ── Crear el objeto Estudio ────────────────────────
-        Estudio nuevoEstudio = new Estudio(
+        Estudio nuevoEstudio = estudioController.crearEstudio(
                 fechaRealizacion,
-                "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
+                fechaEntrega,
                 paciente,
-                profesional
+                profesional,
+                analisisSeleccionados
         );
 
-        // Setear los campos adicionales
-        nuevoEstudio.setFechaEntrega(fechaEntrega);
-        nuevoEstudio.setEstado("En Elaboración"); // estado inicial siempre
-        nuevoEstudio.setAnalisis(analisisSeleccionados);
-
-        // ── Agregar a la lista en memoria ──────────────────
-        listaEstudios.add(nuevoEstudio);
-
-        // ── Guardar en archivo ─────────────────────────────
-        GestorArchivos.guardarEstudioEnArchivo(nuevoEstudio);
+        if (nuevoEstudio == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al crear el estudio. Verificá los datos.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         // ── Avisar a EstudioMenu que refresque ─────────────
         if (ventanaPadre != null) {
