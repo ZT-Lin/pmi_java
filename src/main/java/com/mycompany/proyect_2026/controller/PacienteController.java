@@ -4,7 +4,6 @@
  */
 package com.mycompany.proyect_2026.controller;
 
-import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Paciente;
 import java.util.ArrayList;
 
@@ -23,7 +22,6 @@ public class PacienteController {
         this.paciente = paciente;
     }
     
-    //para Paciente
     //setter
     public void setNombre(String data){
         paciente.setNombre(data);
