@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -118,6 +119,25 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         // ── Conectar botón confirmar ───────────────────────
         confirmar.addActionListener(evt -> confirmarActionPerformed());
+    }
+    
+    private void cargarCheckboxes() {
+        // Array con los 10 checkboxes en orden
+        javax.swing.JCheckBox[] checks = {
+            jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
+            jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+        };
+
+        // Poner el nombre real de cada análisis desde el HashMap
+        for (int i = 0; i < checks.length; i++) {
+            int clave = i + 1;
+            String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(
+                clave, "Análisis " + clave
+            );
+            checks[i].setText(nombre);
+            checks[i].setSelected(false); // desmarcados por defecto
+            checks[i].setEnabled(true);   // habilitados para que el usuario elija
+        }
     }
 
     /**
