@@ -4,12 +4,14 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -316,6 +318,11 @@ public class CrearEstudio extends javax.swing.JFrame {
         jLabel2.setText("D.N.I. :");
 
         confirmar.setText("confirmar");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -444,6 +451,98 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
+
+
+        // ── Validar selección de paciente ──────────────────
+        int idxPaciente = comboPaciente.getSelectedIndex();
+        if (idxPaciente <= 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un paciente.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar selección de profesional ───────────────
+        int idxProfesional = comboProfesional.getSelectedIndex();
+        if (idxProfesional <= 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná un profesional.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar y parsear fecha de realización ─────────
+        Fecha fechaRealizacion;
+        try {
+            fechaRealizacion = parsearFecha(jTextField6.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Fecha de realización inválida: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Validar y parsear fecha de entrega ─────────────
+        // La fecha de entrega es opcional — si el usuario dejó
+        // el placeholder o la dejó vacía, se guarda como null
+        Fecha fechaEntrega = null;
+        String textoEntrega = jTextField8.getText().trim();
+        if (!textoEntrega.isEmpty() && !textoEntrega.equals("dd/mm/aaaa")) {
+            try {
+                fechaEntrega = parsearFecha(textoEntrega);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                    "Fecha de entrega inválida: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // ── Validar que haya al menos un análisis ──────────
+        String[] analisisSeleccionados = obtenerAnalisisSeleccionados();
+        if (analisisSeleccionados.length == 0) {
+            JOptionPane.showMessageDialog(this,
+                "Seleccioná al menos un análisis.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // ── Obtener paciente y profesional seleccionados ───
+        // idx - 1 porque el índice 0 de los combos es el placeholder
+        Paciente paciente = listaPacientes.get(idxPaciente - 1);
+        Profesional profesional = listaProfesionales.get(idxProfesional - 1);
+
+        // ── Crear el objeto Estudio ────────────────────────
+        Estudio nuevoEstudio = new Estudio(
+            fechaRealizacion,
+            "Estudio_" + paciente.getDNI(), // nombre generado automáticamente
+            paciente,
+            profesional
+        );
+
+        // Setear los campos adicionales
+        nuevoEstudio.setFechaEntrega(fechaEntrega);
+        nuevoEstudio.setEstado("En Elaboración"); // estado inicial siempre
+        nuevoEstudio.setAnalisis(analisisSeleccionados);
+
+        // ── Agregar a la lista en memoria ──────────────────
+        listaEstudios.add(nuevoEstudio);
+
+        // ── Guardar en archivo ─────────────────────────────
+        GestorArchivos.guardarEstudioEnArchivo(nuevoEstudio);
+
+        // ── Avisar a EstudioMenu que refresque ─────────────
+        if (ventanaPadre != null) ventanaPadre.refrescarVista();
+
+        JOptionPane.showMessageDialog(this,
+            "Estudio creado correctamente.",
+            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        dispose();
+    
+    }//GEN-LAST:event_confirmarActionPerformed
 
     /**
      * @param args the command line arguments
