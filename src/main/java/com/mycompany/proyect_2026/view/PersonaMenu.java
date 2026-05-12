@@ -80,6 +80,11 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         barraDeBusqueda.setToolTipText("Buscar...");
         barraDeBusqueda.setName(""); // NOI18N
+        barraDeBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barraDeBusquedaActionPerformed(evt);
+            }
+        });
 
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(392, 423));
         areaParaMostrar.setLayout(new java.awt.BorderLayout());
