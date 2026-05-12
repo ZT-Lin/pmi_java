@@ -39,7 +39,11 @@ public class FechaController {
         return actual.getDia();
     }
     
-    public boolean esMayor(Fecha data){
+    public Fecha getFecha(){
+        return actual;
+    }
+    
+    public static boolean esMayor(Fecha actual, Fecha data){
         if(actual.getAnio() > data.getAnio()){
             return true;
         }else if(actual.getMes() > data.getMes()){
@@ -49,7 +53,7 @@ public class FechaController {
         }
         return false;
     }
-    public boolean esMenor(Fecha data){
+    public static boolean esMenor(Fecha actual, Fecha data){
         if(actual.getAnio() < data.getAnio()){
             return true;
         }else if(actual.getMes() < data.getMes()){
@@ -59,7 +63,7 @@ public class FechaController {
         }
         return false;
     }
-    public boolean esIgual(Fecha data){
+    public boolean esIgual(Fecha actual, Fecha data){
         return (actual.getAnio() == data.getAnio()) 
                 && (actual.getMes() == data.getMes())
                 && (actual.getDia() == data.getDia());
