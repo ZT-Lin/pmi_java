@@ -30,11 +30,11 @@ public class CartaPaciente extends javax.swing.JPanel {
         PacienteController pc
                 = new PacienteController(listaPacientes.get(index));
 
-        pNombre.setText(pc.getNombre());
-        pApellido.setText(pc.getApellido());
-        pTelefono.setText(pc.getTel());
-        pCorreo.setText(pc.getMail());
-        pDNI.setText(pc.getDNI());
+        campoNombre.setText(pc.getNombre());
+        campoApellido.setText(pc.getApellido());
+        campoTelefono.setText(pc.getTel());
+        campoCorreo.setText(pc.getMail());
+        campoDNI.setText(pc.getDNI());
         if (pc.getOB()) {
             obSi.setSelected(true);
         } else {
@@ -51,12 +51,12 @@ public class CartaPaciente extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        pNombre = new javax.swing.JTextField();
-        pApellido = new javax.swing.JTextField();
-        pCorreo = new javax.swing.JTextField();
-        pTelefono = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
+        campoApellido = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JTextField();
+        campoTelefono = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        pDNI = new javax.swing.JTextField();
+        campoDNI = new javax.swing.JTextField();
         obSi = new javax.swing.JRadioButton();
         obNo = new javax.swing.JRadioButton();
         nombreLabel = new javax.swing.JLabel();
@@ -68,20 +68,20 @@ public class CartaPaciente extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(392, 387));
 
-        pNombre.setEditable(false);
-        pNombre.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoNombre.setEditable(false);
+        campoNombre.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pApellido.setEditable(false);
-        pApellido.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoApellido.setEditable(false);
+        campoApellido.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pCorreo.setEditable(false);
-        pCorreo.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoCorreo.setEditable(false);
+        campoCorreo.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pTelefono.setEditable(false);
-        pTelefono.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoTelefono.setEditable(false);
+        campoTelefono.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pDNI.setEditable(false);
-        pDNI.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoDNI.setEditable(false);
+        campoDNI.setMinimumSize(new java.awt.Dimension(156, 24));
 
         buttonGroup1.add(obSi);
         obSi.setText("Si");
@@ -127,11 +127,11 @@ public class CartaPaciente extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(obNo))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(pDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(pCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
@@ -139,25 +139,25 @@ public class CartaPaciente extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(apellidoLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mailLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(telLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dniLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -172,6 +172,11 @@ public class CartaPaciente extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidoLabel;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField campoApellido;
+    private javax.swing.JTextField campoCorreo;
+    private javax.swing.JTextField campoDNI;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoTelefono;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel mailLabel;
@@ -179,11 +184,6 @@ public class CartaPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel obLabel;
     private javax.swing.JRadioButton obNo;
     private javax.swing.JRadioButton obSi;
-    private javax.swing.JTextField pApellido;
-    private javax.swing.JTextField pCorreo;
-    private javax.swing.JTextField pDNI;
-    private javax.swing.JTextField pNombre;
-    private javax.swing.JTextField pTelefono;
     private javax.swing.JLabel telLabel;
     // End of variables declaration//GEN-END:variables
 }
