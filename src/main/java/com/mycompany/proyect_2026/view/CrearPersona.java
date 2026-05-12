@@ -51,7 +51,7 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setTitle("Nueva Persona");
+        this.setTitle("Modificar Profesional");
     }
 
     // Constructor para EDITAR un paciente existente
