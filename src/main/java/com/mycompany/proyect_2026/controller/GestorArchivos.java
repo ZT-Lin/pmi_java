@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class GestorArchivos {
 
-    // CORRECCIÓN 12: Precarga de datos mínimos
+    // Precarga de datos mínimos
     public static void crearDatosIniciales() throws IOException {
         File fp = new File("data/pacientes.txt");
         if (!fp.exists()) {
@@ -76,7 +76,7 @@ public class GestorArchivos {
                 continue;
             }
 
-            // CORRECCIÓN 5: Usar split con "|"
+            // Usar split con "|"
             String[] partes = linea.split("\\|");
             if (partes.length < 5) {
                 continue;
@@ -107,7 +107,7 @@ public class GestorArchivos {
                 continue;
             }
 
-            // CORRECCIÓN 5: Usar split con "|"
+            //  Usar split con "|"
             String[] partes = linea.split("\\|");
             if (partes.length < 6) {
                 continue;
@@ -209,7 +209,7 @@ public class GestorArchivos {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt");
             for (Paciente p : listaPacientes) {
-                // CORRECCIÓN 5: Guardar con "|"
+                //Guardar con "|"
                 String linea = p.getNombre() + "|" + p.getApellido() + "|"
                         + p.getMail() + "|" + p.getDNI() + "|"
                         + p.getTel() + "|" + p.getObraSocial() + "\n";
@@ -225,7 +225,7 @@ public class GestorArchivos {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt");
             for (Profesional p : listaProfesionales) {
-                // CORRECCIÓN 5: Guardar con "|"
+                //Guardar con "|"
                 String linea = p.getNombre() + "|" + p.getApellido() + "|"
                         + p.getMail() + "|" + p.getTel() + "|"
                         + p.getMatricula() + "\n";
@@ -252,7 +252,7 @@ public class GestorArchivos {
     public static void agregarPacienteFisico(Paciente p) {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt", true);
-            // CORRECCIÓN 5: Guardar con "|"
+            // Guardar con "|"
             String linea = p.getNombre() + "|" + p.getApellido() + "|"
                     + p.getMail() + "|" + p.getDNI() + "|"
                     + p.getTel() + "|" + p.getObraSocial() + "\n";
@@ -266,7 +266,7 @@ public class GestorArchivos {
     public static void agregarProfesionalFisico(Profesional p) {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt", true);
-            // CORRECCIÓN 5: Guardar con "|"
+            // Guardar con "|"
             String linea = p.getNombre() + "|" + p.getApellido() + "|"
                     + p.getMail() + "|" + p.getTel() + "|"
                     + p.getMatricula() + "\n";
