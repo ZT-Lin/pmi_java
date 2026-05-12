@@ -21,8 +21,23 @@ public class TypeProfesional extends javax.swing.JPanel {
         return matriculaText.getText();
     }
 
+    public boolean matriculaEsValida() {
+        String matricula = matriculaText.getText().trim();
+        if (matricula.isEmpty()) {
+            return false;
+        }
+        // Solo dígitos, al menos 1 carácter
+        return matricula.matches("\\d+");
+    }
+
     public void setMatricula(String matricula) {
         matriculaText.setText(matricula);
+    }
+
+    public void bloquearMatricula() {
+        matriculaText.setEditable(false);
+        matriculaText.setBackground(new java.awt.Color(220, 220, 220)); // gris para que se note
+        matriculaText.setToolTipText("La matrícula no se puede modificar");
     }
 
     /**
@@ -36,12 +51,6 @@ public class TypeProfesional extends javax.swing.JPanel {
         matriculaLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(285, 162));
-
-        matriculaText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matriculaTextActionPerformed(evt);
-            }
-        });
 
         matriculaLabel.setText("Matricula:");
 
@@ -66,10 +75,6 @@ public class TypeProfesional extends javax.swing.JPanel {
                 .addContainerGap(124, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void matriculaTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matriculaTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_matriculaTextActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

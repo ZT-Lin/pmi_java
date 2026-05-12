@@ -124,6 +124,9 @@ public class CrearPersona extends javax.swing.JFrame {
         }
 
         commitPersona.setText("Guardar cambios");
+        if (panelProf != null) {
+            panelProf.bloquearMatricula();
+        }
     }
 
     /**
@@ -301,36 +304,42 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
-                // Modo edición: modificar el objeto existente
                 Paciente p = listaPacientes.get(indiceEdicion);
                 p.setNombre(nombreText.getText());
                 p.setApellido(apellidoText.getText());
                 p.setMail(eMailText.getText());
                 p.setTel(telFText.getText());
                 p.setObraSocial(panelP.tieneObraSocial());
-                // DNI no se modifica (es identificador)
-
-                // Actualizar archivo con la lista completa
                 com.mycompany.proyect_2026.controller.GestorArchivos
                         .actualizarArchivoPacientes(listaPacientes);
-
                 javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
+
             } else {
-                // Modo creación: igual que antes
-                PacienteController pc = new PacienteController();
-                pc.setNombre(nombreText.getText());
-                pc.setApellido(apellidoText.getText());
-                pc.setMail(eMailText.getText());
-                pc.setTelefono(telFText.getText());
-                pc.setDNI(panelP.getDni());
-                pc.setObSocial(panelP.tieneObraSocial());
-                // Antes de pc.registrarEnSistema(...)
+                // Validar DNI antes de registrar
                 if (!panelP.dniEsValido()) {
                     javax.swing.JOptionPane.showMessageDialog(this,
                             "El DNI debe tener 7 u 8 dígitos numéricos.",
                             "DNI inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                // Validar que el DNI no esté repetido
+                String dniNuevo = panelP.getDni().trim();
+                for (Paciente pac : listaPacientes) {
+                    if (pac.getDNI().equals(dniNuevo)) {
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                "Ya existe un paciente con el DNI " + dniNuevo + ".",
+                                "DNI repetido", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                PacienteController pc = new PacienteController();
+                pc.setNombre(nombreText.getText());
+                pc.setApellido(apellidoText.getText());
+                pc.setMail(eMailText.getText());
+                pc.setTelefono(telFText.getText());
+                pc.setDNI(dniNuevo);
+                pc.setObSocial(panelP.tieneObraSocial());
                 pc.registrarEnSistema(this.listaPacientes);
                 javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
             }
@@ -347,24 +356,42 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
+                // En edición: matrícula bloqueada, solo se modifican los otros campos
                 Profesional pr = listaProfesionales.get(indiceEdicion);
                 pr.setNombre(nombreText.getText());
                 pr.setApellido(apellidoText.getText());
                 pr.setMail(eMailText.getText());
                 pr.setTel(telFText.getText());
-                // Matrícula no se modifica (es identificadora)
-
+                // Matrícula NO se toca
                 com.mycompany.proyect_2026.controller.GestorArchivos
                         .actualizarArchivoProfesionales(listaProfesionales);
-
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
+
             } else {
+                // Validar que sea numérica
+                if (!panelProf.matriculaEsValida()) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "La matrícula debe ser numérica.",
+                            "Matrícula inválida", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // Validar que no esté repetida
+                String matriculaNueva = panelProf.getMatricula().trim();
+                for (Profesional pr : listaProfesionales) {
+                    if (pr.getMatricula().equals(matriculaNueva)) {
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                "Ya existe un profesional con la matrícula " + matriculaNueva + ".",
+                                "Matrícula repetida", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
                 ProfesionalController prc = new ProfesionalController();
                 prc.setNombre(nombreText.getText());
                 prc.setApellido(apellidoText.getText());
                 prc.setMail(eMailText.getText());
                 prc.setTelefono(telFText.getText());
-                prc.setMatricula(panelProf.getMatricula());
+                prc.setMatricula(matriculaNueva);
                 prc.registrarEnSistema(this.listaProfesionales);
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
             }
