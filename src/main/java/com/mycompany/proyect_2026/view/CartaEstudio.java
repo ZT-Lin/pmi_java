@@ -28,7 +28,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         test = i;
         identPaciente.setText(String.valueOf(test));
         jCheckBox1.setEnabled(false);
-        jTextField9.setEditable(false); 
+        jTextField9.setEditable(false);
     }
 
     public CartaEstudio(Estudio estudio) {
@@ -101,23 +101,23 @@ public class CartaEstudio extends javax.swing.JPanel {
         jTextField9.setText(estudio.getEstado());
         jTextField9.setEditable(false);
         jTextField9.setText(estudio.getEstado());
-jTextField9.setEditable(false);
+        jTextField9.setEditable(false);
 
 // Color según estado:
-switch (estudio.getEstado()) {
-    case "Finalizado":
-        jTextField9.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
-        break;
-    case "Retirado":
-        jTextField9.setBackground(new java.awt.Color(200, 200, 200)); // gris
-        break;
-    case "Enviado":
-        jTextField9.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
-        break;
-    default: // En Elaboración
-        jTextField9.setBackground(new java.awt.Color(255, 200, 100)); // naranja
-        break;
-}
+        switch (estudio.getEstado()) {
+            case "Finalizado":
+                jTextField9.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
+                break;
+            case "Retirado":
+                jTextField9.setBackground(new java.awt.Color(200, 200, 200)); // gris
+                break;
+            case "Enviado":
+                jTextField9.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
+                break;
+            default: // En Elaboración
+                jTextField9.setBackground(new java.awt.Color(255, 200, 100)); // naranja
+                break;
+        }
     } // cierre de mostrarDatos()
 
     /**

@@ -5,7 +5,6 @@
 package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.controller.EstudioController;
-import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;

@@ -20,7 +20,6 @@ public class CrearPersona extends javax.swing.JFrame {
 
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Profesional> listaProfesionales;
-    private ArrayList<Estudio> listaEstudios;
     private PersonaMenu ventanaPadre;
     private TypePaciente panelP;
     private TypeProfesional panelProf;
@@ -34,7 +33,7 @@ public class CrearPersona extends javax.swing.JFrame {
     public CrearPersona() {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
-        this.listaEstudios = new ArrayList<>();
+        new ArrayList<>();
         this.ventanaPadre = new PersonaMenu();
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -47,7 +46,6 @@ public class CrearPersona extends javax.swing.JFrame {
             PersonaMenu padre) {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
-        this.listaEstudios = estudios;
         this.ventanaPadre = padre;
         initComponents();
         setLocationRelativeTo(null);
@@ -63,7 +61,6 @@ public class CrearPersona extends javax.swing.JFrame {
             int indice) {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
-        this.listaEstudios = estudios;
         this.ventanaPadre = padre;
         this.modoEdicion = true;
         this.indiceEdicion = indice;
@@ -100,7 +97,6 @@ public class CrearPersona extends javax.swing.JFrame {
             int indice) {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
-        this.listaEstudios = estudios;
         this.ventanaPadre = padre;
         this.modoEdicion = true;
         this.indiceEdicion = indice;

@@ -1,11 +1,10 @@
 /*  11/04/2026
     debe agregar "package ..." para incluir la clase en el app, sino sale error
-*/ //--- Lin
+ */ //--- Lin
 package com.mycompany.proyect_2026.model;
 
-
-
 public class Fecha {
+
     private int dia;
     private int mes;
     private int anio;
@@ -22,13 +21,29 @@ public class Fecha {
         this.anio = anio;
     }
 
-    public int getDia()  { return dia; }
-    public int getMes()  { return mes; }
-    public int getAnio() { return anio; }
+    public int getDia() {
+        return dia;
+    }
 
-    public void setDia(int dia)   { this.dia = dia; }
-    public void setMes(int mes)   { this.mes = mes; }
-    public void setAnio(int anio) { this.anio = anio; }
+    public int getMes() {
+        return mes;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
 
     @Override
     public String toString() {

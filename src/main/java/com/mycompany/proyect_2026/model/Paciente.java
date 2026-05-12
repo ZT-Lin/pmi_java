@@ -4,7 +4,6 @@
  */
 package com.mycompany.proyect_2026.model;
 
-
 /**
  *
  * @author linzh
@@ -24,33 +23,35 @@ public class Paciente extends Persona {
         this.dni = dni;
         this.obraSocial = false;
     }
-    
+
     //obraSocial  
     // modificado en 24/04/2026 - Tomas
     // pequeña modificacion de variable
     public void setObraSocial(boolean obraSocial) {
         this.obraSocial = obraSocial;
     }
+
     // modificado en 24/04/2026 - Tomas
     // pequeña modificacion del variable
     public boolean getObraSocial() {
         return this.obraSocial;
     }
-    
+
     //modificado en 25/04/2026 - Lin
     //DNI no va en Persona
     //por que el Profesional no lo pide
-    public void setDNI(String dni){
+    public void setDNI(String dni) {
         this.dni = dni;
     }
-    public String getDNI(){
+
+    public String getDNI() {
         return this.dni;
     }
-    
+
     // agreagado en 11/04/2026 - Lin
     @Override
-    public String toString(){
-        return "Paciente: "+super.toString()
-                +"\n\tobra social:\t"+this.getObraSocial();
+    public String toString() {
+        return "Paciente: " + super.toString()
+                + "\n\tobra social:\t" + this.getObraSocial();
     }
 }
