@@ -20,6 +20,7 @@ public class CartaEstudio extends javax.swing.JPanel {
      */
     public CartaEstudio() {
         initComponents();
+        jTextField9.setEditable(false); // que no se pueda editar
     }
 
     public CartaEstudio(int i) {
@@ -27,8 +28,8 @@ public class CartaEstudio extends javax.swing.JPanel {
         test = i;
         identPaciente.setText(String.valueOf(test));
         jCheckBox1.setEnabled(false);
+        jTextField9.setEditable(false); 
     }
-    // Agregar este constructor nuevo:
 
     public CartaEstudio(Estudio estudio) {
         initComponents();
@@ -97,6 +98,26 @@ public class CartaEstudio extends javax.swing.JPanel {
                 }
             }
         }
+        jTextField9.setText(estudio.getEstado());
+        jTextField9.setEditable(false);
+        jTextField9.setText(estudio.getEstado());
+jTextField9.setEditable(false);
+
+// Color según estado:
+switch (estudio.getEstado()) {
+    case "Finalizado":
+        jTextField9.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
+        break;
+    case "Retirado":
+        jTextField9.setBackground(new java.awt.Color(200, 200, 200)); // gris
+        break;
+    case "Enviado":
+        jTextField9.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
+        break;
+    default: // En Elaboración
+        jTextField9.setBackground(new java.awt.Color(255, 200, 100)); // naranja
+        break;
+}
     } // cierre de mostrarDatos()
 
     /**
@@ -131,6 +152,8 @@ public class CartaEstudio extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jCheckBox10 = new javax.swing.JCheckBox();
         jTextField6 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(280, 400));
 
@@ -138,7 +161,7 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         jTextField8.setEditable(false);
 
-        jLabel7.setText("nombre y apellido: ");
+        jLabel7.setText("Nombre y Apellido: ");
 
         jLabel11.setText("fecha de realización");
 
@@ -177,7 +200,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jLabel5.setText("Profesional");
 
-        jLabel10.setText("fecha de entrega");
+        jLabel10.setText("Fecha de entrega");
 
         jCheckBox9.setText("jCheckBox1");
 
@@ -187,6 +210,10 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         jTextField6.setEditable(false);
         jTextField6.setToolTipText("");
+
+        jLabel12.setText("Estado:");
+
+        jTextField9.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -200,11 +227,6 @@ public class CartaEstudio extends javax.swing.JPanel {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
@@ -247,8 +269,18 @@ public class CartaEstudio extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel3))
-                .addGap(12, 12, 12))
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +337,11 @@ public class CartaEstudio extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -325,6 +361,7 @@ public class CartaEstudio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -336,5 +373,6 @@ public class CartaEstudio extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
