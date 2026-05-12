@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
@@ -21,6 +22,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
+    private EstudioController estudioController;
 
     /**
      * Creates new form PersonaForm
@@ -29,6 +31,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
+        this.estudioController = new EstudioController();
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -41,6 +44,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
+        this.estudioController = new EstudioController(listaEstudios);
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -352,7 +356,7 @@ public class PersonaMenu extends javax.swing.JFrame {
 
             // Verificar restricción: no se puede eliminar si tiene estudios
             // Usamos el método local de esta clase
-            if (pacienteTieneEstudios(p)) {
+            if (estudioController.pacienteTieneEstudios(p)) {
                 JOptionPane.showMessageDialog(this,
                         "No se puede eliminar: " + p.getNombre() + " " + p.getApellido()
                         + " tiene estudios asociados.",
@@ -398,7 +402,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             Profesional pr = listaProfesionales.get(idx);
 
             // Verificar restricción: no se puede eliminar si tiene estudios
-            if (profesionalTieneEstudios(pr)) {
+            if (estudioController.profesionalTieneEstudios(pr)) {
                 JOptionPane.showMessageDialog(this,
                         "No se puede eliminar: " + pr.getNombre() + " " + pr.getApellido()
                         + " tiene estudios asociados.",
@@ -428,42 +432,28 @@ public class PersonaMenu extends javax.swing.JFrame {
         }
     }
 
-    private boolean pacienteTieneEstudios(Paciente p) {
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(p.getDNI())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean profesionalTieneEstudios(Profesional pr) {
-        for (Estudio e : listaEstudios) {
-            if (e.getProfesional().getMatricula().equals(pr.getMatricula())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void configurarFiltros() {
         obSi.addActionListener(e -> filtrarPorObraSocial());
         obNo.addActionListener(e -> filtrarPorObraSocial());
     }
 
     private void filtrarPorObraSocial() {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (Paciente p : listaPacientes) {
-            if (obSi.isSelected() && !p.getObraSocial()) {
-                continue;
-            }
-            if (obNo.isSelected() && p.getObraSocial()) {
-                continue;
-            }
-            modelo.addElement(p.getApellido() + ", " + p.getNombre()
-                    + " - DNI: " + p.getDNI());
-        }
-        pacienteList.setModel(modelo);
+    DefaultListModel<String> modelo = new DefaultListModel<>();
+
+    ArrayList<Paciente> filtrados;
+    if (obSi.isSelected()) {
+        filtrados = estudioController.filtrarPorObraSocial(listaPacientes, true);
+    } else if (obNo.isSelected()) {
+        filtrados = estudioController.filtrarPorObraSocial(listaPacientes, false);
+    } else {
+        filtrados = listaPacientes; // ninguno seleccionado → todos
+    }
+
+    for (Paciente p : filtrados) {
+        modelo.addElement(p.getApellido() + ", " + p.getNombre()
+                + " - DNI: " + p.getDNI());
+    }
+    pacienteList.setModel(modelo);
 
     }//GEN-LAST:event_eliminarActionPerformed
 
