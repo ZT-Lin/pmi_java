@@ -1,30 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyect_2026.controller;
 
 import com.mycompany.proyect_2026.model.Paciente;
 import java.util.ArrayList;
 
-/**
- *
- * @author linzh
- */
 public class PacienteController {
 
     private final Paciente paciente;
+    private ArrayList<Paciente> listaPacientes; // ← NUEVO: Maneja la lista
 
-    //constructor
+    //constructor original
     public PacienteController() {
         paciente = new Paciente();
     }
 
-    public PacienteController(Paciente paciente) {
-        this.paciente = paciente;
+    // NUEVO: Constructor que recibe la lista
+    public PacienteController(ArrayList<Paciente> listaPacientes) {
+        this.paciente = new Paciente();
+        this.listaPacientes = listaPacientes;
     }
 
-    //setter
+    // ... ACÁ DEJAMOS TODOS TUS SETTERS Y GETTERS INTACTOS ...
     public void setNombre(String data) {
         paciente.setNombre(data);
     }
@@ -49,7 +44,6 @@ public class PacienteController {
         paciente.setObraSocial(data);
     }
 
-    //getter
     public String getNombre() {
         return paciente.getNombre();
     }
@@ -81,33 +75,54 @@ public class PacienteController {
     public String getString() {
         return paciente.toString();
     }
+    // ... FIN GETTERS Y SETTERS ...
 
-    public void registrarEnSistema(ArrayList<Paciente> listaMemoria) {
-        if (listaMemoria != null) {
-            listaMemoria.add(this.paciente);
+    // --- NUEVO REDISEÑO MVC ---
+    // Alta
+    public boolean registrarPaciente(String nombre, String apellido, String mail, String tel, String dni, boolean obraSocial) {
+        // Validación de DNI duplicado acá
+        for (Paciente p : listaPacientes) {
+            if (p.getDNI().equals(dni)) {
+                return false;
+            }
         }
-        GestorArchivos.agregarPacienteFisico(this.paciente);
-    }
-    // --- MÉTODOS PARA MVC (Eliminar y Actualizar) ---
-    public void eliminarPaciente(ArrayList<Paciente> lista, int indice) {
-        lista.remove(indice);
-        GestorArchivos.actualizarArchivoPacientes(lista);
+        Paciente nuevo = new Paciente();
+        nuevo.setNombre(nombre);
+        nuevo.setApellido(apellido);
+        nuevo.setMail(mail);
+        nuevo.setTel(tel);
+        nuevo.setDNI(dni);
+        nuevo.setObraSocial(obraSocial);
+        listaPacientes.add(nuevo);
+        GestorArchivos.agregarPacienteFisico(nuevo);
+        return true;
     }
 
-    public void actualizarPaciente(ArrayList<Paciente> lista, int indice, 
-            String nombre, String apellido, String mail, String tel, boolean obraSocial) {
-        Paciente p = lista.get(indice);
+    // Eliminación
+    public boolean eliminarPaciente(int indice) {
+        if (indice < 0 || indice >= listaPacientes.size()) {
+            return false;
+        }
+        listaPacientes.remove(indice);
+        GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+        return true;
+    }
+
+    // Modificación
+    public void actualizarPaciente(int indice, String nombre, String apellido, String mail, String tel, boolean obraSocial) {
+        Paciente p = listaPacientes.get(indice);
         p.setNombre(nombre);
         p.setApellido(apellido);
         p.setMail(mail);
         p.setTel(tel);
         p.setObraSocial(obraSocial);
-        GestorArchivos.actualizarArchivoPacientes(lista);
+        GestorArchivos.actualizarArchivoPacientes(listaPacientes);
     }
-    // --- FILTROS ---
-    public ArrayList<Paciente> filtrarPorObraSocial(ArrayList<Paciente> todos, boolean tieneOS) {
+
+    // Filtro
+    public ArrayList<Paciente> filtrarPorObraSocial(boolean tieneOS) {
         ArrayList<Paciente> resultado = new ArrayList<>();
-        for (Paciente p : todos) {
+        for (Paciente p : listaPacientes) {
             if (p.getObraSocial() == tieneOS) {
                 resultado.add(p);
             }

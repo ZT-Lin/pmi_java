@@ -268,7 +268,6 @@
         </Property>
         <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Todos"/>
-        <Property name="actionCommand" type="java.lang.String" value="Todos"/>
       </Properties>
     </Component>
   </SubComponents>
