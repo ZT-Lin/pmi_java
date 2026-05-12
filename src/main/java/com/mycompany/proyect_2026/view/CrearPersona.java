@@ -305,14 +305,12 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
-                Paciente p = listaPacientes.get(indiceEdicion);
-                p.setNombre(nombreText.getText());
-                p.setApellido(apellidoText.getText());
-                p.setMail(eMailText.getText());
-                p.setTel(telFText.getText());
-                p.setObraSocial(panelP.tieneObraSocial());
-                com.mycompany.proyect_2026.controller.GestorArchivos
-                        .actualizarArchivoPacientes(listaPacientes);
+                // Delegamos toda la tarea al controlador
+                PacienteController pc = new PacienteController();
+                pc.actualizarPaciente(listaPacientes, indiceEdicion, 
+                        nombreText.getText(), apellidoText.getText(), 
+                        eMailText.getText(), telFText.getText(), panelP.tieneObraSocial());
+                
                 javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
 
             } else {
@@ -357,15 +355,12 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
-                // En edición: matrícula bloqueada, solo se modifican los otros campos
-                Profesional pr = listaProfesionales.get(indiceEdicion);
-                pr.setNombre(nombreText.getText());
-                pr.setApellido(apellidoText.getText());
-                pr.setMail(eMailText.getText());
-                pr.setTel(telFText.getText());
-                // Matrícula NO se toca
-                com.mycompany.proyect_2026.controller.GestorArchivos
-                        .actualizarArchivoProfesionales(listaProfesionales);
+                // Delegamos toda la tarea al controlador
+                ProfesionalController prc = new ProfesionalController();
+                prc.actualizarProfesional(listaProfesionales, indiceEdicion, 
+                        nombreText.getText(), apellidoText.getText(), 
+                        eMailText.getText(), telFText.getText());
+                
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
 
             } else {

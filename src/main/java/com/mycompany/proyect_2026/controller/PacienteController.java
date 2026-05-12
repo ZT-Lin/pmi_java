@@ -88,5 +88,21 @@ public class PacienteController {
         }
         GestorArchivos.agregarPacienteFisico(this.paciente);
     }
+    // --- MÉTODOS PARA MVC (Eliminar y Actualizar) ---
+    public void eliminarPaciente(ArrayList<Paciente> lista, int indice) {
+        lista.remove(indice);
+        GestorArchivos.actualizarArchivoPacientes(lista);
+    }
+
+    public void actualizarPaciente(ArrayList<Paciente> lista, int indice, 
+            String nombre, String apellido, String mail, String tel, boolean obraSocial) {
+        Paciente p = lista.get(indice);
+        p.setNombre(nombre);
+        p.setApellido(apellido);
+        p.setMail(mail);
+        p.setTel(tel);
+        p.setObraSocial(obraSocial);
+        GestorArchivos.actualizarArchivoPacientes(lista);
+    }
 
 }

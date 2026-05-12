@@ -65,4 +65,21 @@ public class ProfesionalController {
         }
         GestorArchivos.agregarProfesionalFisico(this.profesional);
     }
+    
+    // --- MÉTODOS PARA MVC (Eliminar y Actualizar) ---
+    public void eliminarProfesional(ArrayList<Profesional> lista, int indice) {
+        lista.remove(indice);
+        GestorArchivos.actualizarArchivoProfesionales(lista);
+    }
+
+    public void actualizarProfesional(ArrayList<Profesional> lista, int indice, 
+            String nombre, String apellido, String mail, String tel) {
+        Profesional pr = lista.get(indice);
+        pr.setNombre(nombre);
+        pr.setApellido(apellido);
+        pr.setMail(mail);
+        pr.setTel(tel);
+        // La matrícula no se toca, como pide la lógica de tu programa
+        GestorArchivos.actualizarArchivoProfesionales(lista);
+    }
 }

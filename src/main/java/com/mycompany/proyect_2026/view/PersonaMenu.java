@@ -6,6 +6,8 @@ package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
+import com.mycompany.proyect_2026.controller.PacienteController;
+import com.mycompany.proyect_2026.controller.ProfesionalController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -392,12 +394,10 @@ public class PersonaMenu extends javax.swing.JFrame {
                     "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                // Eliminar de la lista en memoria
+                // Le pedimos al controlador que elimine y guarde
                 int idxReal = listaPacientes.indexOf(p);
-                listaPacientes.remove(idxReal);
-
-                // Actualizar el archivo para que el cambio persista
-                GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+                PacienteController pc = new PacienteController();
+                pc.eliminarPaciente(listaPacientes, idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
@@ -439,12 +439,10 @@ public class PersonaMenu extends javax.swing.JFrame {
                     "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                // Eliminar de la lista en memoria
+                // Le pedimos al controlador que elimine y guarde
                 int idxReal = listaProfesionales.indexOf(pr);
-                listaProfesionales.remove(idxReal);
-
-                // Actualizar el archivo para que el cambio persista
-                GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+                ProfesionalController prc = new ProfesionalController();
+                prc.eliminarProfesional(listaProfesionales, idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
