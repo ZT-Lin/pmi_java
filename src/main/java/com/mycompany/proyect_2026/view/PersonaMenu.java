@@ -310,7 +310,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         }
 
         Paciente p = listaPacientesFiltrada.get(index);
-        int cantidadEstudios = contarEstudiosDePaciente(p);
+        int cantidadEstudios = estudioController.contarEstudiosDePaciente(p);
 
         // Panel que combina la CartaPaciente con la info de estudios
         javax.swing.JPanel panelCombinado = new javax.swing.JPanel();
@@ -539,16 +539,6 @@ public class PersonaMenu extends javax.swing.JFrame {
         );
         ventanaCrear.setVisible(true);
     }//GEN-LAST:event_agregarActionPerformed
-
-    private int contarEstudiosDePaciente(Paciente p) {
-        int contador = 0;
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(p.getDNI())) {
-                contador++;
-            }
-        }
-        return contador;
-    }
 
     /**
      * @param args the command line arguments
