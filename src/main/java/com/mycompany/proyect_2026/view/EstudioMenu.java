@@ -35,6 +35,9 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaEstudios = new ArrayList<>();
         this.estudioController = new EstudioController();
         initComponents();
+        estadoSelector.setModel(new DefaultComboBoxModel<>(
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+        ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarLista();
@@ -51,6 +54,9 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaEstudios = estudios;
         this.estudioController = new EstudioController(listaEstudios);
         initComponents();
+        estadoSelector.setModel(new DefaultComboBoxModel<>(
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+        ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarLista();
@@ -58,7 +64,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         configurarFiltros();
         this.setSize(640, 530);
         this.setTitle("Sistema de Estudios");
-        
+
     }
 
     private void cargarLista() {
