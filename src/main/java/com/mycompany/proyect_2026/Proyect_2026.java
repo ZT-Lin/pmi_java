@@ -6,6 +6,7 @@ package com.mycompany.proyect_2026;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.*;
 import com.mycompany.proyect_2026.view.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,7 @@ public class Proyect_2026 {
 
     public static void main(String[] args) {
         // Carga de datos
+        new File("data").mkdirs();  // crea el directorio si no existe
         GestorArchivos.cargarAnalisisDesdeArchivo();
 
         // Cargamo Lista de Profesionales
