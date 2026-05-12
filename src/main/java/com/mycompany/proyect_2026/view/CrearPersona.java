@@ -276,11 +276,11 @@ public class CrearPersona extends javax.swing.JFrame {
         personaType.removeAll();
         if (selected.compareToIgnoreCase("Paciente") == 0) {
             this.panelP = new TypePaciente();
-            personaType.add(new TypePaciente(), BorderLayout.CENTER);
+            personaType.add(this.panelP, BorderLayout.CENTER);
         }
         if (selected.compareToIgnoreCase("Profesional") == 0) {
             this.panelProf = new TypeProfesional();
-            personaType.add(new TypeProfesional(), BorderLayout.CENTER);
+            personaType.add(this.panelProf, BorderLayout.CENTER);
         }
 
         personaType.revalidate();
@@ -288,114 +288,125 @@ public class CrearPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
-    String seleccion = (String) selectPacOPro.getSelectedItem();
+        String seleccion = (String) selectPacOPro.getSelectedItem();
 
-    if (seleccion.equals("Paciente")) {
-        if (panelP == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de paciente no cargado.");
-            return;
+        if (seleccion.equals("Paciente")) {
+            if (panelP == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de paciente no cargado.");
+                return;
+            }
+
+            if (modoEdicion) {
+                // Modo edición: modificar el objeto existente
+                Paciente p = listaPacientes.get(indiceEdicion);
+                p.setNombre(nombreText.getText());
+                p.setApellido(apellidoText.getText());
+                p.setMail(eMailText.getText());
+                p.setTel(telFText.getText());
+                p.setObraSocial(panelP.tieneObraSocial());
+                // DNI no se modifica (es identificador)
+
+                // Actualizar archivo con la lista completa
+                com.mycompany.proyect_2026.controller.GestorArchivos
+                        .actualizarArchivoPacientes(listaPacientes);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
+            } else {
+                // Modo creación: igual que antes
+                PacienteController pc = new PacienteController();
+                pc.setNombre(nombreText.getText());
+                pc.setApellido(apellidoText.getText());
+                pc.setMail(eMailText.getText());
+                pc.setTelefono(telFText.getText());
+                pc.setDNI(panelP.getDni());
+                pc.setObSocial(panelP.tieneObraSocial());
+                // Antes de pc.registrarEnSistema(...)
+                if (!panelP.dniEsValido()) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "El DNI debe tener 7 u 8 dígitos numéricos.",
+                            "DNI inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                pc.registrarEnSistema(this.listaPacientes);
+                javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
+            }
+
+            if (ventanaPadre != null) {
+                ventanaPadre.refrescarVista();
+            }
+            this.dispose();
+
+        } else if (seleccion.equals("Profesional")) {
+            if (panelProf == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de profesional no cargado.");
+                return;
+            }
+
+            if (modoEdicion) {
+                Profesional pr = listaProfesionales.get(indiceEdicion);
+                pr.setNombre(nombreText.getText());
+                pr.setApellido(apellidoText.getText());
+                pr.setMail(eMailText.getText());
+                pr.setTel(telFText.getText());
+                // Matrícula no se modifica (es identificadora)
+
+                com.mycompany.proyect_2026.controller.GestorArchivos
+                        .actualizarArchivoProfesionales(listaProfesionales);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
+            } else {
+                ProfesionalController prc = new ProfesionalController();
+                prc.setNombre(nombreText.getText());
+                prc.setApellido(apellidoText.getText());
+                prc.setMail(eMailText.getText());
+                prc.setTelefono(telFText.getText());
+                prc.setMatricula(panelProf.getMatricula());
+                prc.registrarEnSistema(this.listaProfesionales);
+                javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
+            }
+
+            if (ventanaPadre != null) {
+                ventanaPadre.refrescarVista();
+            }
+            this.dispose();
         }
-
-        if (modoEdicion) {
-            // Modo edición: modificar el objeto existente
-            Paciente p = listaPacientes.get(indiceEdicion);
-            p.setNombre(nombreText.getText());
-            p.setApellido(apellidoText.getText());
-            p.setMail(eMailText.getText());
-            p.setTel(telFText.getText());
-            p.setObraSocial(panelP.tieneObraSocial());
-            // DNI no se modifica (es identificador)
-
-            // Actualizar archivo con la lista completa
-            com.mycompany.proyect_2026.controller.GestorArchivos
-                .actualizarArchivoPacientes(listaPacientes);
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
-        } else {
-            // Modo creación: igual que antes
-            PacienteController pc = new PacienteController();
-            pc.setNombre(nombreText.getText());
-            pc.setApellido(apellidoText.getText());
-            pc.setMail(eMailText.getText());
-            pc.setTelefono(telFText.getText());
-            pc.setDNI(panelP.getDni());
-            pc.setObSocial(panelP.tieneObraSocial());
-            pc.registrarEnSistema(this.listaPacientes);
-            javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
-        }
-
-        if (ventanaPadre != null) ventanaPadre.refrescarVista();
-        this.dispose();
-
-    } else if (seleccion.equals("Profesional")) {
-        if (panelProf == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: panel de profesional no cargado.");
-            return;
-        }
-
-        if (modoEdicion) {
-            Profesional pr = listaProfesionales.get(indiceEdicion);
-            pr.setNombre(nombreText.getText());
-            pr.setApellido(apellidoText.getText());
-            pr.setMail(eMailText.getText());
-            pr.setTel(telFText.getText());
-            // Matrícula no se modifica (es identificadora)
-
-            com.mycompany.proyect_2026.controller.GestorArchivos
-                .actualizarArchivoProfesionales(listaProfesionales);
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
-        } else {
-            ProfesionalController prc = new ProfesionalController();
-            prc.setNombre(nombreText.getText());
-            prc.setApellido(apellidoText.getText());
-            prc.setMail(eMailText.getText());
-            prc.setTelefono(telFText.getText());
-            prc.setMatricula(panelProf.getMatricula());
-            prc.registrarEnSistema(this.listaProfesionales);
-            javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
-        }
-
-        if (ventanaPadre != null) ventanaPadre.refrescarVista();
-        this.dispose();
-    }
     }//GEN-LAST:event_commitPersonaActionPerformed
 
-        /**
-         * @param args the command line arguments
-         */
-        public static void main(String args[]) {
-            /* Set the Nimbus look and feel */
-            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-             */
-            try {
-                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                    if ("Nimbus".equals(info.getName())) {
-                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
-            } catch (ClassNotFoundException ex) {
-                java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-            //</editor-fold>
-
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new CrearPersona().setVisible(true);
-                }
-            });
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CrearPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new CrearPersona().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidoLabel;

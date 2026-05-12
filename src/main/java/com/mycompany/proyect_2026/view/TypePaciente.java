@@ -29,6 +29,12 @@ public class TypePaciente extends javax.swing.JPanel {
         dniText.setText(dni);
     }
 
+    public boolean dniEsValido() {
+        String dni = dniText.getText().trim();
+        // Solo dígitos, 7 u 8 caracteres
+        return dni.matches("\\d{7,8}");
+    }
+
     public void setObraSocial(boolean tiene) {
         if (tiene) {
             osSi.setSelected(true);
