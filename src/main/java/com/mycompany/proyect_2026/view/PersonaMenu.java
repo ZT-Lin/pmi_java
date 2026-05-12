@@ -461,25 +461,28 @@ public class PersonaMenu extends javax.swing.JFrame {
     }
 
     private void filtrarPorObraSocial() {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        // Creamos una instancia de PacienteController para usar su filtro
+        PacienteController pc = new PacienteController();
 
         // 1. Verificamos cuál de los tres botones está seleccionado
         if (obTodos.isSelected()) {
-            // Si elige "Todos", la lista filtrada vuelve a ser la original completa
             listaPacientesFiltrada = new ArrayList<>(listaPacientes);
 
         } else if (obSi.isSelected()) {
-            listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, true);
+            // ACÁ ESTÁ EL CAMBIO: Usamos 'pc' en lugar de 'estudioController'
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, true);
 
         } else if (obNo.isSelected()) {
-            listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, false);
+            // ACÁ TAMBIÉN: Usamos 'pc' en lugar de 'estudioController'
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, false);
 
         } else {
-            // Por si acaso al iniciar no hay ninguno seleccionado
             listaPacientesFiltrada = new ArrayList<>(listaPacientes);
         }
 
-        // 2. Llenamos el JList visual con la lista filtrada que haya quedado
+        // 2. Llenamos el JList visual
         for (Paciente p : listaPacientesFiltrada) {
             modelo.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());

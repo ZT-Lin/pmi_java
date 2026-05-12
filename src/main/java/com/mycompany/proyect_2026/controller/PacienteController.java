@@ -104,5 +104,14 @@ public class PacienteController {
         p.setObraSocial(obraSocial);
         GestorArchivos.actualizarArchivoPacientes(lista);
     }
-
+    // --- FILTROS ---
+    public ArrayList<Paciente> filtrarPorObraSocial(ArrayList<Paciente> todos, boolean tieneOS) {
+        ArrayList<Paciente> resultado = new ArrayList<>();
+        for (Paciente p : todos) {
+            if (p.getObraSocial() == tieneOS) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
+    }
 }
