@@ -33,7 +33,7 @@
                           <Group type="102" attributes="0">
                               <Component id="matriculaLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
-                              <Component id="pTelefono1" min="-2" pref="190" max="-2" attributes="0"/>
+                              <Component id="campoMatricula" min="-2" pref="190" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -44,10 +44,10 @@
                               </Group>
                               <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="pApellido" alignment="1" pref="190" max="32767" attributes="0"/>
-                                  <Component id="pCorreo" max="32767" attributes="0"/>
-                                  <Component id="pTelefono" max="32767" attributes="0"/>
-                                  <Component id="pNombre" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="campoApellido" alignment="1" pref="190" max="32767" attributes="0"/>
+                                  <Component id="campoCorreo" max="32767" attributes="0"/>
+                                  <Component id="campoTelefono" max="32767" attributes="0"/>
+                                  <Component id="campoNombre" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -62,29 +62,29 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="pNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nombreLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="pApellido" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoApellido" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="apellidoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="pCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoCorreo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="mailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="pTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="telLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="pTelefono1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoMatricula" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="matriculaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
@@ -93,7 +93,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="pNombre">
+    <Component class="javax.swing.JTextField" name="campoNombre">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -101,7 +101,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="pApellido">
+    <Component class="javax.swing.JTextField" name="campoApellido">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -109,7 +109,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="pCorreo">
+    <Component class="javax.swing.JTextField" name="campoCorreo">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -117,7 +117,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="pTelefono">
+    <Component class="javax.swing.JTextField" name="campoTelefono">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -127,7 +127,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JTextField" name="pTelefono1">
+    <Component class="javax.swing.JTextField" name="campoMatricula">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
