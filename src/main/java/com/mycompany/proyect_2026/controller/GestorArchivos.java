@@ -1,9 +1,5 @@
 package com.mycompany.proyect_2026.controller;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -15,147 +11,187 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author lucam
- */
 public class GestorArchivos {
-    public static void cargarAnalisisDesdeArchivo() {
-        try {
-            File a = new File("data/analisis.txt");
-            if (!a.exists()) return;
-            Scanner lector = new Scanner(a);
-            while (lector.hasNext()) {
-                int codigo = lector.nextInt();
-                String nombre = lector.next();
-                Analisis.TIPO_ANALYSIS.put(codigo, nombre);
-            }
-            lector.close();
-        } catch (IOException e) {
-            System.out.println("Error al cargar los analisis: " + e.getMessage());
+
+    // CORRECCIÓN 12: Precarga de datos mínimos
+    public static void crearDatosIniciales() throws IOException {
+        File fp = new File("data/pacientes.txt");
+        if (!fp.exists()) {
+            // Se asume que si no hay pacientes, tampoco hay lo demás, así que creamos todo
+
+            // 3 Pacientes
+            Paciente p1 = new Paciente("Juan", "García", "juan@mail.com", "11111111", "1122334455");
+            p1.setObraSocial(true);
+            Paciente p2 = new Paciente("Ana", "López", "ana@mail.com", "22222222", "1133445566");
+            p2.setObraSocial(false);
+            Paciente p3 = new Paciente("Carlos", "Martínez", "carlos@mail.com", "33333333", "1144556677");
+            p3.setObraSocial(true);
+            agregarPacienteFisico(p1);
+            agregarPacienteFisico(p2);
+            agregarPacienteFisico(p3);
+
+            // 3 Profesionales
+            Profesional pr1 = new Profesional("Laura", "Gómez", "laura@mail.com", "12341234", "M001");
+            Profesional pr2 = new Profesional("Diego", "Silva", "diego@mail.com", "43214321", "M002");
+            Profesional pr3 = new Profesional("Elena", "Ruiz", "elena@mail.com", "55556666", "M003");
+            agregarProfesionalFisico(pr1);
+            agregarProfesionalFisico(pr2);
+            agregarProfesionalFisico(pr3);
+
+            // 3 Estudios (Básicos)
+            Estudio e1 = new Estudio(new Fecha(1, 10, 2026), "Radiografía", p1, pr1);
+            Estudio e2 = new Estudio(new Fecha(5, 10, 2026), "Ecografía", p2, pr2);
+            Estudio e3 = new Estudio(new Fecha(10, 10, 2026), "Resonancia", p3, pr3);
+            guardarEstudioEnArchivo(e1);
+            guardarEstudioEnArchivo(e2);
+            guardarEstudioEnArchivo(e3);
         }
     }
 
-    public static ArrayList<Profesional> cargarProfesionalesDesdeArchivo() {
-        ArrayList<Profesional> lista = new ArrayList<>();
-        try {
-            File p = new File("data/profesionales.txt");
-            if (!p.exists()) return lista;
-            Scanner lector = new Scanner(p);
-            while (lector.hasNext()) {
-                String nombre = lector.next();
-                String apellido = lector.next();
-                String mail = lector.next();
-                String tel = lector.next();
-                String mat = lector.next();
-                lista.add(new Profesional(nombre, apellido, mail, tel, mat));
-            }
-            lector.close();
-        } catch (IOException e) {
-            System.out.println("Error al cargar profesionales: " + e.getMessage());
+    public static void cargarAnalisisDesdeArchivo() throws IOException {
+        File a = new File("data/analisis.txt");
+        if (!a.exists()) {
+            return;
         }
+        Scanner lector = new Scanner(a);
+        while (lector.hasNext()) {
+            int codigo = lector.nextInt();
+            String nombre = lector.next();
+            Analisis.TIPO_ANALYSIS.put(codigo, nombre);
+        }
+        lector.close();
+    }
+
+    public static ArrayList<Profesional> cargarProfesionalesDesdeArchivo() throws IOException {
+        ArrayList<Profesional> lista = new ArrayList<>();
+        File p = new File("data/profesionales.txt");
+        if (!p.exists()) {
+            return lista;
+        }
+
+        Scanner lector = new Scanner(p);
+        while (lector.hasNextLine()) {
+            String linea = lector.nextLine().trim();
+            if (linea.isEmpty()) {
+                continue;
+            }
+
+            // CORRECCIÓN 5: Usar split con "|"
+            String[] partes = linea.split("\\|");
+            if (partes.length < 5) {
+                continue;
+            }
+
+            String nombre = partes[0];
+            String apellido = partes[1];
+            String mail = partes[2];
+            String tel = partes[3];
+            String mat = partes[4];
+            lista.add(new Profesional(nombre, apellido, mail, tel, mat));
+        }
+        lector.close();
         return lista;
     }
 
-    public static ArrayList<Paciente> cargarPacientesDesdeArchivo() {
+    public static ArrayList<Paciente> cargarPacientesDesdeArchivo() throws IOException {
         ArrayList<Paciente> lista = new ArrayList<>();
-        try {
-            File p = new File("data/pacientes.txt");
-            if (!p.exists()) return lista;
-            Scanner lector = new Scanner(p);
-            while (lector.hasNext()) {
-                String nombre = lector.next();
-                String apellido = lector.next();
-                String mail = lector.next();
-                String dni = lector.next();
-                String telefono = lector.next();
-                boolean obraSocial = Boolean.parseBoolean(lector.next());
-                Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
-                paci.setObraSocial(obraSocial);
-                lista.add(paci);
-            }
-            lector.close();
-        } catch (IOException e) {
-            System.out.println("Error al cargar pacientes: " + e.getMessage());
+        File p = new File("data/pacientes.txt");
+        if (!p.exists()) {
+            return lista;
         }
+
+        Scanner lector = new Scanner(p);
+        while (lector.hasNextLine()) {
+            String linea = lector.nextLine().trim();
+            if (linea.isEmpty()) {
+                continue;
+            }
+
+            // CORRECCIÓN 5: Usar split con "|"
+            String[] partes = linea.split("\\|");
+            if (partes.length < 6) {
+                continue;
+            }
+
+            String nombre = partes[0];
+            String apellido = partes[1];
+            String mail = partes[2];
+            String dni = partes[3];
+            String telefono = partes[4];
+            boolean obraSocial = Boolean.parseBoolean(partes[5]);
+
+            Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
+            paci.setObraSocial(obraSocial);
+            lista.add(paci);
+        }
+        lector.close();
         return lista;
     }
 
     public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(
             ArrayList<Paciente> listaPacientes,
-            ArrayList<Profesional> listaProfesionales) {
+            ArrayList<Profesional> listaProfesionales) throws IOException {
 
         ArrayList<Estudio> listaEstudios = new ArrayList<>();
-        try {
-            File f = new File("data/estudios.txt");
-            if (!f.exists()) return listaEstudios; 
-            Scanner lector = new Scanner(f);
-            while (lector.hasNextLine()) {
-                String linea = lector.nextLine().trim();
-                if (linea.isEmpty()) {
-                    continue;
-                }
-
-                String[] partes = linea.split("\\|");
-                // partes: [0]dia [1]mes [2]anio [3]nombre [4]dni [5]matricula
-                //         [6]estado [7]fechaEntrega [8]analisis (puede faltar)
-
-                int dia = Integer.parseInt(partes[0]);
-                int mes = Integer.parseInt(partes[1]);
-                int anio = Integer.parseInt(partes[2]);
-                String nombreEstudio = partes[3];
-                String dniBusqueda = partes[4];
-                String matriculaBusqueda = partes[5];
-                String estado = partes[6];
-                String fechaEntregaStr = partes[7];
-
-                // Buscar paciente y profesional
-                Paciente paciente = null;
-                for (Paciente p : listaPacientes) {
-                    if (p.getDNI().equals(dniBusqueda)) {
-                        paciente = p;
-                        break;
-                    }
-                }
-
-                Profesional profesional = null;
-                for (Profesional pr : listaProfesionales) {
-                    if (pr.getMatricula().equals(matriculaBusqueda)) {
-                        profesional = pr;
-                        break;
-                    }
-                }
-
-                if (paciente == null || profesional == null) {
-                    System.out.println("Advertencia: no se pudo cargar '" + nombreEstudio + "'");
-                    continue;
-                }
-
-                Estudio est = new Estudio(new Fecha(dia, mes, anio),
-                        nombreEstudio, paciente, profesional);
-                est.setEstado(estado);
-
-                // Fecha de entrega
-                if (!fechaEntregaStr.equals("null")) {
-                    String[] fe = fechaEntregaStr.split("/");
-                    est.setFechaEntrega(new Fecha(
-                            Integer.parseInt(fe[0]),
-                            Integer.parseInt(fe[1]),
-                            Integer.parseInt(fe[2])
-                    ));
-                }
-
-                // Análisis
-                if (partes.length > 8 && !partes[8].isEmpty()) {
-                    est.setAnalisis(partes[8].split(","));
-                }
-
-                listaEstudios.add(est);
-            }
-            lector.close();
-        } catch (IOException ex) {
-            System.out.println("Error al cargar estudios: " + ex.getMessage());
+        File f = new File("data/estudios.txt");
+        if (!f.exists()) {
+            return listaEstudios;
         }
+
+        Scanner lector = new Scanner(f);
+        while (lector.hasNextLine()) {
+            String linea = lector.nextLine().trim();
+            if (linea.isEmpty()) {
+                continue;
+            }
+
+            String[] partes = linea.split("\\|");
+
+            int dia = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+            int anio = Integer.parseInt(partes[2]);
+            String nombreEstudio = partes[3];
+            String dniBusqueda = partes[4];
+            String matriculaBusqueda = partes[5];
+            String estado = partes[6];
+            String fechaEntregaStr = partes[7];
+
+            Paciente paciente = null;
+            for (Paciente p : listaPacientes) {
+                if (p.getDNI().equals(dniBusqueda)) {
+                    paciente = p;
+                    break;
+                }
+            }
+
+            Profesional profesional = null;
+            for (Profesional pr : listaProfesionales) {
+                if (pr.getMatricula().equals(matriculaBusqueda)) {
+                    profesional = pr;
+                    break;
+                }
+            }
+
+            if (paciente == null || profesional == null) {
+                System.out.println("Advertencia: no se pudo cargar '" + nombreEstudio + "'");
+                continue;
+            }
+
+            Estudio est = new Estudio(new Fecha(dia, mes, anio), nombreEstudio, paciente, profesional);
+            est.setEstado(estado);
+
+            if (!fechaEntregaStr.equals("null")) {
+                String[] fe = fechaEntregaStr.split("/");
+                est.setFechaEntrega(new Fecha(Integer.parseInt(fe[0]), Integer.parseInt(fe[1]), Integer.parseInt(fe[2])));
+            }
+
+            if (partes.length > 8 && !partes[8].isEmpty()) {
+                est.setAnalisis(partes[8].split(","));
+            }
+
+            listaEstudios.add(est);
+        }
+        lector.close();
         return listaEstudios;
     }
 
@@ -165,7 +201,7 @@ public class GestorArchivos {
             fw.write(formatearEstudio(e) + "\n");
             fw.close();
         } catch (IOException ex) {
-            System.out.println("Error al guardar estudio: " + ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar estudio.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -173,18 +209,15 @@ public class GestorArchivos {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt");
             for (Paciente p : listaPacientes) {
-                String linea = p.getNombre() + " "
-                        + p.getApellido() + " "
-                        + p.getMail() + " "
-                        + p.getDNI() + " "
-                        + p.getTel() + " " 
-                        + p.getObraSocial() + "\n";
-
+                // CORRECCIÓN 5: Guardar con "|"
+                String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                        + p.getMail() + "|" + p.getDNI() + "|"
+                        + p.getTel() + "|" + p.getObraSocial() + "\n";
                 fw.write(linea);
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al actualizar el archivo de pacientes: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al actualizar pacientes.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -192,16 +225,15 @@ public class GestorArchivos {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt");
             for (Profesional p : listaProfesionales) {
-                String linea = p.getNombre() + " "
-                        + p.getApellido() + " "
-                        + p.getMail() + " "
-                        + p.getTel() + " "
+                // CORRECCIÓN 5: Guardar con "|"
+                String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                        + p.getMail() + "|" + p.getTel() + "|"
                         + p.getMatricula() + "\n";
                 fw.write(linea);
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al actualizar el archivo de profesionales: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al actualizar profesionales.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -213,63 +245,51 @@ public class GestorArchivos {
             }
             fw.close();
         } catch (IOException ex) {
-            System.out.println("Error al actualizar estudios: " + ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al actualizar estudios.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void agregarPacienteFisico(Paciente p) {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt", true);
-            String linea = p.getNombre() + " "
-                    + p.getApellido() + " "
-                    + p.getMail() + " "
-                    + p.getDNI() + " "
-                    + p.getTel() + " " 
-                    + p.getObraSocial() + "\n";
+            // CORRECCIÓN 5: Guardar con "|"
+            String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                    + p.getMail() + "|" + p.getDNI() + "|"
+                    + p.getTel() + "|" + p.getObraSocial() + "\n";
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar paciente.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void agregarProfesionalFisico(Profesional p) {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt", true);
-            String linea = p.getNombre() + " "
-                    + p.getApellido() + " "
-                    + p.getMail() + " "
-                    + p.getTel() + " "
+            // CORRECCIÓN 5: Guardar con "|"
+            String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                    + p.getMail() + "|" + p.getTel() + "|"
                     + p.getMatricula() + "\n";
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al escribir profesional: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar profesional.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // Método auxiliar privado:
     private static String formatearEstudio(Estudio e) {
-        // Fecha entrega: guardamos "null" si no tiene
         String fechaEntrega = (e.getFechaEntrega() != null)
-                ? e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes()
-                + "/" + e.getFechaEntrega().getAnio()
+                ? e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes() + "/" + e.getFechaEntrega().getAnio()
                 : "null";
 
-        // Análisis: unimos con coma
         String analisis = "";
         if (e.getAnalisis() != null && e.getAnalisis().length > 0) {
             analisis = String.join(",", e.getAnalisis());
         }
 
-        return e.getFecha().getDia() + "|"
-                + e.getFecha().getMes() + "|"
-                + e.getFecha().getAnio() + "|"
-                + e.getNombreEstudio() + "|"
-                + e.getPaciente().getDNI() + "|"
-                + e.getProfesional().getMatricula() + "|"
-                + e.getEstado() + "|"
-                + fechaEntrega + "|"
-                + analisis;
+        return e.getFecha().getDia() + "|" + e.getFecha().getMes() + "|" + e.getFecha().getAnio() + "|"
+                + e.getNombreEstudio() + "|" + e.getPaciente().getDNI() + "|"
+                + e.getProfesional().getMatricula() + "|" + e.getEstado() + "|"
+                + fechaEntrega + "|" + analisis;
     }
 }
