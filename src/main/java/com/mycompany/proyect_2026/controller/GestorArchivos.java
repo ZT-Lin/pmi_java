@@ -68,7 +68,9 @@ public class GestorArchivos {
                 String mail = lector.next();
                 String dni = lector.next();
                 String telefono = lector.next();
+                boolean obraSocial = Boolean.parseBoolean(lector.next());
                 Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
+                paci.setObraSocial(obraSocial);
                 lista.add(paci);
             }
             lector.close();
@@ -173,7 +175,8 @@ public class GestorArchivos {
                         + p.getApellido() + " "
                         + p.getMail() + " "
                         + p.getDNI() + " "
-                        + p.getTel() + "\n";
+                        + p.getTel() + " " 
+                        + p.getObraSocial() + "\n";
 
                 fw.write(linea);
             }
@@ -219,7 +222,8 @@ public class GestorArchivos {
                     + p.getApellido() + " "
                     + p.getMail() + " "
                     + p.getDNI() + " "
-                    + p.getTel() + "\n";
+                    + p.getTel() + " " 
+                    + p.getObraSocial() + "\n";
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
