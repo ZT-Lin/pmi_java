@@ -38,7 +38,6 @@ public class EstudioController {
         }
         ArrayList<Estudio> resultado = new ArrayList<>();
         for (Estudio e : listaEstudios) {
-            System.out.println("Estado\t" + e.getEstado());
             if (e.getEstado().equalsIgnoreCase(estado)) {
                 resultado.add(e);
             }
