@@ -33,8 +33,7 @@ public class CrearPersona extends javax.swing.JFrame {
     public CrearPersona() {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
-        new ArrayList<>();
-        this.ventanaPadre = new PersonaMenu();
+        this.ventanaPadre = null;
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -298,6 +297,28 @@ public class CrearPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_selectPacOProItemStateChanged
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
+
+        //VALIDACIONES BÁSICAS (Para ambos tipos de personas)
+        String nombre = nombreText.getText().trim();
+        String apellido = apellidoText.getText().trim();
+        String mail = eMailText.getText().trim();
+        String tel = telFText.getText().trim();
+
+        if (nombre.isEmpty() || apellido.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Nombre y apellido son obligatorios.",
+                    "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; // Corta la ejecución acá, no sigue guardando
+        }
+
+        if (mail.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El mail es obligatorio.",
+                    "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; // Corta la ejecución acá
+        }
+        // -----------------------------------------------------------
+
         String seleccion = (String) selectPacOPro.getSelectedItem();
 
         if (seleccion.equals("Paciente")) {
@@ -305,12 +326,11 @@ public class CrearPersona extends javax.swing.JFrame {
                 return;
             }
 
-            // Instanciamos el controlador con la lista
             PacienteController pc = new PacienteController(listaPacientes);
 
             if (modoEdicion) {
-                pc.actualizarPaciente(indiceEdicion, nombreText.getText(), apellidoText.getText(),
-                        eMailText.getText(), telFText.getText(), panelP.tieneObraSocial());
+                pc.actualizarPaciente(indiceEdicion, nombre, apellido,
+                        mail, tel, panelP.tieneObraSocial());
                 javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
             } else {
                 if (!panelP.dniEsValido()) {
@@ -318,9 +338,8 @@ public class CrearPersona extends javax.swing.JFrame {
                     return;
                 }
 
-                // Intenta registrar. Si devuelve false, es porque el DNI estaba repetido
-                boolean exito = pc.registrarPaciente(nombreText.getText(), apellidoText.getText(),
-                        eMailText.getText(), telFText.getText(), panelP.getDni().trim(), panelP.tieneObraSocial());
+                boolean exito = pc.registrarPaciente(nombre, apellido,
+                        mail, tel, panelP.getDni().trim(), panelP.tieneObraSocial());
 
                 if (!exito) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un paciente con ese DNI.", "DNI repetido", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -334,12 +353,11 @@ public class CrearPersona extends javax.swing.JFrame {
                 return;
             }
 
-            // Instanciamos el controlador con la lista
             ProfesionalController prc = new ProfesionalController(listaProfesionales);
 
             if (modoEdicion) {
-                prc.actualizarProfesional(indiceEdicion, nombreText.getText(), apellidoText.getText(),
-                        eMailText.getText(), telFText.getText());
+                prc.actualizarProfesional(indiceEdicion, nombre, apellido,
+                        mail, tel);
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
             } else {
                 if (!panelProf.matriculaEsValida()) {
@@ -347,9 +365,8 @@ public class CrearPersona extends javax.swing.JFrame {
                     return;
                 }
 
-                // Intenta registrar. Si devuelve false, es porque la matrícula está repetida
-                boolean exito = prc.registrarProfesional(nombreText.getText(), apellidoText.getText(),
-                        eMailText.getText(), telFText.getText(), panelProf.getMatricula().trim());
+                boolean exito = prc.registrarProfesional(nombre, apellido,
+                        mail, tel, panelProf.getMatricula().trim());
 
                 if (!exito) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Ya existe un profesional con esa matrícula.", "Matrícula repetida", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -363,7 +380,6 @@ public class CrearPersona extends javax.swing.JFrame {
             ventanaPadre.refrescarVista();
         }
         this.dispose();
-
     }//GEN-LAST:event_commitPersonaActionPerformed
 
     /**
