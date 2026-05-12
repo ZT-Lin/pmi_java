@@ -88,6 +88,7 @@ public class GestorArchivos {
         ArrayList<Estudio> listaEstudios = new ArrayList<>();
         try {
             File f = new File("data/estudios.txt");
+            if (!f.exists()) return listaEstudios; 
             Scanner lector = new Scanner(f);
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine().trim();
