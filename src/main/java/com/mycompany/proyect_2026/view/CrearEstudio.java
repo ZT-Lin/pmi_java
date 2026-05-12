@@ -531,6 +531,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         if (ventanaPadre != null) {
             ventanaPadre.refrescarVista();
         }
+        this.dispose();
     }//GEN-LAST:event_confirmarActionPerformed
 
     /**
