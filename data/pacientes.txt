@@ -1,6 +1,5 @@
-Marco Lorca marco@mail.com 40111222 4223344
-Javier Sangar javier@gmail.com 47318647 423345
-Juan Perez juan@mail.com 12345678 2615551001
-Maria Lopez maria@mail.com 87654321 2615552002
-Carlos Ruiz carlos@mail.com 33445566 2615553003
-Santiago Lamas lamastomas8@gmail.com 1234567 1234567
+Marco Lorca marco@mail.com 40111222 4223344 false
+Juan Perez juan@mail.com 12345678 2615551001 true
+Maria Lopez maria@mail.com 87654321 2615552002 false
+Carlos Ruiz carlos@mail.com 33445566 2615553003 false
+Santiago Lamas lamastomas8@gmail.com 1234567 1234567 true
