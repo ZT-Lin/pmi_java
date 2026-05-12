@@ -74,7 +74,9 @@ public class CrearPersona extends javax.swing.JFrame {
 
         // Pre-rellenar campos comunes
         nombreText.setText(pacienteAEditar.getNombre());
+        nombreText.setEditable(false);
         apellidoText.setText(pacienteAEditar.getApellido());
+        apellidoText.setEditable(false);
         eMailText.setText(pacienteAEditar.getMail());
         telFText.setText(pacienteAEditar.getTel());
 
@@ -107,7 +109,9 @@ public class CrearPersona extends javax.swing.JFrame {
         selectPacOPro.setSelectedItem("Profesional");
 
         nombreText.setText(profesionalAEditar.getNombre());
+        nombreText.setEditable(false);
         apellidoText.setText(profesionalAEditar.getApellido());
+        apellidoText.setEditable(false);
         eMailText.setText(profesionalAEditar.getMail());
         telFText.setText(profesionalAEditar.getTel());
 

@@ -48,7 +48,7 @@ public class GestorArchivos {
                 String mail = lector.next();
                 String tel = lector.next();
                 String mat = lector.next();
-                lista.add(new Profesional(nom, ape, mail, tel, mat));
+                lista.add(new Profesional(nombre, apellido, mail, tel, mat));
             }
             lector.close();
         } catch (IOException e) {
@@ -64,8 +64,8 @@ public class GestorArchivos {
             if (!p.exists()) return lista;
             Scanner lector = new Scanner(p);
             while (lector.hasNext()) {
-                String nom = lector.next();
-                String ape = lector.next();
+                String nombre = lector.next();
+                String apellido = lector.next();
                 String mail = lector.next();
                 String dni = lector.next();
                 String telefono = lector.next();
@@ -155,7 +155,7 @@ public class GestorArchivos {
         } catch (IOException ex) {
             System.out.println("Error al cargar estudios: " + ex.getMessage());
         }
-        return lista;
+        return listaEstudios;
     }
 
     public static void guardarEstudioEnArchivo(Estudio e) {

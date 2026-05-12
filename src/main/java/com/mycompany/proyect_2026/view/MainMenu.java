@@ -31,6 +31,8 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
+        this.setSize(689, 374);
+
     }
 
     public MainMenu(ArrayList<Paciente> pacientes,
@@ -42,7 +44,8 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
-
+        this.setSize(689, 374);
+        
     }
 
     /**
@@ -83,26 +86,25 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(nombreCompañía))
+                        .addGap(209, 209, 209)
+                        .addComponent(toPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(toPersona))
+                        .addGap(210, 210, 210)
+                        .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                        .addGap(113, 113, 113)
+                        .addComponent(nombreCompañía)))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(38, 38, 38)
                 .addComponent(nombreCompañía, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(toPersona)
                 .addGap(18, 18, 18)
-                .addComponent(toStudios)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addComponent(toPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
