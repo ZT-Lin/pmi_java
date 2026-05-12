@@ -35,11 +35,15 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaEstudios = new ArrayList<>();
         this.estudioController = new EstudioController();
         initComponents();
+        estadoSelector.setModel(new DefaultComboBoxModel<>(
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+        ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarLista();
         cargarCombosProfesional();
         configurarFiltros();
+        this.setTitle("Sistema de Estudios");
     }
 
     public EstudioMenu(ArrayList<Paciente> pacientes,
@@ -50,11 +54,17 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaEstudios = estudios;
         this.estudioController = new EstudioController(listaEstudios);
         initComponents();
+        estadoSelector.setModel(new DefaultComboBoxModel<>(
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+        ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarLista();
         cargarCombosProfesional();
         configurarFiltros();
+        this.setSize(640, 530);
+        this.setTitle("Sistema de Estudios");
+
     }
 
     private void cargarLista() {
@@ -205,7 +215,7 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(580, 500));
+        setPreferredSize(new java.awt.Dimension(614, 497));
 
         estudioList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -219,7 +229,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(estudioList);
 
-        estadoSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado" }));
+        estadoSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Todos>", "En Elaboracion", "Finalizado", "Retirado", "Enviado" }));
 
         estadoLabel.setText("Estado:");
 
@@ -296,25 +306,21 @@ public class EstudioMenu extends javax.swing.JFrame {
                                 .addComponent(anioTField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 116, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(modificar)
-                            .addComponent(agregar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(fechaLabel)
@@ -333,8 +339,14 @@ public class EstudioMenu extends javax.swing.JFrame {
                             .addComponent(profesionalSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(profesionalLabel))
                         .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(modificar)
+                            .addComponent(agregar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();

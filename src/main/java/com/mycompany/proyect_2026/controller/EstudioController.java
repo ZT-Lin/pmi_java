@@ -4,7 +4,7 @@ package com.mycompany.proyect_2026.controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import com.mycompany.proyect_2026.controller.GestorArchivos;
+
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
@@ -38,6 +38,7 @@ public class EstudioController {
         }
         ArrayList<Estudio> resultado = new ArrayList<>();
         for (Estudio e : listaEstudios) {
+            System.out.println("Estado\t" + e.getEstado());
             if (e.getEstado().equalsIgnoreCase(estado)) {
                 resultado.add(e);
             }
@@ -190,14 +191,5 @@ public class EstudioController {
         return false;
     }
 
-    public ArrayList<Paciente> filtrarPorObraSocial(
-            ArrayList<Paciente> todos, boolean tieneOS) {
-        ArrayList<Paciente> resultado = new ArrayList<>();
-        for (Paciente p : todos) {
-            if (p.getObraSocial() == tieneOS) {
-                resultado.add(p);
-            }
-        }
-        return resultado;
-    }
+
 }

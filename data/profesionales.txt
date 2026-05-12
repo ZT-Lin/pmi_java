@@ -1,6 +1,7 @@
 Franco Lin lin@gmail.com 26641234 1001
 Tomas Lamas lamastomas8@gmail.com 26645678 1002
 Luca Masotti lucamasotti23@gmail.com 26643130 1003
-Ana Garcia ana@lab.com 2615554001 1001
-Pedro Silva pedro@lab.com 2615554002 1002
-Laura Torres laura@lab.com 2615554003 1003
+Ana Garcia ana@lab.com 2615554001 1004
+Pedro Silva pedro@lab.com 2615554002 1005
+Laura Torres laura@lab.com 2615554003 1006
+Jorge Miranda jorge@lab.com 2664185662 1007

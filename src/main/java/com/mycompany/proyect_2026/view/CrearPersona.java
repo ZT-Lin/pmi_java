@@ -38,6 +38,7 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        this.setTitle("Nueva Persona");
     }
 
     public CrearPersona(ArrayList<Paciente> pacientes,
@@ -50,6 +51,7 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setTitle("Modificar Profesional");
     }
 
     // Constructor para EDITAR un paciente existente
@@ -59,6 +61,7 @@ public class CrearPersona extends javax.swing.JFrame {
             PersonaMenu padre,
             Paciente pacienteAEditar,
             int indice) {
+        this.setTitle("Modificar Paciente");
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.ventanaPadre = padre;
@@ -74,7 +77,9 @@ public class CrearPersona extends javax.swing.JFrame {
 
         // Pre-rellenar campos comunes
         nombreText.setText(pacienteAEditar.getNombre());
+        nombreText.setEditable(false);
         apellidoText.setText(pacienteAEditar.getApellido());
+        apellidoText.setEditable(false);
         eMailText.setText(pacienteAEditar.getMail());
         telFText.setText(pacienteAEditar.getTel());
 
@@ -95,6 +100,7 @@ public class CrearPersona extends javax.swing.JFrame {
             PersonaMenu padre,
             Profesional profesionalAEditar,
             int indice) {
+        this.setTitle("Nueva Profesional");
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.ventanaPadre = padre;
@@ -107,7 +113,9 @@ public class CrearPersona extends javax.swing.JFrame {
         selectPacOPro.setSelectedItem("Profesional");
 
         nombreText.setText(profesionalAEditar.getNombre());
+        nombreText.setEditable(false);
         apellidoText.setText(profesionalAEditar.getApellido());
+        apellidoText.setEditable(false);
         eMailText.setText(profesionalAEditar.getMail());
         telFText.setText(profesionalAEditar.getTel());
 
@@ -116,6 +124,9 @@ public class CrearPersona extends javax.swing.JFrame {
         }
 
         commitPersona.setText("Guardar cambios");
+        if (panelProf != null) {
+            panelProf.bloquearMatricula();
+        }
     }
 
     /**
@@ -135,10 +146,10 @@ public class CrearPersona extends javax.swing.JFrame {
         telLabel = new javax.swing.JLabel();
         telFText = new javax.swing.JFormattedTextField();
         personaType = new javax.swing.JPanel();
-        commitPersona = new javax.swing.JToggleButton();
         titleLabel = new javax.swing.JLabel();
         selectPacOPro = new javax.swing.JComboBox<>();
         seleccionarLabel = new javax.swing.JLabel();
+        commitPersona = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,13 +212,6 @@ public class CrearPersona extends javax.swing.JFrame {
         personaType.setPreferredSize(new java.awt.Dimension(285, 162));
         personaType.setLayout(new java.awt.BorderLayout());
 
-        commitPersona.setText("Agregar nueva persona");
-        commitPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                commitPersonaActionPerformed(evt);
-            }
-        });
-
         titleLabel.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         titleLabel.setText("Datos básicos");
 
@@ -220,6 +224,13 @@ public class CrearPersona extends javax.swing.JFrame {
 
         seleccionarLabel.setText("Tipo");
 
+        commitPersona.setText("Agregar Persona Nueva");
+        commitPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                commitPersonaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,23 +238,24 @@ public class CrearPersona extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(personaData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleLabel)
-                        .addGap(75, 75, 75)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(personaData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(titleLabel)
+                                .addGap(75, 75, 75)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(seleccionarLabel)
+                                .addGap(19, 19, 19)
+                                .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(personaType, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(seleccionarLabel)
-                        .addGap(19, 19, 19)
-                        .addComponent(selectPacOPro, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(personaType, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(211, 211, 211)
+                        .addComponent(commitPersona)))
                 .addContainerGap(22, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(commitPersona)
-                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,36 +305,40 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
-                // Modo edición: modificar el objeto existente
-                Paciente p = listaPacientes.get(indiceEdicion);
-                p.setNombre(nombreText.getText());
-                p.setApellido(apellidoText.getText());
-                p.setMail(eMailText.getText());
-                p.setTel(telFText.getText());
-                p.setObraSocial(panelP.tieneObraSocial());
-                // DNI no se modifica (es identificador)
-
-                // Actualizar archivo con la lista completa
-                com.mycompany.proyect_2026.controller.GestorArchivos
-                        .actualizarArchivoPacientes(listaPacientes);
-
-                javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
-            } else {
-                // Modo creación: igual que antes
+                // Delegamos toda la tarea al controlador
                 PacienteController pc = new PacienteController();
-                pc.setNombre(nombreText.getText());
-                pc.setApellido(apellidoText.getText());
-                pc.setMail(eMailText.getText());
-                pc.setTelefono(telFText.getText());
-                pc.setDNI(panelP.getDni());
-                pc.setObSocial(panelP.tieneObraSocial());
-                // Antes de pc.registrarEnSistema(...)
+                pc.actualizarPaciente(listaPacientes, indiceEdicion, 
+                        nombreText.getText(), apellidoText.getText(), 
+                        eMailText.getText(), telFText.getText(), panelP.tieneObraSocial());
+                
+                javax.swing.JOptionPane.showMessageDialog(this, "Paciente modificado con éxito");
+
+            } else {
+                // Validar DNI antes de registrar
                 if (!panelP.dniEsValido()) {
                     javax.swing.JOptionPane.showMessageDialog(this,
                             "El DNI debe tener 7 u 8 dígitos numéricos.",
                             "DNI inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                // Validar que el DNI no esté repetido
+                String dniNuevo = panelP.getDni().trim();
+                for (Paciente pac : listaPacientes) {
+                    if (pac.getDNI().equals(dniNuevo)) {
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                "Ya existe un paciente con el DNI " + dniNuevo + ".",
+                                "DNI repetido", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                PacienteController pc = new PacienteController();
+                pc.setNombre(nombreText.getText());
+                pc.setApellido(apellidoText.getText());
+                pc.setMail(eMailText.getText());
+                pc.setTelefono(telFText.getText());
+                pc.setDNI(dniNuevo);
+                pc.setObSocial(panelP.tieneObraSocial());
                 pc.registrarEnSistema(this.listaPacientes);
                 javax.swing.JOptionPane.showMessageDialog(this, "Paciente registrado con éxito");
             }
@@ -339,24 +355,39 @@ public class CrearPersona extends javax.swing.JFrame {
             }
 
             if (modoEdicion) {
-                Profesional pr = listaProfesionales.get(indiceEdicion);
-                pr.setNombre(nombreText.getText());
-                pr.setApellido(apellidoText.getText());
-                pr.setMail(eMailText.getText());
-                pr.setTel(telFText.getText());
-                // Matrícula no se modifica (es identificadora)
-
-                com.mycompany.proyect_2026.controller.GestorArchivos
-                        .actualizarArchivoProfesionales(listaProfesionales);
-
+                // Delegamos toda la tarea al controlador
+                ProfesionalController prc = new ProfesionalController();
+                prc.actualizarProfesional(listaProfesionales, indiceEdicion, 
+                        nombreText.getText(), apellidoText.getText(), 
+                        eMailText.getText(), telFText.getText());
+                
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional modificado con éxito");
+
             } else {
+                // Validar que sea numérica
+                if (!panelProf.matriculaEsValida()) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "La matrícula debe ser numérica.",
+                            "Matrícula inválida", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // Validar que no esté repetida
+                String matriculaNueva = panelProf.getMatricula().trim();
+                for (Profesional pr : listaProfesionales) {
+                    if (pr.getMatricula().equals(matriculaNueva)) {
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                "Ya existe un profesional con la matrícula " + matriculaNueva + ".",
+                                "Matrícula repetida", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
                 ProfesionalController prc = new ProfesionalController();
                 prc.setNombre(nombreText.getText());
                 prc.setApellido(apellidoText.getText());
                 prc.setMail(eMailText.getText());
                 prc.setTelefono(telFText.getText());
-                prc.setMatricula(panelProf.getMatricula());
+                prc.setMatricula(matriculaNueva);
                 prc.registrarEnSistema(this.listaProfesionales);
                 javax.swing.JOptionPane.showMessageDialog(this, "Profesional registrado con éxito");
             }
@@ -366,6 +397,7 @@ public class CrearPersona extends javax.swing.JFrame {
             }
             this.dispose();
         }
+
     }//GEN-LAST:event_commitPersonaActionPerformed
 
     /**
@@ -407,7 +439,7 @@ public class CrearPersona extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidoLabel;
     private javax.swing.JTextField apellidoText;
-    private javax.swing.JToggleButton commitPersona;
+    private javax.swing.JButton commitPersona;
     private javax.swing.JLabel eMailLabel;
     private javax.swing.JTextField eMailText;
     private javax.swing.JLabel nombreLabel;

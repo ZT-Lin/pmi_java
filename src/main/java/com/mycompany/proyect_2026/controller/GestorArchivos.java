@@ -17,13 +17,13 @@ import java.util.Scanner;
 
 /**
  *
- * @author Usuario
+ * @author lucam
  */
 public class GestorArchivos {
-
     public static void cargarAnalisisDesdeArchivo() {
         try {
             File a = new File("data/analisis.txt");
+            if (!a.exists()) return;
             Scanner lector = new Scanner(a);
             while (lector.hasNext()) {
                 int codigo = lector.nextInt();
@@ -40,15 +40,15 @@ public class GestorArchivos {
         ArrayList<Profesional> lista = new ArrayList<>();
         try {
             File p = new File("data/profesionales.txt");
+            if (!p.exists()) return lista;
             Scanner lector = new Scanner(p);
             while (lector.hasNext()) {
                 String nombre = lector.next();
                 String apellido = lector.next();
                 String mail = lector.next();
-                String telefono = lector.next();
-                String matricula = lector.next();
-                Profesional prof = new Profesional(nombre, apellido, mail, telefono, matricula);
-                lista.add(prof);
+                String tel = lector.next();
+                String mat = lector.next();
+                lista.add(new Profesional(nombre, apellido, mail, tel, mat));
             }
             lector.close();
         } catch (IOException e) {
@@ -60,8 +60,9 @@ public class GestorArchivos {
     public static ArrayList<Paciente> cargarPacientesDesdeArchivo() {
         ArrayList<Paciente> lista = new ArrayList<>();
         try {
-            File z = new File("data/pacientes.txt");
-            Scanner lector = new Scanner(z);
+            File p = new File("data/pacientes.txt");
+            if (!p.exists()) return lista;
+            Scanner lector = new Scanner(p);
             while (lector.hasNext()) {
                 String nombre = lector.next();
                 String apellido = lector.next();
@@ -87,6 +88,7 @@ public class GestorArchivos {
         ArrayList<Estudio> listaEstudios = new ArrayList<>();
         try {
             File f = new File("data/estudios.txt");
+            if (!f.exists()) return listaEstudios; 
             Scanner lector = new Scanner(f);
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine().trim();

@@ -6,6 +6,8 @@ package com.mycompany.proyect_2026.view;
 
 import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
+import com.mycompany.proyect_2026.controller.PacienteController;
+import com.mycompany.proyect_2026.controller.ProfesionalController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -23,6 +25,8 @@ public class PersonaMenu extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
     private EstudioController estudioController;
+    private ArrayList<Paciente> listaPacientesFiltrada;
+    private ArrayList<Profesional> listaProfesionalesFiltrada;
 
     /**
      * Creates new form PersonaForm
@@ -38,6 +42,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
+        this.setTitle("Sistema de Personas");
     }
 
     public PersonaMenu(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales, ArrayList<Estudio> estudios) {
@@ -51,6 +56,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
+        this.setTitle("Sistema de Personas");
     }
 
     /**
@@ -75,6 +81,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         obraSocialLabel = new javax.swing.JLabel();
         obSi = new javax.swing.JRadioButton();
         obNo = new javax.swing.JRadioButton();
+        obTodos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -157,6 +164,11 @@ public class PersonaMenu extends javax.swing.JFrame {
         buttonGroup1.add(obNo);
         obNo.setText("No");
 
+        buttonGroup1.add(obTodos);
+        obTodos.setSelected(true);
+        obTodos.setText("Todos");
+        obTodos.setActionCommand("Todos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,14 +179,18 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(volver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                    .addComponent(personaList)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(obraSocialLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(obSi)
-                        .addGap(18, 18, 18)
-                        .addComponent(obNo))
-                    .addComponent(personaList))
+                        .addComponent(obTodos)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(obraSocialLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(obSi)
+                                .addGap(12, 12, 12)
+                                .addComponent(obNo)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -196,26 +212,37 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addComponent(modificar)
                     .addComponent(agregar)
                     .addComponent(volver))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(obraSocialLabel)
-                            .addComponent(obSi)
-                            .addComponent(obNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(personaList)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(obraSocialLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(obSi)
+                                    .addComponent(obNo)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(obTodos)))
+                        .addGap(9, 9, 9)
+                        .addComponent(personaList))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void cargarListas() {
+        // Inicializamos las listas filtradas como copias exactas de las originales
+        listaPacientesFiltrada = new ArrayList<>(listaPacientes);
+        listaProfesionalesFiltrada = new ArrayList<>(listaProfesionales);
+
         // --- Pacientes ---
         DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
-        for (Paciente p : listaPacientes) {
-            // Lo que se muestra en cada fila del JList
+        for (Paciente p : listaPacientesFiltrada) { // ← Ojo acá: iteramos sobre la filtrada
             modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());
         }
@@ -223,7 +250,7 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         // --- Profesionales ---
         DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
-        for (Profesional pr : listaProfesionales) {
+        for (Profesional pr : listaProfesionalesFiltrada) { // ← Iteramos sobre la filtrada
             modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre()
                     + " - Mat: " + pr.getMatricula());
         }
@@ -235,11 +262,10 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
     }
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
-
         String texto = barraDeBusqueda.getText().trim().toLowerCase();
 
         if (texto.isEmpty()) {
-            cargarListas(); // si borra todo, vuelve a mostrar todos
+            cargarListas();
             return;
         }
 
@@ -247,31 +273,30 @@ public class PersonaMenu extends javax.swing.JFrame {
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         if (tabActivo == 0) {
+            listaPacientesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
             for (Paciente p : listaPacientes) {
                 if (p.getNombre().toLowerCase().contains(texto)
                         || p.getApellido().toLowerCase().contains(texto)
                         || p.getDNI().contains(texto)) {
+                    listaPacientesFiltrada.add(p); // Guardamos el objeto real filtrado
                     modelo.addElement(p.getApellido() + ", " + p.getNombre()
                             + " - DNI: " + p.getDNI());
                 }
             }
+            pacienteList.setModel(modelo);
         } else {
+            listaProfesionalesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
             for (Profesional pr : listaProfesionales) {
                 if (pr.getNombre().toLowerCase().contains(texto)
                         || pr.getApellido().toLowerCase().contains(texto)
                         || pr.getMatricula().contains(texto)) {
+                    listaProfesionalesFiltrada.add(pr); // Guardamos el objeto real filtrado
                     modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
                             + " - Mat: " + pr.getMatricula());
                 }
             }
-        }
-
-        if (tabActivo == 0) {
-            pacienteList.setModel(modelo);
-        } else {
             profesionalList.setModel(modelo);
         }
-
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
@@ -282,7 +307,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             return;
         }
 
-        Paciente p = listaPacientes.get(index);
+        Paciente p = listaPacientesFiltrada.get(index);
         int cantidadEstudios = contarEstudiosDePaciente(p);
 
         // Panel que combina la CartaPaciente con la info de estudios
@@ -313,7 +338,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             int indice = profesionalList.getSelectedIndex();
 
             if (indice != -1) {
-                com.mycompany.proyect_2026.model.Profesional seleccionado = this.listaProfesionales.get(indice);
+                Profesional seleccionado = this.listaProfesionalesFiltrada.get(indice);
                 areaParaMostrar.removeAll();
 
                 areaParaMostrar.add(new CartaProfesional(
@@ -356,7 +381,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
 
             // Obtener el paciente seleccionado de la lista real
-            Paciente p = listaPacientes.get(idx);
+            Paciente p = listaPacientesFiltrada.get(idx);
 
             // Verificar restricción: no se puede eliminar si tiene estudios
             // Usamos el método local de esta clase
@@ -374,11 +399,10 @@ public class PersonaMenu extends javax.swing.JFrame {
                     "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                // Eliminar de la lista en memoria
-                listaPacientes.remove(idx);
-
-                // Actualizar el archivo para que el cambio persista
-                GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+                // Le pedimos al controlador que elimine y guarde
+                int idxReal = listaPacientes.indexOf(p);
+                PacienteController pc = new PacienteController();
+                pc.eliminarPaciente(listaPacientes, idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
@@ -403,7 +427,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
 
             // Obtener el profesional seleccionado de la lista real
-            Profesional pr = listaProfesionales.get(idx);
+            Profesional pr = listaProfesionalesFiltrada.get(idx);
 
             // Verificar restricción: no se puede eliminar si tiene estudios
             if (estudioController.profesionalTieneEstudios(pr)) {
@@ -420,11 +444,10 @@ public class PersonaMenu extends javax.swing.JFrame {
                     "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
             if (confirmar == JOptionPane.YES_OPTION) {
-                // Eliminar de la lista en memoria
-                listaProfesionales.remove(idx);
-
-                // Actualizar el archivo para que el cambio persista
-                GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+                // Le pedimos al controlador que elimine y guarde
+                int idxReal = listaProfesionales.indexOf(pr);
+                ProfesionalController prc = new ProfesionalController();
+                prc.eliminarProfesional(listaProfesionales, idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
@@ -439,21 +462,33 @@ public class PersonaMenu extends javax.swing.JFrame {
     private void configurarFiltros() {
         obSi.addActionListener(e -> filtrarPorObraSocial());
         obNo.addActionListener(e -> filtrarPorObraSocial());
+        obTodos.addActionListener(e -> filtrarPorObraSocial());
     }
 
     private void filtrarPorObraSocial() {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+DefaultListModel<String> modelo = new DefaultListModel<>();
 
-        ArrayList<Paciente> filtrados;
-        if (obSi.isSelected()) {
-            filtrados = estudioController.filtrarPorObraSocial(listaPacientes, true);
+        // Creamos una instancia de PacienteController para usar su filtro
+        PacienteController pc = new PacienteController();
+
+        // 1. Verificamos cuál de los tres botones está seleccionado
+        if (obTodos.isSelected()) {
+            listaPacientesFiltrada = new ArrayList<>(listaPacientes);
+
+        } else if (obSi.isSelected()) {
+            // ACÁ ESTÁ EL CAMBIO: Usamos 'pc' en lugar de 'estudioController'
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, true);
+
         } else if (obNo.isSelected()) {
-            filtrados = estudioController.filtrarPorObraSocial(listaPacientes, false);
+            // ACÁ TAMBIÉN: Usamos 'pc' en lugar de 'estudioController'
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, false);
+
         } else {
-            filtrados = listaPacientes; // ninguno seleccionado → todos
+            listaPacientesFiltrada = new ArrayList<>(listaPacientes);
         }
 
-        for (Paciente p : filtrados) {
+        // 2. Llenamos el JList visual
+        for (Paciente p : listaPacientesFiltrada) {
             modelo.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());
         }
@@ -473,8 +508,9 @@ public class PersonaMenu extends javax.swing.JFrame {
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Paciente p = listaPacientes.get(idx);
-            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idx)
+            Paciente p = listaPacientesFiltrada.get(idx);
+            int idxReal = listaPacientes.indexOf(p);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idxReal)
                     .setVisible(true);
 
         } else {
@@ -486,8 +522,9 @@ public class PersonaMenu extends javax.swing.JFrame {
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Profesional pr = listaProfesionales.get(idx);
-            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idx)
+            Profesional pr = listaProfesionalesFiltrada.get(idx);
+            int idxReal = listaProfesionales.indexOf(pr);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idxReal)
                     .setVisible(true);
         }
     }//GEN-LAST:event_modificarActionPerformed
@@ -558,6 +595,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     private javax.swing.JButton modificar;
     private javax.swing.JRadioButton obNo;
     private javax.swing.JRadioButton obSi;
+    private javax.swing.JRadioButton obTodos;
     private javax.swing.JLabel obraSocialLabel;
     private javax.swing.JList<String> pacienteList;
     private javax.swing.JTabbedPane personaList;
