@@ -531,6 +531,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         if (ventanaPadre != null) {
             ventanaPadre.refrescarVista();
         }
+        JOptionPane.showMessageDialog(this, "Estudio creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
     }//GEN-LAST:event_confirmarActionPerformed
 
