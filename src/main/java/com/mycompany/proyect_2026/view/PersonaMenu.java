@@ -38,6 +38,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
+        this.setTitle("Sistema de Personas");
     }
 
     public PersonaMenu(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales, ArrayList<Estudio> estudios) {
@@ -51,6 +52,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
+        this.setTitle("Sistema de Personas");
     }
 
     /**

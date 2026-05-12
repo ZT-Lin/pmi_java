@@ -45,6 +45,8 @@ public class CrearEstudio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
+        
+        this.setTitle("Nuevo Estudio");
     }
 
     // Constructor real — recibe listas y referencia a EstudioMenu
@@ -62,6 +64,8 @@ public class CrearEstudio extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
         this.setSize(420, 480);
+        
+        this.setTitle("Nuevo Estudio");
     }
 
     private void configurarFormulario() {

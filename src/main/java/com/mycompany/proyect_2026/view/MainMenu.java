@@ -32,6 +32,7 @@ public class MainMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
         this.setSize(689, 374);
+        this.setTitle("Laboratorio de Análisis Clínicos Java SRL");
 
     }
 
@@ -45,6 +46,7 @@ public class MainMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         configurarVentana(); //Aqui determinaremos CloseOperation
         this.setSize(689, 374);
+        this.setTitle("Laboratorio de Análisis Clínicos Java SRL");
         
     }
 

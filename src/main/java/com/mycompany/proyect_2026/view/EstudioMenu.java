@@ -40,6 +40,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         cargarLista();
         cargarCombosProfesional();
         configurarFiltros();
+        this.setTitle("Sistema de Estudios");
     }
 
     public EstudioMenu(ArrayList<Paciente> pacientes,
@@ -56,6 +57,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         cargarCombosProfesional();
         configurarFiltros();
         this.setSize(640, 530);
+        this.setTitle("Sistema de Estudios");
         
     }
 
