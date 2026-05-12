@@ -4,7 +4,9 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.EstudioController;
 import com.mycompany.proyect_2026.model.Estudio;
+import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class EstudioMenu extends javax.swing.JFrame {
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
+    private ArrayList<Estudio> listaFiltrada; // lista que refleja lo que se ve en pantalla
+    private EstudioController estudioController;
 
     /**
      * Creates new form EstudioMenu
@@ -29,6 +33,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
+        this.estudioController = new EstudioController();
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -43,6 +48,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
+        this.estudioController = new EstudioController(listaEstudios);
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -52,18 +58,8 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void cargarLista() {
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (Estudio e : listaEstudios) {
-            // Mostramos: nombre del estudio | paciente | estado
-            // así el usuario puede identificar cada estudio de un vistazo
-            modelo.addElement(
-                    e.getNombreEstudio()
-                    + " | " + e.getPaciente().getApellido()
-                    + ", " + e.getPaciente().getNombre()
-                    + " | " + e.getEstado()
-            );
-        }
-        estudioList.setModel(modelo);
+        listaFiltrada = new ArrayList<>(listaEstudios);
+        actualizarJList(listaFiltrada);
     }
 
     private void cargarCombosProfesional() {
@@ -88,28 +84,17 @@ public class EstudioMenu extends javax.swing.JFrame {
 
     private void filtrarPorEstado() {
         String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        
-        if(estadoSeleccionado.equalsIgnoreCase("<Todos>")){
+
+        if (estadoSeleccionado.equalsIgnoreCase("<Todos>")) {
             cargarLista();
-            return ;
+            return;
         }
 
-        for (Estudio e : listaEstudios) {
-            // Comparamos ignorando mayúsculas/minúsculas por seguridad
-            if (e.getEstado().equalsIgnoreCase(estadoSeleccionado)) {
-                modelo.addElement(
-                        e.getNombreEstudio()
-                        + " | " + e.getPaciente().getApellido()
-                        + ", " + e.getPaciente().getNombre()
-                        + " | " + e.getEstado()
-                );
-            }
-        }
-        estudioList.setModel(modelo);
+        // Delegar lógica al controller
+        listaFiltrada = estudioController.filtrarPorEstado(estadoSeleccionado);
+        actualizarJList(listaFiltrada);
 
-        // Avisar si no hay resultados
-        if (modelo.isEmpty()) {
+        if (listaFiltrada.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "No hay estudios con estado: " + estadoSeleccionado,
                     "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
@@ -119,79 +104,61 @@ public class EstudioMenu extends javax.swing.JFrame {
     private void filtrarPorProfesional() {
         int idx = profesionalSelector.getSelectedIndex();
 
-        // Índice 0 es "<Todos>" → mostramos todo sin filtrar
         if (idx <= 0) {
             cargarLista();
             return;
         }
 
-        // idx - 1 porque el índice 0 del combo es "<Todos>"
-        // pero el índice 0 de listaProfesionales es el primer profesional real
         Profesional prSeleccionado = listaProfesionales.get(idx - 1);
 
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (Estudio e : listaEstudios) {
-            // Comparamos por matrícula, no por referencia
-            // porque si los objetos se recargaron del archivo son instancias distintas
-            if (e.getProfesional().getMatricula()
-                    .equals(prSeleccionado.getMatricula())) {
-                modelo.addElement(
-                        e.getNombreEstudio()
-                        + " | " + e.getPaciente().getApellido()
-                        + ", " + e.getPaciente().getNombre()
-                        + " | " + e.getEstado()
-                );
-            }
-        }
-        estudioList.setModel(modelo);
+        // Delegar lógica al controller
+        listaFiltrada = estudioController.filtrarPorProfesional(prSeleccionado);
+        actualizarJList(listaFiltrada);
 
-        if (modelo.isEmpty()) {
+        if (listaFiltrada.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "No hay estudios para ese profesional.",
                     "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
+    private void actualizarJList(ArrayList<Estudio> lista) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (Estudio e : lista) {
+            modelo.addElement(
+                    e.getNombreEstudio()
+                    + " | " + e.getPaciente().getApellido()
+                    + ", " + e.getPaciente().getNombre()
+                    + " | " + e.getEstado()
+            );
+        }
+        estudioList.setModel(modelo);
+    }
+
     private void filtrarPorFecha() {
         try {
-            // Parseamos los tres campos — pueden lanzar NumberFormatException
             int dia = Integer.parseInt(diaTField.getText().trim());
             int mes = Integer.parseInt(mesTField.getText().trim());
             int anio = Integer.parseInt(anioTField.getText().trim());
-            
-            /*caso ingresar fecha rara*/
-            if((dia<01 || dia>31) || (mes<1 || mes >12) || (anio<1999)){
+
+            if ((dia < 1 || dia > 31) || (mes < 1 || mes > 12) || anio < 1999) {
                 JOptionPane.showMessageDialog(this,
-                        "la fecha "
-                        + dia + "/" + mes + "/" + anio+" es invalida",
+                        "La fecha " + dia + "/" + mes + "/" + anio + " es inválida",
                         "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
-            DefaultListModel<String> modelo = new DefaultListModel<>();
-            for (Estudio e : listaEstudios) {
-                if (e.getFecha().getDia() == dia
-                        && e.getFecha().getMes() == mes
-                        && e.getFecha().getAnio() == anio) {
-                    modelo.addElement(
-                            e.getNombreEstudio()
-                            + " | " + e.getPaciente().getApellido()
-                            + ", " + e.getPaciente().getNombre()
-                            + " | " + e.getEstado()
-                    );
-                }
-            }
-            estudioList.setModel(modelo);
+            // Delegar lógica al controller
+            listaFiltrada = estudioController.filtrarPorFecha(dia, mes, anio);
+            actualizarJList(listaFiltrada);
 
-            if (modelo.isEmpty()) {
+            if (listaFiltrada.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                        "No hay estudios para la fecha "
-                        + dia + "/" + mes + "/" + anio,
+                        "No hay estudios para la fecha " + dia + "/" + mes + "/" + anio,
                         "Sin resultados", JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (NumberFormatException ex) {
-            // Si el usuario escribió letras en los campos de fecha
             JOptionPane.showMessageDialog(this,
                     "Ingresá una fecha válida (solo números).",
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -277,13 +244,18 @@ public class EstudioMenu extends javax.swing.JFrame {
         areaParaMostrar.setLayout(new java.awt.BorderLayout());
 
         agregar.setText("Agregar");
-        agregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                agregarMouseClicked(evt);
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
             }
         });
 
         modificar.setText("Modificar");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
         volver.setText("←");
         volver.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +351,7 @@ public class EstudioMenu extends javax.swing.JFrame {
             return; // nada seleccionado
         }
         // Obtener el estudio real de la lista
-        Estudio seleccionado = listaEstudios.get(idx);
+        Estudio seleccionado = listaFiltrada.get(idx);
 
         areaParaMostrar.removeAll();
         areaParaMostrar.add(new CartaEstudio(seleccionado),
@@ -388,18 +360,75 @@ public class EstudioMenu extends javax.swing.JFrame {
         areaParaMostrar.repaint();
     }//GEN-LAST:event_estudioListValueChanged
 
-    private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
-        // Pasamos las listas y referencia a esta ventana
-        // para que CrearEstudio pueda avisarnos cuando termina
-        new CrearEstudio(listaPacientes, listaProfesionales, listaEstudios, this)
-                .setVisible(true);
-    }//GEN-LAST:event_agregarMouseClicked
-
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         // Pasamos las listas actualizadas a MainMenu
         new MainMenu(listaPacientes, listaProfesionales, listaEstudios).setVisible(true);
         dispose();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+        int idx = estudioList.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccioná un estudio primero.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Estudio seleccionado = listaFiltrada.get(idx);
+
+        // Diálogo para cambiar estado
+        String[] opciones = {"En Elaboración", "Finalizado", "Retirado", "Enviado"};
+        String nuevoEstado = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccioná el nuevo estado:",
+                "Modificar Estado",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                seleccionado.getEstado()
+        );
+
+        if (nuevoEstado != null) {
+            estudioController.modificarEstado(seleccionado, nuevoEstado);
+        }
+
+        // Diálogo para cambiar fecha de entrega
+        String nuevaFechaStr = JOptionPane.showInputDialog(
+                this,
+                "Nueva fecha de entrega (dd/mm/aaaa) — dejá vacío para no cambiar:",
+                seleccionado.getFechaEntrega() != null
+                ? seleccionado.getFechaEntrega().toString()
+                : ""
+        );
+
+        if (nuevaFechaStr != null && !nuevaFechaStr.trim().isEmpty()) {
+            try {
+                String[] p = nuevaFechaStr.trim().split("/");
+                Fecha nueva = new Fecha(
+                        Integer.parseInt(p[0]),
+                        Integer.parseInt(p[1]),
+                        Integer.parseInt(p[2])
+                );
+                estudioController.modificarFechaEntrega(seleccionado, nueva);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Fecha inválida. No se modificó.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        refrescarVista();
+        JOptionPane.showMessageDialog(this, "Estudio actualizado.", "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        // Pasamos las listas y referencia a esta ventana
+        // para que CrearEstudio pueda avisarnos cuando termina
+        new CrearEstudio(listaPacientes, listaProfesionales, listaEstudios, this)
+                .setVisible(true);
+    }//GEN-LAST:event_agregarActionPerformed
 
     /**
      * @param args the command line arguments

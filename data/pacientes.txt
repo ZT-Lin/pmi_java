@@ -1,2 +1,5 @@
-Marco Lorca marco@mail.com 40111222 4223344
-Javier Sanchez javier@mail.com 41222333 4334455
+Marco Lorca marco@mail.com 40111222 4223344 false
+Juan Perez juan@mail.com 12345678 2615551001 true
+Maria Lopez maria@mail.com 87654321 2615552002 false
+Carlos Ruiz carlos@mail.com 33445566 2615553003 false
+Santiago Lamas lamastomas8@gmail.com 1234567 1234567 true

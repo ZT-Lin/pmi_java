@@ -1,2 +1,3 @@
-23;6;2006;Estudio_40111222;40111222;1003;24;11;2005;En Elaboración;Hemograma_completo,Glucemia,Tu_mama,Urea
-25;11;2005;Estudio_41222333;41222333;1003;25;4;2006;En Elaboración;Colesterol,Tu_mama,Urea,Creatinina
+10|4|2026|Estudio_12345678|12345678|1001|En Elaboración|null|Hemograma_Completo,Glucemia
+5|4|2026|Estudio_87654321|87654321|1002|Finalizado|20/4/2026|Colesterol_Total
+1|5|2026|Estudio_33445566|33445566|1003|En Elaboración|null|Orina_Completa,Urea

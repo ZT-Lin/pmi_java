@@ -3,15 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyect_2026.model;
-import java.util.HashMap;
 
+import java.util.HashMap;
 
 /**
  *
  * @author linzh
  */
-
 public class Analisis {
+
     public static final HashMap<Integer, String> TIPO_ANALYSIS = new HashMap<>();
 
     // Se carga una sola vez cuando la clase se inicializa
@@ -28,4 +28,3 @@ public class Analisis {
         TIPO_ANALYSIS.put(10, "TSH_Tiroideo");
     }
 }
-

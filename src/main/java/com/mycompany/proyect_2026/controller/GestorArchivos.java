@@ -4,7 +4,6 @@ package com.mycompany.proyect_2026.controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
  */
-
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
@@ -15,37 +14,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 /**
  *
  * @author lucam
  */
 public class GestorArchivos {
-    // Método auxiliar para buscar un Paciente en la memoria por su DNI
-    private static Paciente buscarPaciente(ArrayList<Paciente> pacientes, String dniBuscado) {
-        if (pacientes != null) {
-            // Recorremos la lista usando un for-each clásico
-            for (Paciente p : pacientes) {
-                // Usamos .trim() y .equals() para comparar los Strings de forma segura
-                if (p.getDNI().trim().equals(dniBuscado.trim())) {
-                    return p; // Lo encontramos, lo devolvemos
-                }
-            }
-        }
-        return null; // Si termina el ciclo y no lo encontró, devuelve null
-    }
-
-    // Método auxiliar para buscar un Profesional en la memoria por su Matrícula
-    private static Profesional buscarProfesional(ArrayList<Profesional> profesionales, String matriculaBuscada) {
-        if (profesionales != null) {
-            for (Profesional prof : profesionales) {
-                if (prof.getMatricula().trim().equals(matriculaBuscada.trim())) {
-                    return prof; // Lo encontramos, lo devolvemos
-                }
-            }
-        }
-        return null; // Si no lo encuentra, devuelve null
-    }
-    
     public static void cargarAnalisisDesdeArchivo() {
         try {
             File a = new File("data/analisis.txt");
@@ -69,8 +43,8 @@ public class GestorArchivos {
             if (!p.exists()) return lista;
             Scanner lector = new Scanner(p);
             while (lector.hasNext()) {
-                String nom = lector.next();
-                String ape = lector.next();
+                String nombre = lector.next();
+                String apellido = lector.next();
                 String mail = lector.next();
                 String tel = lector.next();
                 String mat = lector.next();
@@ -94,8 +68,11 @@ public class GestorArchivos {
                 String ape = lector.next();
                 String mail = lector.next();
                 String dni = lector.next();
-                String tel = lector.next();
-                lista.add(new Paciente(nom, ape, mail, dni, tel));
+                String telefono = lector.next();
+                boolean obraSocial = Boolean.parseBoolean(lector.next());
+                Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
+                paci.setObraSocial(obraSocial);
+                lista.add(paci);
             }
             lector.close();
         } catch (IOException e) {
@@ -104,99 +81,109 @@ public class GestorArchivos {
         return lista;
     }
 
-    public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales) {
-        ArrayList<Estudio> lista = new ArrayList<>();
-        File f = new File("data/estudios.txt");
-    
-        if (!f.exists()) return lista;
+    public static ArrayList<Estudio> cargarEstudiosDesdeArchivo(
+            ArrayList<Paciente> listaPacientes,
+            ArrayList<Profesional> listaProfesionales) {
 
+        ArrayList<Estudio> listaEstudios = new ArrayList<>();
         try {
+            File f = new File("data/estudios.txt");
             Scanner lector = new Scanner(f);
             while (lector.hasNextLine()) {
-                String linea = lector.nextLine();
-                if (linea.trim().isEmpty()) continue;
-
-                String[] datos = linea.split(";");
-            
-                // datos[0]: Fecha Realiz, [1]: Nombre, [2]: DNI Pac, [3]: Mat Prof
-                // datos[4]: Fecha Ent, [5]: Estado, [6]: Analisis
-
-                // Parsear Fecha Realización
-                String[] f1 = datos[0].split("/");
-                Fecha fechaRealiz = new Fecha(Integer.parseInt(f1[0]), Integer.parseInt(f1[1]), Integer.parseInt(f1[2]));
-
-                // Buscar Paciente y Profesional en las listas de RAM
-                Paciente pac = buscarPaciente(pacientes, datos[2]);
-                Profesional prof = buscarProfesional(profesionales, datos[3]);
-
-                if (pac != null && prof != null) {
-                    Estudio nuevo = new Estudio(fechaRealiz, datos[1], pac, prof);
-                
-                    // Cargar Fecha de Entrega si no es "null"
-                    if (!datos[4].equals("null")) {
-                        String[] f2 = datos[4].split("/");
-                        nuevo.setFechaEntrega(new Fecha(Integer.parseInt(f2[0]), Integer.parseInt(f2[1]), Integer.parseInt(f2[2])));
-                    }
-                
-                    nuevo.setEstado(datos[5]);
-                
-                    // Cargar Análisis (de String separado por coma a String[])
-                    String[] analisisArray = datos[6].split(",");
-                    nuevo.setAnalisis(analisisArray);
-
-                    lista.add(nuevo);
+                String linea = lector.nextLine().trim();
+                if (linea.isEmpty()) {
+                    continue;
                 }
+
+                String[] partes = linea.split("\\|");
+                // partes: [0]dia [1]mes [2]anio [3]nombre [4]dni [5]matricula
+                //         [6]estado [7]fechaEntrega [8]analisis (puede faltar)
+
+                int dia = Integer.parseInt(partes[0]);
+                int mes = Integer.parseInt(partes[1]);
+                int anio = Integer.parseInt(partes[2]);
+                String nombreEstudio = partes[3];
+                String dniBusqueda = partes[4];
+                String matriculaBusqueda = partes[5];
+                String estado = partes[6];
+                String fechaEntregaStr = partes[7];
+
+                // Buscar paciente y profesional
+                Paciente paciente = null;
+                for (Paciente p : listaPacientes) {
+                    if (p.getDNI().equals(dniBusqueda)) {
+                        paciente = p;
+                        break;
+                    }
+                }
+
+                Profesional profesional = null;
+                for (Profesional pr : listaProfesionales) {
+                    if (pr.getMatricula().equals(matriculaBusqueda)) {
+                        profesional = pr;
+                        break;
+                    }
+                }
+
+                if (paciente == null || profesional == null) {
+                    System.out.println("Advertencia: no se pudo cargar '" + nombreEstudio + "'");
+                    continue;
+                }
+
+                Estudio est = new Estudio(new Fecha(dia, mes, anio),
+                        nombreEstudio, paciente, profesional);
+                est.setEstado(estado);
+
+                // Fecha de entrega
+                if (!fechaEntregaStr.equals("null")) {
+                    String[] fe = fechaEntregaStr.split("/");
+                    est.setFechaEntrega(new Fecha(
+                            Integer.parseInt(fe[0]),
+                            Integer.parseInt(fe[1]),
+                            Integer.parseInt(fe[2])
+                    ));
+                }
+
+                // Análisis
+                if (partes.length > 8 && !partes[8].isEmpty()) {
+                    est.setAnalisis(partes[8].split(","));
+                }
+
+                listaEstudios.add(est);
             }
-            lector.close(); // Cierre manual purista
-        } catch (IOException e) {
-            System.out.println("Error al cargar estudios: " + e.getMessage());
+            lector.close();
+        } catch (IOException ex) {
+            System.out.println("Error al cargar estudios: " + ex.getMessage());
         }
         return lista;
     }
 
-    private static String formatearLineaEstudio(Estudio e) {
-    // 1. Fecha de realización (siempre está)
-    String fRealizacion = e.getFecha().getDia() + "/" + e.getFecha().getMes() + "/" + e.getFecha().getAnio();
-
-    // 2. Fecha de entrega (puede ser null)
-    String fEntrega = "null";
-    if (e.getFechaEntrega() != null) {
-        fEntrega = e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes() + "/" + e.getFechaEntrega().getAnio();
-    }
-
-    // 3. Análisis (Convertir String[] a "Analisis1,Analisis2")
-    String strAnalisis = "";
-    String[] arrayAn = e.getAnalisis();
-    if (arrayAn != null && arrayAn.length > 0) {
-        for (int i = 0; i < arrayAn.length; i++) {
-            strAnalisis += arrayAn[i];
-            if (i < arrayAn.length - 1) strAnalisis += ","; // Sub-delimitador
+    public static void guardarEstudioEnArchivo(Estudio e) {
+        try {
+            FileWriter fw = new FileWriter("data/estudios.txt", true);
+            fw.write(formatearEstudio(e) + "\n");
+            fw.close();
+        } catch (IOException ex) {
+            System.out.println("Error al guardar estudio: " + ex.getMessage());
         }
-    } else {
-        strAnalisis = "Sin_Analisis";
-    }
-
-    // 4. Unimos todo con el delimitador principal ;
-    // Orden: FechaRealiz ; Nombre ; DNIPac ; MatProf ; FechaEnt ; Estado ; Analisis
-    return fRealizacion + ";" + 
-           e.getNombreEstudio() + ";" + 
-           e.getPaciente().getDNI() + ";" + 
-           e.getProfesional().getMatricula() + ";" +
-           fEntrega + ";" +
-           e.getEstado() + ";" +
-           strAnalisis;
     }
 
     public static void actualizarArchivoPacientes(ArrayList<Paciente> listaPacientes) {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt");
             for (Paciente p : listaPacientes) {
-                String linea = p.getNombre() + " " + p.getApellido() + " " + p.getMail() + " " + p.getDNI() + " " + p.getTel() + "\n";
+                String linea = p.getNombre() + " "
+                        + p.getApellido() + " "
+                        + p.getMail() + " "
+                        + p.getDNI() + " "
+                        + p.getTel() + " " 
+                        + p.getObraSocial() + "\n";
+
                 fw.write(linea);
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al actualizar pacientes: " + e.getMessage());
+            System.out.println("Error al actualizar el archivo de pacientes: " + e.getMessage());
         }
     }
 
@@ -204,20 +191,24 @@ public class GestorArchivos {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt");
             for (Profesional p : listaProfesionales) {
-                String linea = p.getNombre() + " " + p.getApellido() + " " + p.getMail() + " " + p.getTel() + " " + p.getMatricula() + "\n";
+                String linea = p.getNombre() + " "
+                        + p.getApellido() + " "
+                        + p.getMail() + " "
+                        + p.getTel() + " "
+                        + p.getMatricula() + "\n";
                 fw.write(linea);
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al actualizar profesionales: " + e.getMessage());
+            System.out.println("Error al actualizar el archivo de profesionales: " + e.getMessage());
         }
     }
 
-    public static void actualizarArchivoEstudios(ArrayList<Estudio> listaEstudios) {
+    public static void actualizarArchivoEstudios(ArrayList<Estudio> lista) {
         try {
             FileWriter fw = new FileWriter("data/estudios.txt");
-            for (Estudio e : listaEstudios) {
-                fw.write(formatearLineaEstudio(e) + "\n");
+            for (Estudio e : lista) {
+                fw.write(formatearEstudio(e) + "\n");
             }
             fw.close();
         } catch (IOException ex) {
@@ -228,18 +219,27 @@ public class GestorArchivos {
     public static void agregarPacienteFisico(Paciente p) {
         try {
             FileWriter fw = new FileWriter("data/pacientes.txt", true);
-            String linea = p.getNombre() + " " + p.getApellido() + " " + p.getMail() + " " + p.getDNI() + " " + p.getTel() + "\n";
+            String linea = p.getNombre() + " "
+                    + p.getApellido() + " "
+                    + p.getMail() + " "
+                    + p.getDNI() + " "
+                    + p.getTel() + " " 
+                    + p.getObraSocial() + "\n";
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
-            System.out.println("Error al escribir paciente: " + e.getMessage());
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
     }
 
     public static void agregarProfesionalFisico(Profesional p) {
         try {
             FileWriter fw = new FileWriter("data/profesionales.txt", true);
-            String linea = p.getNombre() + " " + p.getApellido() + " " + p.getMail() + " " + p.getTel() + " " + p.getMatricula() + "\n";
+            String linea = p.getNombre() + " "
+                    + p.getApellido() + " "
+                    + p.getMail() + " "
+                    + p.getTel() + " "
+                    + p.getMatricula() + "\n";
             fw.write(linea);
             fw.close();
         } catch (IOException e) {
@@ -247,13 +247,28 @@ public class GestorArchivos {
         }
     }
 
-    public static void agregarEstudioFisico(Estudio e) {
-        try {
-            FileWriter fw = new FileWriter("data/estudios.txt", true);
-            fw.write(formatearLineaEstudio(e) + "\n");
-            fw.close();
-        } catch (IOException ex) {
-            System.out.println("Error al escribir estudio: " + ex.getMessage());
+    // Método auxiliar privado:
+    private static String formatearEstudio(Estudio e) {
+        // Fecha entrega: guardamos "null" si no tiene
+        String fechaEntrega = (e.getFechaEntrega() != null)
+                ? e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes()
+                + "/" + e.getFechaEntrega().getAnio()
+                : "null";
+
+        // Análisis: unimos con coma
+        String analisis = "";
+        if (e.getAnalisis() != null && e.getAnalisis().length > 0) {
+            analisis = String.join(",", e.getAnalisis());
         }
+
+        return e.getFecha().getDia() + "|"
+                + e.getFecha().getMes() + "|"
+                + e.getFecha().getAnio() + "|"
+                + e.getNombreEstudio() + "|"
+                + e.getPaciente().getDNI() + "|"
+                + e.getProfesional().getMatricula() + "|"
+                + e.getEstado() + "|"
+                + fechaEntrega + "|"
+                + analisis;
     }
 }

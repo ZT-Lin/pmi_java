@@ -30,11 +30,11 @@ public class Profesional extends Persona {
     public String getMatricula() {
         return this.matricula;
     }
-    
+
     // agreagado en 11/04/2026 - Lin
     @Override
-    public String toString(){
-        return "Profesional: "+super.toString()
-                +"\n\tmatricula:\t"+this.matricula;
+    public String toString() {
+        return "Profesional: " + super.toString()
+                + "\n\tmatricula:\t" + this.matricula;
     }
 }
