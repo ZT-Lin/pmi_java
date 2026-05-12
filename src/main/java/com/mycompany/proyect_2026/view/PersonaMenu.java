@@ -23,6 +23,8 @@ public class PersonaMenu extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
     private EstudioController estudioController;
+    private ArrayList<Paciente> listaPacientesFiltrada;
+    private ArrayList<Profesional> listaProfesionalesFiltrada;
 
     /**
      * Creates new form PersonaForm
@@ -209,10 +211,13 @@ public class PersonaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void cargarListas() {
+        // Inicializamos las listas filtradas como copias exactas de las originales
+        listaPacientesFiltrada = new ArrayList<>(listaPacientes);
+        listaProfesionalesFiltrada = new ArrayList<>(listaProfesionales);
+
         // --- Pacientes ---
         DefaultListModel<String> modeloPacientes = new DefaultListModel<>();
-        for (Paciente p : listaPacientes) {
-            // Lo que se muestra en cada fila del JList
+        for (Paciente p : listaPacientesFiltrada) { // ← Ojo acá: iteramos sobre la filtrada
             modeloPacientes.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());
         }
@@ -220,7 +225,7 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         // --- Profesionales ---
         DefaultListModel<String> modeloProfesionales = new DefaultListModel<>();
-        for (Profesional pr : listaProfesionales) {
+        for (Profesional pr : listaProfesionalesFiltrada) { // ← Iteramos sobre la filtrada
             modeloProfesionales.addElement(pr.getApellido() + ", " + pr.getNombre()
                     + " - Mat: " + pr.getMatricula());
         }
@@ -232,43 +237,41 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
     }
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
+String texto = barraDeBusqueda.getText().trim().toLowerCase();
 
-        String texto = barraDeBusqueda.getText().trim().toLowerCase();
+    if (texto.isEmpty()) {
+        cargarListas(); 
+        return;
+    }
 
-        if (texto.isEmpty()) {
-            cargarListas(); // si borra todo, vuelve a mostrar todos
-            return;
-        }
+    int tabActivo = personaList.getSelectedIndex();
+    DefaultListModel<String> modelo = new DefaultListModel<>();
 
-        int tabActivo = personaList.getSelectedIndex();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        if (tabActivo == 0) {
-            for (Paciente p : listaPacientes) {
-                if (p.getNombre().toLowerCase().contains(texto)
-                        || p.getApellido().toLowerCase().contains(texto)
-                        || p.getDNI().contains(texto)) {
-                    modelo.addElement(p.getApellido() + ", " + p.getNombre()
-                            + " - DNI: " + p.getDNI());
-                }
-            }
-        } else {
-            for (Profesional pr : listaProfesionales) {
-                if (pr.getNombre().toLowerCase().contains(texto)
-                        || pr.getApellido().toLowerCase().contains(texto)
-                        || pr.getMatricula().contains(texto)) {
-                    modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
-                            + " - Mat: " + pr.getMatricula());
-                }
+    if (tabActivo == 0) {
+        listaPacientesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
+        for (Paciente p : listaPacientes) {
+            if (p.getNombre().toLowerCase().contains(texto)
+                    || p.getApellido().toLowerCase().contains(texto)
+                    || p.getDNI().contains(texto)) {
+                listaPacientesFiltrada.add(p); // Guardamos el objeto real filtrado
+                modelo.addElement(p.getApellido() + ", " + p.getNombre()
+                        + " - DNI: " + p.getDNI());
             }
         }
-
-        if (tabActivo == 0) {
-            pacienteList.setModel(modelo);
-        } else {
-            profesionalList.setModel(modelo);
+        pacienteList.setModel(modelo);
+    } else {
+        listaProfesionalesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
+        for (Profesional pr : listaProfesionales) {
+            if (pr.getNombre().toLowerCase().contains(texto)
+                    || pr.getApellido().toLowerCase().contains(texto)
+                    || pr.getMatricula().contains(texto)) {
+                listaProfesionalesFiltrada.add(pr); // Guardamos el objeto real filtrado
+                modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
+                        + " - Mat: " + pr.getMatricula());
+            }
         }
-
+        profesionalList.setModel(modelo);
+    }
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
@@ -279,7 +282,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             return;
         }
 
-        Paciente p = listaPacientes.get(index);
+        Paciente p = listaPacientesFiltrada.get(index);
         int cantidadEstudios = contarEstudiosDePaciente(p);
 
         // Panel que combina la CartaPaciente con la info de estudios
@@ -310,7 +313,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             int indice = profesionalList.getSelectedIndex();
 
             if (indice != -1) {
-                com.mycompany.proyect_2026.model.Profesional seleccionado = this.listaProfesionales.get(indice);
+                Profesional seleccionado = this.listaProfesionalesFiltrada.get(indice);
                 areaParaMostrar.removeAll();
 
                 areaParaMostrar.add(new CartaProfesional(
@@ -353,7 +356,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
 
             // Obtener el paciente seleccionado de la lista real
-            Paciente p = listaPacientes.get(idx);
+            Paciente p = listaPacientesFiltrada.get(idx);
 
             // Verificar restricción: no se puede eliminar si tiene estudios
             // Usamos el método local de esta clase
@@ -372,7 +375,8 @@ public class PersonaMenu extends javax.swing.JFrame {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 // Eliminar de la lista en memoria
-                listaPacientes.remove(idx);
+                int idxReal = listaPacientes.indexOf(p);
+                listaPacientes.remove(idxReal);
 
                 // Actualizar el archivo para que el cambio persista
                 GestorArchivos.actualizarArchivoPacientes(listaPacientes);
@@ -400,7 +404,7 @@ public class PersonaMenu extends javax.swing.JFrame {
             }
 
             // Obtener el profesional seleccionado de la lista real
-            Profesional pr = listaProfesionales.get(idx);
+            Profesional pr = listaProfesionalesFiltrada.get(idx);
 
             // Verificar restricción: no se puede eliminar si tiene estudios
             if (estudioController.profesionalTieneEstudios(pr)) {
@@ -418,7 +422,8 @@ public class PersonaMenu extends javax.swing.JFrame {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 // Eliminar de la lista en memoria
-                listaProfesionales.remove(idx);
+                int idxReal = listaProfesionales.indexOf(pr);
+                listaProfesionales.remove(idxReal);
 
                 // Actualizar el archivo para que el cambio persista
                 GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
@@ -441,16 +446,15 @@ public class PersonaMenu extends javax.swing.JFrame {
     private void filtrarPorObraSocial() {
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
-        ArrayList<Paciente> filtrados;
         if (obSi.isSelected()) {
-            filtrados = estudioController.filtrarPorObraSocial(listaPacientes, true);
+            listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, true);
         } else if (obNo.isSelected()) {
-            filtrados = estudioController.filtrarPorObraSocial(listaPacientes, false);
+            listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, false);
         } else {
-            filtrados = listaPacientes; // ninguno seleccionado → todos
+            listaPacientesFiltrada = new ArrayList<>(listaPacientes); // ninguno seleccionado → todos
         }
 
-        for (Paciente p : filtrados) {
+        for (Paciente p : listaPacientesFiltrada) {
             modelo.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());
         }
@@ -470,8 +474,9 @@ public class PersonaMenu extends javax.swing.JFrame {
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Paciente p = listaPacientes.get(idx);
-            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idx)
+            Paciente p = listaPacientesFiltrada.get(idx); 
+            int idxReal = listaPacientes.indexOf(p);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idxReal)
                     .setVisible(true);
 
         } else {
@@ -483,8 +488,9 @@ public class PersonaMenu extends javax.swing.JFrame {
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Profesional pr = listaProfesionales.get(idx);
-            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idx)
+            Profesional pr = listaProfesionalesFiltrada.get(idx);
+            int idxReal = listaProfesionales.indexOf(pr);
+            new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, pr, idxReal)
                     .setVisible(true);
         }
     }//GEN-LAST:event_modificarActionPerformed
