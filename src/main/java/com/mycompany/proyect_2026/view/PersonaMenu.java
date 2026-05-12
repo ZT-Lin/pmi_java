@@ -79,6 +79,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         obraSocialLabel = new javax.swing.JLabel();
         obSi = new javax.swing.JRadioButton();
         obNo = new javax.swing.JRadioButton();
+        obTodos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -156,6 +157,11 @@ public class PersonaMenu extends javax.swing.JFrame {
         buttonGroup1.add(obNo);
         obNo.setText("No");
 
+        buttonGroup1.add(obTodos);
+        obTodos.setSelected(true);
+        obTodos.setText("Todos");
+        obTodos.setActionCommand("Todos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,14 +172,18 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(volver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                    .addComponent(personaList)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(obraSocialLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(obSi)
-                        .addGap(18, 18, 18)
-                        .addComponent(obNo))
-                    .addComponent(personaList))
+                        .addComponent(obTodos)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(obraSocialLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(obSi)
+                                .addGap(12, 12, 12)
+                                .addComponent(obNo)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -195,16 +205,24 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addComponent(modificar)
                     .addComponent(agregar)
                     .addComponent(volver))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(areaParaMostrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(obraSocialLabel)
-                            .addComponent(obSi)
-                            .addComponent(obNo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(personaList)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(obraSocialLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(obSi)
+                                    .addComponent(obNo)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(obTodos)))
+                        .addGap(9, 9, 9)
+                        .addComponent(personaList))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -237,41 +255,41 @@ public class PersonaMenu extends javax.swing.JFrame {
         cargarListas();
     }
     private void barraDeBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barraDeBusquedaActionPerformed
-String texto = barraDeBusqueda.getText().trim().toLowerCase();
+        String texto = barraDeBusqueda.getText().trim().toLowerCase();
 
-    if (texto.isEmpty()) {
-        cargarListas(); 
-        return;
-    }
-
-    int tabActivo = personaList.getSelectedIndex();
-    DefaultListModel<String> modelo = new DefaultListModel<>();
-
-    if (tabActivo == 0) {
-        listaPacientesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
-        for (Paciente p : listaPacientes) {
-            if (p.getNombre().toLowerCase().contains(texto)
-                    || p.getApellido().toLowerCase().contains(texto)
-                    || p.getDNI().contains(texto)) {
-                listaPacientesFiltrada.add(p); // Guardamos el objeto real filtrado
-                modelo.addElement(p.getApellido() + ", " + p.getNombre()
-                        + " - DNI: " + p.getDNI());
-            }
+        if (texto.isEmpty()) {
+            cargarListas();
+            return;
         }
-        pacienteList.setModel(modelo);
-    } else {
-        listaProfesionalesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
-        for (Profesional pr : listaProfesionales) {
-            if (pr.getNombre().toLowerCase().contains(texto)
-                    || pr.getApellido().toLowerCase().contains(texto)
-                    || pr.getMatricula().contains(texto)) {
-                listaProfesionalesFiltrada.add(pr); // Guardamos el objeto real filtrado
-                modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
-                        + " - Mat: " + pr.getMatricula());
+
+        int tabActivo = personaList.getSelectedIndex();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        if (tabActivo == 0) {
+            listaPacientesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
+            for (Paciente p : listaPacientes) {
+                if (p.getNombre().toLowerCase().contains(texto)
+                        || p.getApellido().toLowerCase().contains(texto)
+                        || p.getDNI().contains(texto)) {
+                    listaPacientesFiltrada.add(p); // Guardamos el objeto real filtrado
+                    modelo.addElement(p.getApellido() + ", " + p.getNombre()
+                            + " - DNI: " + p.getDNI());
+                }
             }
+            pacienteList.setModel(modelo);
+        } else {
+            listaProfesionalesFiltrada = new ArrayList<>(); // Vaciamos la lista espejo
+            for (Profesional pr : listaProfesionales) {
+                if (pr.getNombre().toLowerCase().contains(texto)
+                        || pr.getApellido().toLowerCase().contains(texto)
+                        || pr.getMatricula().contains(texto)) {
+                    listaProfesionalesFiltrada.add(pr); // Guardamos el objeto real filtrado
+                    modelo.addElement(pr.getApellido() + ", " + pr.getNombre()
+                            + " - Mat: " + pr.getMatricula());
+                }
+            }
+            profesionalList.setModel(modelo);
         }
-        profesionalList.setModel(modelo);
-    }
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
@@ -441,19 +459,29 @@ String texto = barraDeBusqueda.getText().trim().toLowerCase();
     private void configurarFiltros() {
         obSi.addActionListener(e -> filtrarPorObraSocial());
         obNo.addActionListener(e -> filtrarPorObraSocial());
+        obTodos.addActionListener(e -> filtrarPorObraSocial());
     }
 
     private void filtrarPorObraSocial() {
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
-        if (obSi.isSelected()) {
+        // 1. Verificamos cuál de los tres botones está seleccionado
+        if (obTodos.isSelected()) {
+            // Si elige "Todos", la lista filtrada vuelve a ser la original completa
+            listaPacientesFiltrada = new ArrayList<>(listaPacientes);
+
+        } else if (obSi.isSelected()) {
             listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, true);
+
         } else if (obNo.isSelected()) {
             listaPacientesFiltrada = estudioController.filtrarPorObraSocial(listaPacientes, false);
+
         } else {
-            listaPacientesFiltrada = new ArrayList<>(listaPacientes); // ninguno seleccionado → todos
+            // Por si acaso al iniciar no hay ninguno seleccionado
+            listaPacientesFiltrada = new ArrayList<>(listaPacientes);
         }
 
+        // 2. Llenamos el JList visual con la lista filtrada que haya quedado
         for (Paciente p : listaPacientesFiltrada) {
             modelo.addElement(p.getApellido() + ", " + p.getNombre()
                     + " - DNI: " + p.getDNI());
@@ -474,7 +502,7 @@ String texto = barraDeBusqueda.getText().trim().toLowerCase();
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            Paciente p = listaPacientesFiltrada.get(idx); 
+            Paciente p = listaPacientesFiltrada.get(idx);
             int idxReal = listaPacientes.indexOf(p);
             new CrearPersona(listaPacientes, listaProfesionales, listaEstudios, this, p, idxReal)
                     .setVisible(true);
@@ -561,6 +589,7 @@ String texto = barraDeBusqueda.getText().trim().toLowerCase();
     private javax.swing.JButton modificar;
     private javax.swing.JRadioButton obNo;
     private javax.swing.JRadioButton obSi;
+    private javax.swing.JRadioButton obTodos;
     private javax.swing.JLabel obraSocialLabel;
     private javax.swing.JList<String> pacienteList;
     private javax.swing.JTabbedPane personaList;
