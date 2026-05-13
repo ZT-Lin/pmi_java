@@ -7,6 +7,8 @@ package com.mycompany.proyect_2026.view;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 
+import com.mycompany.proyect_2026.controller.*;
+
 /**
  *
  * @author linzh
@@ -39,34 +41,39 @@ public class CartaEstudio extends javax.swing.JPanel {
         this.setSize(362, 456);
     }
 
-    private void mostrarDatos(Estudio estudio) {
+    private void mostrarDatos(Estudio est) {
+        EstudioController estudio = new EstudioController(est);
+        PacienteController pc = new PacienteController(est.getPaciente());
+        ProfesionalController pf = new ProfesionalController(est.getProfesional());
+        FechaController fc = new FechaController(est.getFecha());
 
         // ── Datos del Paciente
         // identPaciente → nombre y apellido del paciente
         campoNombrePaciente.setText(
-                estudio.getPaciente().getNombre() + " "
-                + estudio.getPaciente().getApellido()
+                pc.getNombre() + " "
+                + pc.getApellido()
         );
         // jTextField2 → DNI del paciente
-        campoDNI.setText(estudio.getPaciente().getDNI());
+        campoDNI.setText(pc.getDNI());
 
         // ── Datos del Profesional 
         // jTextField3 → nombre y apellido del profesional
         campoNombreProfesional.setText(
-                estudio.getProfesional().getNombre() + " "
-                + estudio.getProfesional().getApellido()
+                pf.getNombre() + " "
+                + pf.getApellido()
         );
         // jTextField7 → matrícula del profesional
-        campoMatricula.setText(estudio.getProfesional().getMatricula());
+        campoMatricula.setText(pf.getMatricula());
 
         // ── Fechas 
         // jTextField6 → fecha de realización
-        campoFechaRealizacion.setText(estudio.getFecha().toString());
+        campoFechaRealizacion.setText(fc.toString());
 
         // jTextField8 → fecha de entrega
         // puede ser null si todavía no se asignó
         if (estudio.getFechaEntrega() != null) {
-            campoFechaEntrega.setText(estudio.getFechaEntrega().toString());
+            FechaController fe = new FechaController(estudio.getFechaEntrega());
+            campoFechaEntrega.setText(fe.toString());
         } else {
             campoFechaEntrega.setText("Sin asignar");
         }

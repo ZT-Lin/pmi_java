@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
-import com.mycompany.proyect_2026.controller.EstudioController;
+import com.mycompany.proyect_2026.controller.ListaEstudioController;
 import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.controller.PacienteController;
 import com.mycompany.proyect_2026.controller.ProfesionalController;
@@ -24,7 +24,7 @@ public class PersonaMenu extends javax.swing.JFrame {
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
-    private EstudioController estudioController;
+    private ListaEstudioController estudioController;
     private ArrayList<Paciente> listaPacientesFiltrada;
     private ArrayList<Profesional> listaProfesionalesFiltrada;
 
@@ -35,7 +35,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
-        this.estudioController = new EstudioController();
+        this.estudioController = new ListaEstudioController();
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -49,7 +49,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
-        this.estudioController = new EstudioController(listaEstudios);
+        this.estudioController = new ListaEstudioController(listaEstudios);
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);

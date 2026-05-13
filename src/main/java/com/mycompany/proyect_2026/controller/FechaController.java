@@ -43,6 +43,11 @@ public class FechaController {
         return actual;
     }
     
+    @Override
+    public String toString(){
+        return actual.toString();
+    }
+    
     public static boolean esMayor(Fecha actual, Fecha data){
         if(actual.getAnio() > data.getAnio()){
             return true;

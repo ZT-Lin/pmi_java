@@ -16,15 +16,15 @@ import java.util.ArrayList;
  * @author lamas Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
  *
  */
-public class EstudioController {
+public class ListaEstudioController {
 
     private ArrayList<Estudio> listaEstudios;
 
-    public EstudioController() {
+    public ListaEstudioController() {
         this.listaEstudios = new ArrayList<>();
     }
 
-    public EstudioController(ArrayList<Estudio> listaEstudios) {
+    public ListaEstudioController(ArrayList<Estudio> listaEstudios) {
         this.listaEstudios = listaEstudios;
     }
 

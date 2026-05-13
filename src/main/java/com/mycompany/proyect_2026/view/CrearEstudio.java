@@ -23,7 +23,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Estudio> listaEstudios;
-    private EstudioController estudioController;
+    private ListaEstudioController estudioController;
 
     // Referencia a EstudioMenu para avisarle cuando terminamos
     private EstudioMenu ventanaPadre;
@@ -38,7 +38,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
-        this.estudioController = new EstudioController();
+        this.estudioController = new ListaEstudioController();
         this.ventanaPadre = null;
         initComponents();
         setLocationRelativeTo(null);
@@ -56,7 +56,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
-        this.estudioController = new EstudioController(listaEstudios);
+        this.estudioController = new ListaEstudioController(listaEstudios);
         this.ventanaPadre = padre;
         initComponents();
         setLocationRelativeTo(null);

@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
-import com.mycompany.proyect_2026.controller.EstudioController;
+import com.mycompany.proyect_2026.controller.ListaEstudioController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
@@ -24,7 +24,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Estudio> listaEstudios;
     private ArrayList<Estudio> listaFiltrada; // lista que refleja lo que se ve en pantalla
-    private EstudioController estudioController;
+    private ListaEstudioController estudioController;
 
     /**
      * Creates new form EstudioMenu
@@ -33,7 +33,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
-        this.estudioController = new EstudioController();
+        this.estudioController = new ListaEstudioController();
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
                 new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
@@ -52,7 +52,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
-        this.estudioController = new EstudioController(listaEstudios);
+        this.estudioController = new ListaEstudioController(listaEstudios);
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
                 new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
