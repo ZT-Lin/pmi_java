@@ -19,18 +19,18 @@ public class CartaProfesional extends javax.swing.JPanel {
 
     public CartaProfesional(int i) {
         initComponents();
-        pNombre.setText(String.valueOf(i));
+        campoNombre.setText(String.valueOf(i));
     }
 
     public CartaProfesional(String nombre, String apellido, String correo, String tel, String matricula) {
         initComponents(); // Dibuja la interfaz
 
         // Seteamos los textos en las cajitas (asumiendo los nombres de variables de tu diseño)
-        pNombre.setText(nombre);
-        pApellido.setText(apellido);
-        pCorreo.setText(correo);
-        pTelefono.setText(tel);
-        pTelefono1.setText(matricula); // En tu diseño pTelefono1 parece ser el de la matrícula
+        campoNombre.setText(nombre);
+        campoApellido.setText(apellido);
+        campoCorreo.setText(correo);
+        campoTelefono.setText(tel);
+        campoMatricula.setText(matricula); // En tu diseño pTelefono1 parece ser el de la matrícula
     }
 
     /**
@@ -40,12 +40,12 @@ public class CartaProfesional extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pNombre = new javax.swing.JTextField();
-        pApellido = new javax.swing.JTextField();
-        pCorreo = new javax.swing.JTextField();
-        pTelefono = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
+        campoApellido = new javax.swing.JTextField();
+        campoCorreo = new javax.swing.JTextField();
+        campoTelefono = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        pTelefono1 = new javax.swing.JTextField();
+        campoMatricula = new javax.swing.JTextField();
         nombreLabel = new javax.swing.JLabel();
         apellidoLabel = new javax.swing.JLabel();
         mailLabel = new javax.swing.JLabel();
@@ -54,20 +54,20 @@ public class CartaProfesional extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(392, 387));
 
-        pNombre.setEditable(false);
-        pNombre.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoNombre.setEditable(false);
+        campoNombre.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pApellido.setEditable(false);
-        pApellido.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoApellido.setEditable(false);
+        campoApellido.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pCorreo.setEditable(false);
-        pCorreo.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoCorreo.setEditable(false);
+        campoCorreo.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pTelefono.setEditable(false);
-        pTelefono.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoTelefono.setEditable(false);
+        campoTelefono.setMinimumSize(new java.awt.Dimension(156, 24));
 
-        pTelefono1.setEditable(false);
-        pTelefono1.setMinimumSize(new java.awt.Dimension(156, 24));
+        campoMatricula.setEditable(false);
+        campoMatricula.setMinimumSize(new java.awt.Dimension(156, 24));
 
         nombreLabel.setText("Nombre");
 
@@ -94,7 +94,7 @@ public class CartaProfesional extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(matriculaLabel)
                                 .addGap(113, 113, 113)
-                                .addComponent(pTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(campoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nombreLabel)
@@ -103,10 +103,10 @@ public class CartaProfesional extends javax.swing.JPanel {
                                     .addComponent(telLabel))
                                 .addGap(113, 113, 113)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(pApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                    .addComponent(pCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(pTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(pNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(campoApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(campoCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
@@ -114,25 +114,25 @@ public class CartaProfesional extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(apellidoLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mailLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(telLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(matriculaLabel))
                 .addGap(208, 208, 208))
         );
@@ -141,15 +141,15 @@ public class CartaProfesional extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidoLabel;
+    private javax.swing.JTextField campoApellido;
+    private javax.swing.JTextField campoCorreo;
+    private javax.swing.JTextField campoMatricula;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoTelefono;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel mailLabel;
     private javax.swing.JLabel matriculaLabel;
     private javax.swing.JLabel nombreLabel;
-    private javax.swing.JTextField pApellido;
-    private javax.swing.JTextField pCorreo;
-    private javax.swing.JTextField pNombre;
-    private javax.swing.JTextField pTelefono;
-    private javax.swing.JTextField pTelefono1;
     private javax.swing.JLabel telLabel;
     // End of variables declaration//GEN-END:variables
 }

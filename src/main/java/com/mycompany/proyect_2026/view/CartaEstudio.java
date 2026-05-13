@@ -20,16 +20,16 @@ public class CartaEstudio extends javax.swing.JPanel {
      */
     public CartaEstudio() {
         initComponents();
-        jTextField9.setEditable(false); // que no se pueda editar
+        campoEstado.setEditable(false); // que no se pueda editar
         this.setSize(362, 456);
     }
 
     public CartaEstudio(int i) {
         initComponents();
         test = i;
-        identPaciente.setText(String.valueOf(test));
-        jCheckBox1.setEnabled(false);
-        jTextField9.setEditable(false);
+        campoNombrePaciente.setText(String.valueOf(test));
+        checkHemograma.setEnabled(false);
+        campoEstado.setEditable(false);
         this.setSize(362, 456);
     }
 
@@ -43,40 +43,40 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         // ── Datos del Paciente
         // identPaciente → nombre y apellido del paciente
-        identPaciente.setText(
+        campoNombrePaciente.setText(
                 estudio.getPaciente().getNombre() + " "
                 + estudio.getPaciente().getApellido()
         );
         // jTextField2 → DNI del paciente
-        jTextField2.setText(estudio.getPaciente().getDNI());
+        campoDNI.setText(estudio.getPaciente().getDNI());
 
         // ── Datos del Profesional 
         // jTextField3 → nombre y apellido del profesional
-        jTextField3.setText(
+        campoNombreProfesional.setText(
                 estudio.getProfesional().getNombre() + " "
                 + estudio.getProfesional().getApellido()
         );
         // jTextField7 → matrícula del profesional
-        jTextField7.setText(estudio.getProfesional().getMatricula());
+        campoMatricula.setText(estudio.getProfesional().getMatricula());
 
         // ── Fechas 
         // jTextField6 → fecha de realización
-        jTextField6.setText(estudio.getFecha().toString());
+        campoFechaRealizacion.setText(estudio.getFecha().toString());
 
         // jTextField8 → fecha de entrega
         // puede ser null si todavía no se asignó
         if (estudio.getFechaEntrega() != null) {
-            jTextField8.setText(estudio.getFechaEntrega().toString());
+            campoFechaEntrega.setText(estudio.getFechaEntrega().toString());
         } else {
-            jTextField8.setText("Sin asignar");
+            campoFechaEntrega.setText("Sin asignar");
         }
 
         // ── Análisis ────────────────────────────────────
         // Juntamos los 10 checkboxes en un array para iterar
         // El orden debe coincidir con las claves 1-10 del HashMap
         javax.swing.JCheckBox[] checks = {
-            jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
-            jCheckBox6, jCheckBox7, jCheckBox8, jCheckBox9, jCheckBox10
+            checkHemograma, checkGlucemia, checkColes, checkTrigli, checkOrina,
+            checkHepatograma, checkUrea, checkCreat, checkAcido, checkTSH
         };
 
         // Ponemos el nombre de cada análisis como texto del checkbox
@@ -101,22 +101,24 @@ public class CartaEstudio extends javax.swing.JPanel {
                 }
             }
         }
-        jTextField9.setText(estudio.getEstado());
-        jTextField9.setEditable(false);
+        campoEstado.setText(estudio.getEstado());
+        campoEstado.setEditable(false);
+        campoEstado.setText(estudio.getEstado());
+        campoEstado.setEditable(false);
 
 // Color según estado:
         switch (estudio.getEstado()) {
             case "Finalizado":
-                jTextField9.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
+                campoEstado.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
                 break;
             case "Retirado":
-                jTextField9.setBackground(new java.awt.Color(200, 200, 200)); // gris
+                campoEstado.setBackground(new java.awt.Color(200, 200, 200)); // gris
                 break;
             case "Enviado":
-                jTextField9.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
+                campoEstado.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
                 break;
             default: // En Elaboración
-                jTextField9.setBackground(new java.awt.Color(255, 200, 100)); // naranja
+                campoEstado.setBackground(new java.awt.Color(255, 200, 100)); // naranja
                 break;
         }
     } // cierre de mostrarDatos()
@@ -128,39 +130,39 @@ public class CartaEstudio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        campoMatricula = new javax.swing.JTextField();
+        campoFechaEntrega = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        identPaciente = new javax.swing.JTextField();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jTextField2 = new javax.swing.JTextField();
+        checkHemograma = new javax.swing.JCheckBox();
+        campoNombrePaciente = new javax.swing.JTextField();
+        checkGlucemia = new javax.swing.JCheckBox();
+        campoDNI = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        checkHepatograma = new javax.swing.JCheckBox();
+        checkColes = new javax.swing.JCheckBox();
+        checkTrigli = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
+        checkOrina = new javax.swing.JCheckBox();
+        checkUrea = new javax.swing.JCheckBox();
+        checkCreat = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jTextField3 = new javax.swing.JTextField();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jTextField6 = new javax.swing.JTextField();
+        checkAcido = new javax.swing.JCheckBox();
+        campoNombreProfesional = new javax.swing.JTextField();
+        checkTSH = new javax.swing.JCheckBox();
+        campoFechaRealizacion = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        campoEstado = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(295, 428));
 
-        jTextField7.setEditable(false);
+        campoMatricula.setEditable(false);
 
-        jTextField8.setEditable(false);
+        campoFechaEntrega.setEditable(false);
 
         jLabel7.setText("Nombre y Apellido: ");
 
@@ -170,30 +172,47 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         jLabel2.setText("D.N.I. :");
 
-        jCheckBox1.setText("analisis 1");
+        checkHemograma.setText("checkHemograma");
 
-        identPaciente.setEditable(false);
+        campoNombrePaciente.setEditable(false);
+        campoNombrePaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNombrePacienteActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setText("jCheckBox1");
+        checkGlucemia.setText("checkGlucemia");
+        checkGlucemia.setToolTipText("");
 
-        jTextField2.setEditable(false);
+        campoDNI.setEditable(false);
+        campoDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoDNIActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("nombre y apellido: ");
 
-        jCheckBox6.setText("analisis 1");
+        checkHepatograma.setText("checkHepatograma");
 
-        jCheckBox3.setText("jCheckBox1");
+        checkColes.setText("checkColes");
 
-        jCheckBox4.setText("analisis 1");
+        checkTrigli.setText("checkTrigli");
+        checkTrigli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkTrigliActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jLabel4.setText("Analisis");
 
-        jCheckBox5.setText("jCheckBox1");
+        checkOrina.setText("checkOrina");
 
-        jCheckBox7.setText("analisis 1");
+        checkUrea.setText("checkUrea");
+        checkUrea.setToolTipText("");
 
-        jCheckBox8.setText("jCheckBox1");
+        checkCreat.setText("checkCreat");
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jLabel3.setText("Paciente");
@@ -203,18 +222,18 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         jLabel10.setText("Fecha de entrega");
 
-        jCheckBox9.setText("jCheckBox1");
+        checkAcido.setText("checkAcido");
 
-        jTextField3.setEditable(false);
+        campoNombreProfesional.setEditable(false);
 
-        jCheckBox10.setText("jCheckBox1");
+        checkTSH.setText("checkTSH");
 
-        jTextField6.setEditable(false);
-        jTextField6.setToolTipText("");
+        campoFechaRealizacion.setEditable(false);
+        campoFechaRealizacion.setToolTipText("");
 
         jLabel12.setText("Estado:");
 
-        jTextField9.setEditable(false);
+        campoEstado.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,6 +242,16 @@ public class CartaEstudio extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(campoNombreProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(campoMatricula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -242,41 +271,28 @@ public class CartaEstudio extends javax.swing.JPanel {
                                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(45, 45, 45)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(identPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(campoNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addGap(45, 45, 45)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckBox9)
-                                            .addComponent(jCheckBox4)
-                                            .addComponent(jCheckBox3)
-                                            .addComponent(jCheckBox7)
-                                            .addComponent(jCheckBox8)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(53, 53, 53))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(167, 167, 167)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(checkAcido)
+                                            .addComponent(checkTrigli)
+                                            .addComponent(checkColes)
+                                            .addComponent(checkUrea)
+                                            .addComponent(checkCreat)
+                                            .addComponent(campoFechaRealizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox10)
-                                    .addComponent(jCheckBox6)
-                                    .addComponent(jCheckBox5)
-                                    .addComponent(jCheckBox1)
-                                    .addComponent(jCheckBox2))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(53, 53, 53))))
+                                    .addComponent(checkTSH)
+                                    .addComponent(checkHepatograma)
+                                    .addComponent(checkOrina)
+                                    .addComponent(checkHemograma)
+                                    .addComponent(checkGlucemia))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,75 +301,93 @@ public class CartaEstudio extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(identPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoFechaRealizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(checkHemograma)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox2))
+                        .addComponent(checkGlucemia))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox4)
+                        .addComponent(checkTrigli)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox3)))
+                        .addComponent(checkColes)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox7))
+                    .addComponent(checkHepatograma)
+                    .addComponent(checkUrea))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox8))
+                    .addComponent(checkOrina)
+                    .addComponent(checkCreat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox10)
-                    .addComponent(jCheckBox9))
+                    .addComponent(checkTSH)
+                    .addComponent(checkAcido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNombreProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void campoDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDNIActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDNIActionPerformed
+
+    private void checkTrigliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTrigliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkTrigliActionPerformed
+
+    private void campoNombrePacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombrePacienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNombrePacienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField identPaciente;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JTextField campoDNI;
+    private javax.swing.JTextField campoEstado;
+    private javax.swing.JTextField campoFechaEntrega;
+    private javax.swing.JTextField campoFechaRealizacion;
+    private javax.swing.JTextField campoMatricula;
+    private javax.swing.JTextField campoNombrePaciente;
+    private javax.swing.JTextField campoNombreProfesional;
+    private javax.swing.JCheckBox checkAcido;
+    private javax.swing.JCheckBox checkColes;
+    private javax.swing.JCheckBox checkCreat;
+    private javax.swing.JCheckBox checkGlucemia;
+    private javax.swing.JCheckBox checkHemograma;
+    private javax.swing.JCheckBox checkHepatograma;
+    private javax.swing.JCheckBox checkOrina;
+    private javax.swing.JCheckBox checkTSH;
+    private javax.swing.JCheckBox checkTrigli;
+    private javax.swing.JCheckBox checkUrea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -364,11 +398,5 @@ public class CartaEstudio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
