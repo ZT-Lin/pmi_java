@@ -503,7 +503,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // -- Comparacion entre fechas --------
         
         if(FechaController.esMenor(fechaEntrega , fechaRealizacion)){
-            JOptionPane.showMessageDialog(this,"la fecha de entrega no puede ser menor que fecha de realizacion","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"La fecha de entrega no puede ser menor que fecha de realización","Error",JOptionPane.ERROR_MESSAGE);
             return;
         }
 
