@@ -73,7 +73,7 @@ public class PacienteController {
         return paciente.getTel();
     }
 
-    public boolean getOB() {
+    public boolean getObraSocial() {
         return paciente.getObraSocial();
     }
 

@@ -110,8 +110,6 @@ public class CartaEstudio extends javax.swing.JPanel {
         }
         campoEstado.setText(estudio.getEstado());
         campoEstado.setEditable(false);
-        campoEstado.setText(estudio.getEstado());
-        campoEstado.setEditable(false);
 
 // Color según estado:
         switch (est.getEstado()) {

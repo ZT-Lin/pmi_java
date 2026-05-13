@@ -29,17 +29,16 @@ public CartaPaciente(ArrayList<Paciente> pacientes, int index) {
         PacienteController pc = new PacienteController(listaPaciente.getPaciente(index));
 
         // 1. OBTENEMOS EL PACIENTE DE LA LISTA USANDO EL ÍNDICE
-        Paciente pacienteActual = listaPacientes.get(index);
 
         // 2. USAMOS ESE PACIENTE PARA LLENAR LOS CAMPOS VISUALES
-        campoNombre.setText(pacienteActual.getNombre());
-        campoApellido.setText(pacienteActual.getApellido());
-        campoTelefono.setText(pacienteActual.getTel());
-        campoCorreo.setText(pacienteActual.getMail());
-        campoDNI.setText(pacienteActual.getDNI());
+        campoNombre.setText(pc.getNombre());
+        campoApellido.setText(pc.getApellido());
+        campoTelefono.setText(pc.getTel());
+        campoCorreo.setText(pc.getMail());
+        campoDNI.setText(pc.getDNI());
         
         // 3. VERIFICAMOS LA OBRA SOCIAL (usando getObraSocial(), no getOB())
-        if (pacienteActual.getObraSocial()) {
+        if (pc.getObraSocial()) {
             obSi.setSelected(true);
         } else {
             obNo.setSelected(true);
