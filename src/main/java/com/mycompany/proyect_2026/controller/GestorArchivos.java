@@ -137,18 +137,41 @@ public class GestorArchivos {
                 if (paciente != null && profesional != null) {
                     Estudio est = new Estudio(new Fecha(dia, mes, anio), partes[3], paciente, profesional);
                     est.setEstado(partes[6]);
-                    // ... resto de carga de fecha entrega y analisis ...
+
+                    // --- Cargar fecha de entrega ---
+                    // partes[7] es "dd/mm/aaaa" o la palabra "null"
+                    if (partes.length > 7 && !partes[7].equals("null") && !partes[7].isEmpty()) {
+                        String[] partesEntrega = partes[7].split("/");
+                        if (partesEntrega.length == 3) {
+                            try {
+                                int diaE = Integer.parseInt(partesEntrega[0]);
+                                int mesE = Integer.parseInt(partesEntrega[1]);
+                                int anioE = Integer.parseInt(partesEntrega[2]);
+                                est.setFechaEntrega(new Fecha(diaE, mesE, anioE));
+                            } catch (NumberFormatException ex) {
+                                // Fecha de entrega corrupta: dejamos null, no es crítico
+                                est.setFechaEntrega(null);
+                            }
+                        }
+                    }
+
+                    // --- Cargar análisis ---
+                    // partes[8] es "Hemograma_Completo,Glucemia" o vacío
+                    if (partes.length > 8 && !partes[8].isEmpty()) {
+                        String[] analisis = partes[8].split(",");
+                        est.setAnalisis(analisis);
+                    } else {
+                        est.setAnalisis(new String[0]);
+                    }
+
                     listaEstudios.add(est);
                 }
             }
         } catch (NumberFormatException e) {
-            // Error específico: El archivo tiene letras donde debería haber números
             throw new IOException("Error de formato: El archivo de estudios tiene datos dañados.", e);
         } catch (FileNotFoundException e) {
-            // Error específico: Archivo no encontrado
             throw e;
         } catch (IOException e) {
-            // Error general
             throw e;
         } finally {
             if (lector != null) {
@@ -189,6 +212,7 @@ public class GestorArchivos {
             javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar paciente.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public static void agregarProfesionalFisico(Profesional p) throws IOException {
 
         try {
@@ -196,11 +220,8 @@ public class GestorArchivos {
             FileWriter fw = new FileWriter("data/profesionales.txt", true);
 
             // Guardar con "|"
-
             String linea = p.getNombre() + "|" + p.getApellido() + "|"
-
                     + p.getMail() + "|" + p.getTel() + "|"
-
                     + p.getMatricula() + "\n";
 
             fw.write(linea);
@@ -214,7 +235,8 @@ public class GestorArchivos {
         }
 
     }
-      public static void cargarAnalisisDesdeArchivo() throws IOException {
+
+    public static void cargarAnalisisDesdeArchivo() throws IOException {
 
         File a = new File("data/analisis.txt");
 
@@ -239,18 +261,15 @@ public class GestorArchivos {
         lector.close();
 
     }
-       public static void crearDatosIniciales() throws IOException {
+
+    public static void crearDatosIniciales() throws IOException {
 
         File fp = new File("data/pacientes.txt");
 
         if (!fp.exists()) {
 
             // Se asume que si no hay pacientes, tampoco hay lo demás, así que creamos todo
-
-
-
             // 3 Pacientes
-
             Paciente p1 = new Paciente("Juan", "García", "juan@mail.com", "48150524", "1122334455");
 
             p1.setObraSocial(true);
@@ -269,10 +288,7 @@ public class GestorArchivos {
 
             agregarPacienteFisico(p3);
 
-
-
             // 3 Profesionales
-
             Profesional pr1 = new Profesional("Laura", "Gómez", "laura@mail.com", "2664201976", "1020");
 
             Profesional pr2 = new Profesional("Diego", "Silva", "diego@mail.com", "2664185432", "1021");
@@ -285,10 +301,7 @@ public class GestorArchivos {
 
             agregarProfesionalFisico(pr3);
 
-
-
             // 3 Estudios (Básicos)
-
             Estudio e1 = new Estudio(new Fecha(1, 10, 2026), "Radiografía", p1, pr1);
 
             Estudio e2 = new Estudio(new Fecha(5, 10, 2026), "Ecografía", p2, pr2);
@@ -304,7 +317,8 @@ public class GestorArchivos {
         }
 
     }
-       public static ArrayList<Profesional> cargarProfesionalesDesdeArchivo() throws IOException {
+
+    public static ArrayList<Profesional> cargarProfesionalesDesdeArchivo() throws IOException {
 
         ArrayList<Profesional> lista = new ArrayList<>();
 
@@ -315,8 +329,6 @@ public class GestorArchivos {
             return lista;
 
         }
-
-
 
         Scanner lector = new Scanner(p);
 
@@ -330,10 +342,7 @@ public class GestorArchivos {
 
             }
 
-
-
             // Usar split con "|"
-
             String[] partes = linea.split("\\|");
 
             if (partes.length < 5) {
@@ -341,8 +350,6 @@ public class GestorArchivos {
                 continue;
 
             }
-
-
 
             String nombre = partes[0];
 
@@ -364,8 +371,6 @@ public class GestorArchivos {
 
     }
 
-
-
     public static ArrayList<Paciente> cargarPacientesDesdeArchivo() throws IOException {
 
         ArrayList<Paciente> lista = new ArrayList<>();
@@ -377,8 +382,6 @@ public class GestorArchivos {
             return lista;
 
         }
-
-
 
         Scanner lector = new Scanner(p);
 
@@ -392,10 +395,7 @@ public class GestorArchivos {
 
             }
 
-
-
             //  Usar split con "|"
-
             String[] partes = linea.split("\\|");
 
             if (partes.length < 6) {
@@ -403,8 +403,6 @@ public class GestorArchivos {
                 continue;
 
             }
-
-
 
             String nombre = partes[0];
 
@@ -417,8 +415,6 @@ public class GestorArchivos {
             String telefono = partes[4];
 
             boolean obraSocial = Boolean.parseBoolean(partes[5]);
-
-
 
             Paciente paci = new Paciente(nombre, apellido, mail, dni, telefono);
 
