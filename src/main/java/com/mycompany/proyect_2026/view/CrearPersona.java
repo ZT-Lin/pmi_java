@@ -298,24 +298,44 @@ public class CrearPersona extends javax.swing.JFrame {
 
     private void commitPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_commitPersonaActionPerformed
 
-        //VALIDACIONES BÁSICAS (Para ambos tipos de personas)
+// 1. CAPTURA Y LIMPIEZA DE DATOS
         String nombre = nombreText.getText().trim();
         String apellido = apellidoText.getText().trim();
         String mail = eMailText.getText().trim();
         String tel = telFText.getText().trim();
 
-        if (nombre.isEmpty() || apellido.isEmpty()) {
+        // --- NUEVAS VALIDACIONES PROFESIONALES ---
+        // A. Validar que no estén vacíos
+        if (nombre.isEmpty() || apellido.isEmpty() || tel.isEmpty() || mail.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "Nombre y apellido son obligatorios.",
-                    "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return; // Corta la ejecución acá, no sigue guardando
+                    "Todos los campos son obligatorios.",
+                    "Campos incompletos", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-        if (mail.isEmpty()) {
+        // B. Validar Nombre (Solo letras y espacios)
+        if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                    "El mail es obligatorio.",
-                    "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return; // Corta la ejecución acá
+                    "El nombre no puede contener números ni símbolos especiales.",
+                    "Formato de nombre inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // C. Validar Apellido (Solo letras y espacios)
+        if (!apellido.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El apellido no puede contener números ni símbolos especiales.",
+                    "Formato de apellido inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // D. Validar Teléfono (Solo números, entre 7 y 15 dígitos)
+        // El regex ^[0-9]{7,15}$ obliga a que sean solo números y controla el largo
+        if (!tel.matches("^[0-9]{7,15}$")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "El teléfono debe contener solo números (entre 7 y 15 dígitos).",
+                    "Formato de teléfono inválido", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
         }
         String seleccion = (String) selectPacOPro.getSelectedItem();
         if (seleccion.equals("<Seleccionar>")) {
@@ -330,7 +350,12 @@ public class CrearPersona extends javax.swing.JFrame {
             if (panelP == null) {
                 return;
             }
-
+            if (!panelP.isObraSocialSeleccionada()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Por favor, especifique si el paciente tiene Obra Social (Sí/No).",
+                        "Falta información", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return; // Cortamos la ejecución para que no cierre la ventana
+            }
             PacienteController pc = new PacienteController(listaPacientes);
 
             if (modoEdicion) {
