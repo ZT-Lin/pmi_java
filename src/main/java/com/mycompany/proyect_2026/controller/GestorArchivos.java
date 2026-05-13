@@ -20,20 +20,20 @@ public class GestorArchivos {
             // Se asume que si no hay pacientes, tampoco hay lo demás, así que creamos todo
 
             // 3 Pacientes
-            Paciente p1 = new Paciente("Juan", "García", "juan@mail.com", "11111111", "1122334455");
+            Paciente p1 = new Paciente("Juan", "García", "juan@mail.com", "48150524", "1122334455");
             p1.setObraSocial(true);
-            Paciente p2 = new Paciente("Ana", "López", "ana@mail.com", "22222222", "1133445566");
+            Paciente p2 = new Paciente("Ana", "López", "ana@mail.com", "49172341", "1133445566");
             p2.setObraSocial(false);
-            Paciente p3 = new Paciente("Carlos", "Martínez", "carlos@mail.com", "33333333", "1144556677");
+            Paciente p3 = new Paciente("Carlos", "Martínez", "carlos@mail.com", "20476524", "1144556677");
             p3.setObraSocial(true);
             agregarPacienteFisico(p1);
             agregarPacienteFisico(p2);
             agregarPacienteFisico(p3);
 
             // 3 Profesionales
-            Profesional pr1 = new Profesional("Laura", "Gómez", "laura@mail.com", "12341234", "M001");
-            Profesional pr2 = new Profesional("Diego", "Silva", "diego@mail.com", "43214321", "M002");
-            Profesional pr3 = new Profesional("Elena", "Ruiz", "elena@mail.com", "55556666", "M003");
+            Profesional pr1 = new Profesional("Laura", "Gómez", "laura@mail.com", "2664201976", "1020");
+            Profesional pr2 = new Profesional("Diego", "Silva", "diego@mail.com", "2664185432", "1021");
+            Profesional pr3 = new Profesional("Elena", "Ruiz", "elena@mail.com", "2664183257", "1022");
             agregarProfesionalFisico(pr1);
             agregarProfesionalFisico(pr2);
             agregarProfesionalFisico(pr3);
