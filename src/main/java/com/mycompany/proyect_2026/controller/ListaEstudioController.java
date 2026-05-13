@@ -9,7 +9,10 @@ import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -134,7 +137,11 @@ public class ListaEstudioController {
         nuevo.setAnalisis(analisis);
 
         listaEstudios.add(nuevo);
-        GestorArchivos.guardarEstudioEnArchivo(nuevo);
+        try {
+            GestorArchivos.guardarEstudioEnArchivo(nuevo);
+        } catch (IOException ex) {
+            Logger.getLogger(ListaEstudioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return nuevo;
     }
@@ -148,7 +155,11 @@ public class ListaEstudioController {
             return;
         }
         estudio.setEstado(nuevoEstado);
-        GestorArchivos.actualizarArchivoEstudios(listaEstudios);
+        try {
+            GestorArchivos.actualizarArchivoEstudios(listaEstudios);
+        } catch (IOException ex) {
+            Logger.getLogger(ListaEstudioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -159,7 +170,11 @@ public class ListaEstudioController {
             return;
         }
         estudio.setFechaEntrega(nuevaFecha);
-        GestorArchivos.actualizarArchivoEstudios(listaEstudios);
+        try {
+            GestorArchivos.actualizarArchivoEstudios(listaEstudios);
+        } catch (IOException ex) {
+            Logger.getLogger(ListaEstudioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // GETTER

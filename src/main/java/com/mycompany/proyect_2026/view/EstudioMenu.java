@@ -36,7 +36,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.estudioController = new ListaEstudioController();
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
-                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+                new String[]{"<Todos>", "En Elaboracion", "Finalizado", "Retirado", "Enviado"}
         ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -55,7 +55,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.estudioController = new ListaEstudioController(listaEstudios);
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
-                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
+                new String[]{"<Todos>", "En Elaboracion", "Finalizado", "Retirado", "Enviado"}
         ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -390,7 +390,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         Estudio seleccionado = listaFiltrada.get(idx);
 
         // Diálogo para cambiar estado
-        String[] opciones = {"En Elaboración", "Finalizado", "Retirado", "Enviado"};
+        String[] opciones = {"En Elaboracion", "Finalizado", "Retirado", "Enviado"};
         String nuevoEstado = (String) JOptionPane.showInputDialog(
                 this,
                 "Seleccioná el nuevo estado:",

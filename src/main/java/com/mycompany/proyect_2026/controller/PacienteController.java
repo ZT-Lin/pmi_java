@@ -1,6 +1,7 @@
 package com.mycompany.proyect_2026.controller;
 
 import com.mycompany.proyect_2026.model.Paciente;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PacienteController {
@@ -88,22 +89,23 @@ public class PacienteController {
     // --- NUEVO REDISEÑO MVC ---
     // Alta
     public boolean registrarPaciente(String nombre, String apellido, String mail, String tel, String dni, boolean obraSocial) {
-        // Validación de DNI duplicado acá
         for (Paciente p : listaPacientes) {
             if (p.getDNI().equals(dni)) {
                 return false;
             }
         }
-        Paciente nuevo = new Paciente();
-        nuevo.setNombre(nombre);
-        nuevo.setApellido(apellido);
-        nuevo.setMail(mail);
-        nuevo.setTel(tel);
-        nuevo.setDNI(dni);
+
+        Paciente nuevo = new Paciente(nombre, apellido, mail, dni, tel);
         nuevo.setObraSocial(obraSocial);
-        listaPacientes.add(nuevo);
-        GestorArchivos.agregarPacienteFisico(nuevo);
-        return true;
+
+        try {
+            listaPacientes.add(nuevo);
+            GestorArchivos.agregarPacienteFisico(nuevo);
+            return true;
+        } catch (IOException ex) {
+            listaPacientes.remove(nuevo); // Quitamos de memoria si falló el disco
+            return false;
+        }
     }
 
     // Eliminación
@@ -111,20 +113,55 @@ public class PacienteController {
         if (indice < 0 || indice >= listaPacientes.size()) {
             return false;
         }
-        listaPacientes.remove(indice);
-        GestorArchivos.actualizarArchivoPacientes(listaPacientes);
-        return true;
+        //Guardamos el paciente por si hay que restaurarlo
+        Paciente borrado = listaPacientes.get(indice);
+        try {
+            listaPacientes.remove(indice);
+            GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+            return true;
+        } catch (IOException ex) {
+            //Si falló el disco, lo volvemos a poner donde estaba
+            listaPacientes.add(indice, borrado);
+            System.err.println("Error al eliminar: " + ex.getMessage());
+            return false;
+        }
     }
 
     // Modificación
-    public void actualizarPaciente(int indice, String nombre, String apellido, String mail, String tel, boolean obraSocial) {
+    public boolean actualizarPaciente(int indice, String nombre, String apellido, String mail, String tel, boolean obraSocial) {
+        if (indice < 0 || indice >= listaPacientes.size()) {
+            return false;
+        }
+
         Paciente p = listaPacientes.get(indice);
+
+        // Guardamos los datos viejos por si el archivo falla
+        String oldNom = p.getNombre();
+        String oldApe = p.getApellido();
+        String oldMail = p.getMail();
+        String oldTel = p.getTel();
+        boolean oldOS = p.getObraSocial();
+
+        // Aplicamos los cambios en memoria
         p.setNombre(nombre);
         p.setApellido(apellido);
         p.setMail(mail);
         p.setTel(tel);
         p.setObraSocial(obraSocial);
-        GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+
+        try {
+            GestorArchivos.actualizarArchivoPacientes(listaPacientes);
+            return true;
+        } catch (IOException ex) {
+            //Restauramos los datos originales
+            p.setNombre(oldNom);
+            p.setApellido(oldApe);
+            p.setMail(oldMail);
+            p.setTel(oldTel);
+            p.setObraSocial(oldOS);
+            System.err.println("Error al actualizar: " + ex.getMessage());
+            return false;
+        }
     }
 
     // Filtro
