@@ -44,7 +44,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
-        
+
         this.setTitle("Nuevo Estudio");
     }
 
@@ -63,7 +63,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
         this.setSize(420, 480);
-        
+
         this.setTitle("Nuevo Estudio");
     }
 
@@ -462,7 +462,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
-  
+
         // ── Validar selección de paciente ──────────────────
         int idxPaciente = comboPaciente.getSelectedIndex();
         if (idxPaciente <= 0) {
@@ -499,11 +499,13 @@ public class CrearEstudio extends javax.swing.JFrame {
                 return;
             }
         }
-        
+
         // -- Comparacion entre fechas --------
-        
-        if(FechaController.esMenor(fechaEntrega , fechaRealizacion)){
-            JOptionPane.showMessageDialog(this,"La fecha de entrega no puede ser menor que fecha de realización","Error",JOptionPane.ERROR_MESSAGE);
+        //Solo comparamos si el usuario ingreso fecha de entrega (es opcional)
+        if (fechaEntrega != null && FechaController.esMenor(fechaEntrega, fechaRealizacion)) {
+            JOptionPane.showMessageDialog(this,
+                    "La fecha de entrega no puede ser menor que la fecha de realización.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
