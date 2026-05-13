@@ -4,13 +4,12 @@
  */
 package com.mycompany.proyect_2026.view;
 
-import com.mycompany.proyect_2026.controller.EstudioController;
+import com.mycompany.proyect_2026.controller.*;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
-import com.mycompany.proyect_2026.controller.EstudioController;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -24,7 +23,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     private ArrayList<Paciente> listaPacientes;
     private ArrayList<Profesional> listaProfesionales;
     private ArrayList<Estudio> listaEstudios;
-    private EstudioController estudioController;
+    private ListaEstudioController estudioController;
 
     // Referencia a EstudioMenu para avisarle cuando terminamos
     private EstudioMenu ventanaPadre;
@@ -39,7 +38,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = new ArrayList<>();
         this.listaProfesionales = new ArrayList<>();
         this.listaEstudios = new ArrayList<>();
-        this.estudioController = new EstudioController();
+        this.estudioController = new ListaEstudioController();
         this.ventanaPadre = null;
         initComponents();
         setLocationRelativeTo(null);
@@ -57,7 +56,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.listaEstudios = estudios;
-        this.estudioController = new EstudioController(listaEstudios);
+        this.estudioController = new ListaEstudioController(listaEstudios);
         this.ventanaPadre = padre;
         initComponents();
         setLocationRelativeTo(null);
@@ -73,11 +72,11 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Hacer editables los campos de fecha ────────────
         // initComponents los pone como non-editable,
         // los sobreescribimos acá
-        jTextField6.setEditable(true);  // fecha de realización
-        jTextField6.setText("dd/mm/aaaa");
+        fRealizacion.setEditable(true);  // fecha de realización
+        fRealizacion.setText("dd/mm/aaaa");
 
-        jTextField8.setEditable(true);  // fecha de entrega
-        jTextField8.setText("dd/mm/aaaa");
+        fEntrega.setEditable(true);  // fecha de entrega
+        fEntrega.setText("dd/mm/aaaa");
 
         // ── Agregar combo de pacientes ─────────────────────
         // Lo creamos programáticamente porque el form no lo tiene
@@ -119,12 +118,12 @@ public class CrearEstudio extends javax.swing.JFrame {
         }
         comboProfesional.addActionListener(evt -> onProfesionalSeleccionado());
 
-        jTextField3.setVisible(false); // ocultamos el campo viejo
+        identProfesional.setVisible(false); // ocultamos el campo viejo
         comboProfesional.setBounds(
-                jTextField3.getX(),
-                jTextField3.getY(),
-                jTextField3.getWidth() + 50,
-                jTextField3.getHeight()
+                identProfesional.getX(),
+                identProfesional.getY(),
+                identProfesional.getWidth() + 50,
+                identProfesional.getHeight()
         );
         getContentPane().add(comboProfesional);
 
@@ -158,7 +157,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // Índice 0 es "<Seleccionar paciente>" — limpiar campos
         if (idx <= 0) {
             identPaciente.setText("");
-            jTextField2.setText("");
+            DNI.setText("");
             return;
         }
 
@@ -168,21 +167,21 @@ public class CrearEstudio extends javax.swing.JFrame {
         // Mostramos los datos del paciente seleccionado
         // en los campos de solo lectura como confirmación visual
         identPaciente.setText(p.getNombre() + " " + p.getApellido());
-        jTextField2.setText(p.getDNI());
+        DNI.setText(p.getDNI());
     }
 
     private void onProfesionalSeleccionado() {
         int idx = comboProfesional.getSelectedIndex();
 
         if (idx <= 0) {
-            jTextField3.setText("");
-            jTextField7.setText("");
+            identProfesional.setText("");
+            matricula.setText("");
             return;
         }
 
         Profesional pr = listaProfesionales.get(idx - 1);
-        jTextField3.setText(pr.getNombre() + " " + pr.getApellido());
-        jTextField7.setText(pr.getMatricula());
+        identProfesional.setText(pr.getNombre() + " " + pr.getApellido());
+        matricula.setText(pr.getMatricula());
     }
 
     private Fecha parsearFecha(String texto) throws Exception {
@@ -252,7 +251,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         identPaciente = new javax.swing.JTextField();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jTextField2 = new javax.swing.JTextField();
+        DNI = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jCheckBox6 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
@@ -265,12 +264,12 @@ public class CrearEstudio extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jCheckBox9 = new javax.swing.JCheckBox();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        matricula = new javax.swing.JTextField();
+        fEntrega = new javax.swing.JTextField();
+        identProfesional = new javax.swing.JTextField();
         jCheckBox10 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        fRealizacion = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -284,7 +283,7 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         jCheckBox2.setText("jCheckBox1");
 
-        jTextField2.setEditable(false);
+        DNI.setEditable(false);
 
         jLabel1.setText("nombre y apellido: ");
 
@@ -313,18 +312,18 @@ public class CrearEstudio extends javax.swing.JFrame {
 
         jCheckBox9.setText("jCheckBox1");
 
-        jTextField7.setEditable(false);
+        matricula.setEditable(false);
 
-        jTextField8.setEditable(false);
+        fEntrega.setEditable(false);
 
-        jTextField3.setEditable(false);
+        identProfesional.setEditable(false);
 
         jCheckBox10.setText("jCheckBox1");
 
         jLabel7.setText("nombre y apellido: ");
 
-        jTextField6.setEditable(false);
-        jTextField6.setToolTipText("");
+        fRealizacion.setEditable(false);
+        fRealizacion.setToolTipText("");
 
         jLabel11.setText("fecha de realización");
 
@@ -351,8 +350,8 @@ public class CrearEstudio extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(fEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -379,19 +378,19 @@ public class CrearEstudio extends javax.swing.JFrame {
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField7)
+                                    .addComponent(matricula)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(identProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 30, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DNI, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(fRealizacion, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(identPaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(confirmar, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
@@ -410,12 +409,12 @@ public class CrearEstudio extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fRealizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -444,16 +443,16 @@ public class CrearEstudio extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(identProfesional, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(matricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmar)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -463,7 +462,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
-
+  
         // ── Validar selección de paciente ──────────────────
         int idxPaciente = comboPaciente.getSelectedIndex();
         if (idxPaciente <= 0) {
@@ -481,7 +480,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Validar y parsear fecha de realización ─────────
         Fecha fechaRealizacion;
         try {
-            fechaRealizacion = parsearFecha(jTextField6.getText());
+            fechaRealizacion = parsearFecha(fRealizacion.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fecha de realización inválida: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -491,7 +490,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // La fecha de entrega es opcional — si el usuario dejó
         // el placeholder o la dejó vacía, se guarda como null
         Fecha fechaEntrega = null;
-        String textoEntrega = jTextField8.getText().trim();
+        String textoEntrega = fEntrega.getText().trim();
         if (!textoEntrega.isEmpty() && !textoEntrega.equals("dd/mm/aaaa")) {
             try {
                 fechaEntrega = parsearFecha(textoEntrega);
@@ -499,6 +498,13 @@ public class CrearEstudio extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Fecha de entrega inválida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+        }
+        
+        // -- Comparacion entre fechas --------
+        
+        if(FechaController.esMenor(fechaEntrega , fechaRealizacion)){
+            JOptionPane.showMessageDialog(this,"la fecha de entrega no puede ser menor que fecha de realizacion","Error",JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         // ── Validar que haya al menos un análisis ──────────
@@ -571,8 +577,12 @@ public class CrearEstudio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField DNI;
     private javax.swing.JButton confirmar;
+    private javax.swing.JTextField fEntrega;
+    private javax.swing.JTextField fRealizacion;
     private javax.swing.JTextField identPaciente;
+    private javax.swing.JTextField identProfesional;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox2;
@@ -592,10 +602,6 @@ public class CrearEstudio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField matricula;
     // End of variables declaration//GEN-END:variables
 }

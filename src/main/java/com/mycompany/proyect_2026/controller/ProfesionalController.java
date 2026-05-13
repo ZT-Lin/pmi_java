@@ -12,6 +12,9 @@ public class ProfesionalController {
     public ProfesionalController() {
         this.profesional = new Profesional();
     }
+    public ProfesionalController(Profesional data) {
+        this.profesional = data;
+    }
 
     // NUEVO: Constructor con lista
     public ProfesionalController(ArrayList<Profesional> listaProfesionales) {

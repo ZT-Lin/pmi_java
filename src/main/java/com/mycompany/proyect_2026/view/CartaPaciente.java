@@ -14,19 +14,19 @@ import java.util.ArrayList;
  */
 public class CartaPaciente extends javax.swing.JPanel {
 
-    private ArrayList<Paciente> listaPacientes;
-
     /**
      * Creates new form CartaPersona
      */
     public CartaPaciente() {
         initComponents();
-        this.listaPacientes = new ArrayList();
     }
 
 public CartaPaciente(ArrayList<Paciente> pacientes, int index) {
         initComponents();
-        this.listaPacientes = pacientes;
+        PacienteController listaPaciente = new PacienteController(pacientes);
+
+        
+        PacienteController pc = new PacienteController(listaPaciente.getPaciente(index));
 
         // 1. OBTENEMOS EL PACIENTE DE LA LISTA USANDO EL ÍNDICE
         Paciente pacienteActual = listaPacientes.get(index);

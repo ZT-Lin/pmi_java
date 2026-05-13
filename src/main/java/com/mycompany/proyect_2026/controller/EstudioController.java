@@ -1,5 +1,3 @@
-package com.mycompany.proyect_2026.controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -18,15 +16,21 @@ import java.util.ArrayList;
  *
  */
 public class EstudioController {
-
-    private ArrayList<Estudio> listaEstudios;
-
-    public EstudioController() {
-        this.listaEstudios = new ArrayList<>();
+    private Estudio estudio;
+    
+    public EstudioController(){
+         estudio = new Estudio();
+    }
+    public EstudioController(Estudio data){
+         this.estudio = data;
+    }
+    
+    public Fecha getFecha() {
+        return estudio.getFecha();
     }
 
-    public EstudioController(ArrayList<Estudio> listaEstudios) {
-        this.listaEstudios = listaEstudios;
+    public Fecha getFechaEntrega() {
+        return estudio.getFechaEntrega();
     }
 
     // FILTROS
@@ -65,52 +69,16 @@ public class EstudioController {
         return resultado;
     }
 
-    /**
-     * Devuelve todos los estudios realizados en la fecha indicada.
-     */
-    public ArrayList<Estudio> filtrarPorFecha(int dia, int mes, int anio) {
-        ArrayList<Estudio> resultado = new ArrayList<>();
-        for (Estudio e : listaEstudios) {
-            if (e.getFecha().getDia() == dia
-                    && e.getFecha().getMes() == mes
-                    && e.getFecha().getAnio() == anio) {
-                resultado.add(e);
-            }
-        }
-        return resultado;
+    public void setEstado(String estado) {
+        estudio.setEstado(estado);
     }
 
-    // CONSULTAS
-    /**
-     * Cuenta cuántos estudios tiene un paciente dado (por DNI).
-     */
-    public int contarEstudiosDePaciente(Paciente paciente) {
-        if (paciente == null) {
-            return 0;
-        }
-        int contador = 0;
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(paciente.getDNI())) {
-                contador++;
-            }
-        }
-        return contador;
+    public void setFecha(Fecha fecha) {
+        estudio.setFecha( fecha );
     }
 
-    /**
-     * Devuelve todos los estudios de un paciente dado (por DNI).
-     */
-    public ArrayList<Estudio> obtenerEstudiosDePaciente(Paciente paciente) {
-        ArrayList<Estudio> resultado = new ArrayList<>();
-        if (paciente == null) {
-            return resultado;
-        }
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(paciente.getDNI())) {
-                resultado.add(e);
-            }
-        }
-        return resultado;
+    public String getNombreEstudio() {
+        return estudio.getNombreEstudio();
     }
 
     // ALTA
@@ -181,33 +149,16 @@ public class EstudioController {
         }
     }
 
-    // GETTER
-    public ArrayList<Estudio> getListaEstudios() {
-        return listaEstudios;
+    public Paciente getPaciente() {
+        return estudio.getPaciente();
     }
 
-    public boolean pacienteTieneEstudios(Paciente paciente) {
-        if (paciente == null) {
-            return false;
-        }
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(paciente.getDNI())) {
-                return true;
-            }
-        }
-        return false;
+    public void setPaciente(Paciente paciente) {
+        estudio.setPaciente ( paciente);
     }
 
-    public boolean profesionalTieneEstudios(Profesional profesional) {
-        if (profesional == null) {
-            return false;
-        }
-        for (Estudio e : listaEstudios) {
-            if (e.getProfesional().getMatricula().equals(profesional.getMatricula())) {
-                return true;
-            }
-        }
-        return false;
+    public Profesional getProfesional() {
+        return estudio.getProfesional();
     }
 
 }

@@ -19,6 +19,14 @@ public class PacienteController {
         this.paciente = new Paciente();
         this.listaPacientes = listaPacientes;
     }
+    public PacienteController(ArrayList<Paciente> listaPacientes, Paciente paciente) {
+        this.paciente = paciente;
+        this.listaPacientes = listaPacientes;
+    }
+    public PacienteController(Paciente paciente) {
+        this.paciente = paciente;
+        this.listaPacientes = new ArrayList();
+    }
 
     // ... ACÁ DEJAMOS TODOS TUS SETTERS Y GETTERS INTACTOS ...
     public void setNombre(String data) {
@@ -165,5 +173,9 @@ public class PacienteController {
             }
         }
         return resultado;
+    }
+    
+    public Paciente getPaciente(int index){
+        return listaPacientes.get(index);
     }
 }
