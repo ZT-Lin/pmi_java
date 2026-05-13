@@ -25,17 +25,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="209" pref="209" max="-2" attributes="0"/>
-                      <Component id="toPersona" min="-2" pref="242" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="210" pref="210" max="-2" attributes="0"/>
-                      <Component id="toStudios" min="-2" pref="242" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                       <Component id="nombreCompañía" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="toPersona" pref="243" max="32767" attributes="0"/>
+                          <Component id="toStudios" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace pref="113" max="32767" attributes="0"/>
@@ -48,9 +47,10 @@
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="nombreCompañía" min="-2" pref="60" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="toPersona" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace min="49" pref="49" max="-2" attributes="0"/>
-              <Component id="toStudios" min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="toPersona" min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="toStudios" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,6 +67,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="toStudios">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/estudio_Icon.jpg"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Estudios"/>
       </Properties>
       <Events>
@@ -75,6 +78,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="toPersona">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/persona_Icon.jpg"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Personas"/>
       </Properties>
       <Events>
