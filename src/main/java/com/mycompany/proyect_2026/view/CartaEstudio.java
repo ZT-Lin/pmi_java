@@ -175,21 +175,11 @@ public class CartaEstudio extends javax.swing.JPanel {
         checkHemograma.setText("checkHemograma");
 
         campoNombrePaciente.setEditable(false);
-        campoNombrePaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNombrePacienteActionPerformed(evt);
-            }
-        });
 
         checkGlucemia.setText("checkGlucemia");
         checkGlucemia.setToolTipText("");
 
         campoDNI.setEditable(false);
-        campoDNI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDNIActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("nombre y apellido: ");
 
@@ -198,11 +188,6 @@ public class CartaEstudio extends javax.swing.JPanel {
         checkColes.setText("checkColes");
 
         checkTrigli.setText("checkTrigli");
-        checkTrigli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkTrigliActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jLabel4.setText("Analisis");
@@ -356,18 +341,6 @@ public class CartaEstudio extends javax.swing.JPanel {
                 .addGap(38, 38, 38))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void campoDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDNIActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDNIActionPerformed
-
-    private void checkTrigliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTrigliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkTrigliActionPerformed
-
-    private void campoNombrePacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombrePacienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoNombrePacienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
