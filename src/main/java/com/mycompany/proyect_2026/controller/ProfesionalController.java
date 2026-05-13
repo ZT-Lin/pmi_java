@@ -18,6 +18,9 @@ public class ProfesionalController {
     public ProfesionalController() {
         this.profesional = new Profesional();
     }
+    public ProfesionalController(Profesional data) {
+        this.profesional = data;
+    }
 
     public void setNombre(String d) {
         profesional.setNombre(d);
