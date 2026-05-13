@@ -69,6 +69,7 @@ public class MainMenu extends javax.swing.JFrame {
         nombreCompañía.setText("Laboratorio de Análisis Clínicos Java SRL");
         nombreCompañía.setToolTipText("");
 
+        toStudios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estudio_Icon.jpg"))); // NOI18N
         toStudios.setText("Estudios");
         toStudios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +77,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        toPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/persona_Icon.jpg"))); // NOI18N
         toPersona.setText("Personas");
         toPersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +110,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(toPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(toStudios)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();

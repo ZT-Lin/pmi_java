@@ -104,6 +104,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         panelVacio.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paciente-profesional.jpg"))); // NOI18N
         panelVacio.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         areaParaMostrar.add(panelVacio, "VACIO");
