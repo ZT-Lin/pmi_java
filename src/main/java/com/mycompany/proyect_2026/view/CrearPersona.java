@@ -317,9 +317,14 @@ public class CrearPersona extends javax.swing.JFrame {
                     "Campos vacíos", javax.swing.JOptionPane.ERROR_MESSAGE);
             return; // Corta la ejecución acá
         }
-        // -----------------------------------------------------------
-
         String seleccion = (String) selectPacOPro.getSelectedItem();
+        if (seleccion.equals("<Seleccionar>")) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Por favor, seleccione si desea registrar un Paciente o un Profesional.",
+                    "Tipo de persona no seleccionado", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Cortamos la ejecución para que no cierre la ventana
+        }
+        // -----------------------------------------------------------
 
         if (seleccion.equals("Paciente")) {
             if (panelP == null) {
