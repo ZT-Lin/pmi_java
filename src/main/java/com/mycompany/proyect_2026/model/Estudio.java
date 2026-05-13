@@ -31,6 +31,15 @@ public class Estudio {
         this.paciente = paciente;
         this.profesional = profesional;
     }
+    public Estudio() {
+        this.fecha = new Fecha();
+        this.nombreEstudio = null;
+        this.estado = "En Elaboración"; // valor por defecto
+        this.fechaEntrega = new Fecha();        // se completa después
+        this.informeResultados = "Pendiente de resultados";
+        this.paciente = new Paciente();
+        this.profesional = new Profesional();
+    }
 
     //Getters y Setters
     public Fecha getFecha() {
