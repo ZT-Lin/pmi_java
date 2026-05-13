@@ -1,6 +1,7 @@
 package com.mycompany.proyect_2026.controller;
 
 import com.mycompany.proyect_2026.model.Profesional;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProfesionalController {
@@ -68,26 +69,58 @@ public class ProfesionalController {
             }
         }
         Profesional nuevo = new Profesional(nombre, apellido, mail, tel, matricula);
-        listaProfesionales.add(nuevo);
-        GestorArchivos.agregarProfesionalFisico(nuevo);
-        return true;
+        try {
+            listaProfesionales.add(nuevo);
+            GestorArchivos.agregarProfesionalFisico(nuevo);
+            return true;
+        } catch (IOException e) {
+            listaProfesionales.remove(nuevo);
+            System.out.println("No se pudo guardar el profesional" + e.getMessage());
+            return false;
+        }
     }
 
     public boolean eliminarProfesional(int indice) {
         if (indice < 0 || indice >= listaProfesionales.size()) {
             return false;
         }
-        listaProfesionales.remove(indice);
-        GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
-        return true;
+        Profesional eliminado = listaProfesionales.get(indice); //guardamos por si tenemos que revertir
+        try {
+            listaProfesionales.remove(indice);
+            GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+            return true;
+        } catch (IOException e) {
+            //Lo volvemos a meter en la lista en la misma posición
+            listaProfesionales.add(indice, eliminado);
+            System.err.println("No se pudo eliminar el profesional: " + e.getMessage());
+            return false;
+        }
     }
 
     public void actualizarProfesional(int indice, String nombre, String apellido, String mail, String tel) {
         Profesional pr = listaProfesionales.get(indice);
+
+        // Guardamos los datos viejos para hacer rollback si falla
+        String oldNombre = pr.getNombre();
+        String oldApellido = pr.getApellido();
+        String oldMail = pr.getMail();
+        String oldTel = pr.getTel();
+
+        // Actualizamos en memoria
         pr.setNombre(nombre);
         pr.setApellido(apellido);
         pr.setMail(mail);
         pr.setTel(tel);
-        GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+
+        try {
+            GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+        } catch (IOException e) {
+            // ROLLBACK: Volvemos a los datos viejos si falló el guardado
+            pr.setNombre(oldNombre);
+            pr.setApellido(oldApellido);
+            pr.setMail(oldMail);
+            pr.setTel(oldTel);
+            System.err.println("No se pudieron actualizar los datos: " + e.getMessage());
+        }
     }
 }

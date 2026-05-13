@@ -8,8 +8,10 @@ import com.mycompany.proyect_2026.controller.GestorArchivos;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 import com.mycompany.proyect_2026.model.Estudio;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -121,12 +123,20 @@ public class MainMenu extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
+                try{
                 // Guardar todo antes de cerrar
                 GestorArchivos.actualizarArchivoPacientes(listaPacientes);
                 GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
                 GestorArchivos.actualizarArchivoEstudios(listaEstudios);
 
                 System.exit(0); // cerrar el programa
+                }catch(IOException ex){
+                    JOptionPane.showMessageDialog(null, 
+                    "Error crítico: No se pudieron guardar los datos antes de salir.\n" + ex.getMessage(),
+                    "Error de Archivo", JOptionPane.ERROR_MESSAGE);
+                // Generalmente en errores de cierre se fuerza la salida tras avisar.
+                System.exit(1);
+                }
             }
         });
     }
