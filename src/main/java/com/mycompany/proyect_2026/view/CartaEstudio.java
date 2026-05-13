@@ -97,7 +97,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         }
 
         // Marcamos los que el estudio tiene
-        String[] analisisDelEstudio = est.getAnalisis();
+        String[] analisisDelEstudio = estudio.getAnalisis();
         if (analisisDelEstudio != null) {
             for (String nombreAnalisis : analisisDelEstudio) {
                 for (javax.swing.JCheckBox cb : checks) {
@@ -110,11 +110,8 @@ public class CartaEstudio extends javax.swing.JPanel {
         }
         campoEstado.setText(estudio.getEstado());
         campoEstado.setEditable(false);
-        campoEstado.setText(estudio.getEstado());
-        campoEstado.setEditable(false);
-
 // Color según estado:
-        switch (est.getEstado()) {
+        switch (estudio.getEstado()) {
             case "Finalizado":
                 campoEstado.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
                 break;
