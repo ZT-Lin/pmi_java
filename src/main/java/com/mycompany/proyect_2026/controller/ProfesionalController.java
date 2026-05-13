@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyect_2026.controller;
 
 import com.mycompany.proyect_2026.model.Profesional;
 import java.util.ArrayList;
 
-/**
- *
- * @author lucam
- */
 public class ProfesionalController {
 
     private final Profesional profesional;
+    private ArrayList<Profesional> listaProfesionales;
 
     public ProfesionalController() {
         this.profesional = new Profesional();
@@ -22,6 +15,13 @@ public class ProfesionalController {
         this.profesional = data;
     }
 
+    // NUEVO: Constructor con lista
+    public ProfesionalController(ArrayList<Profesional> listaProfesionales) {
+        this.profesional = new Profesional();
+        this.listaProfesionales = listaProfesionales;
+    }
+
+    // ... TUS GETTERS Y SETTERS INTACTOS ...
     public void setNombre(String d) {
         profesional.setNombre(d);
     }
@@ -61,28 +61,36 @@ public class ProfesionalController {
     public String getMatricula() {
         return profesional.getMatricula();
     }
+    // ... FIN GETTERS Y SETTERS ...
 
-    public void registrarEnSistema(ArrayList<Profesional> listaMemoria) {
-        if (listaMemoria != null) {
-            listaMemoria.add(this.profesional);
+    // --- NUEVO REDISEÑO MVC ---
+    public boolean registrarProfesional(String nombre, String apellido, String mail, String tel, String matricula) {
+        for (Profesional pr : listaProfesionales) {
+            if (pr.getMatricula().equals(matricula)) {
+                return false; // Matrícula repetida
+            }
         }
-        GestorArchivos.agregarProfesionalFisico(this.profesional);
-    }
-    
-    // --- MÉTODOS PARA MVC (Eliminar y Actualizar) ---
-    public void eliminarProfesional(ArrayList<Profesional> lista, int indice) {
-        lista.remove(indice);
-        GestorArchivos.actualizarArchivoProfesionales(lista);
+        Profesional nuevo = new Profesional(nombre, apellido, mail, tel, matricula);
+        listaProfesionales.add(nuevo);
+        GestorArchivos.agregarProfesionalFisico(nuevo);
+        return true;
     }
 
-    public void actualizarProfesional(ArrayList<Profesional> lista, int indice, 
-            String nombre, String apellido, String mail, String tel) {
-        Profesional pr = lista.get(indice);
+    public boolean eliminarProfesional(int indice) {
+        if (indice < 0 || indice >= listaProfesionales.size()) {
+            return false;
+        }
+        listaProfesionales.remove(indice);
+        GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
+        return true;
+    }
+
+    public void actualizarProfesional(int indice, String nombre, String apellido, String mail, String tel) {
+        Profesional pr = listaProfesionales.get(indice);
         pr.setNombre(nombre);
         pr.setApellido(apellido);
         pr.setMail(mail);
         pr.setTel(tel);
-        // La matrícula no se toca, como pide la lógica de tu programa
-        GestorArchivos.actualizarArchivoProfesionales(lista);
+        GestorArchivos.actualizarArchivoProfesionales(listaProfesionales);
     }
 }

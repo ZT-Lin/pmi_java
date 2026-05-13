@@ -43,6 +43,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
         this.setTitle("Sistema de Personas");
+        configurarListenersExtras();
     }
 
     public PersonaMenu(ArrayList<Paciente> pacientes, ArrayList<Profesional> profesionales, ArrayList<Estudio> estudios) {
@@ -57,6 +58,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         configurarFiltros();
         barraDeBusqueda.addActionListener(evt -> barraDeBusquedaActionPerformed(evt));
         this.setTitle("Sistema de Personas");
+        configurarListenersExtras();
     }
 
     /**
@@ -69,6 +71,9 @@ public class PersonaMenu extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         barraDeBusqueda = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
+        panelVacio = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        panelDatos = new javax.swing.JPanel();
         personaList = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         pacienteList = new javax.swing.JList<>();
@@ -87,9 +92,25 @@ public class PersonaMenu extends javax.swing.JFrame {
 
         barraDeBusqueda.setToolTipText("Buscar...");
         barraDeBusqueda.setName(""); // NOI18N
+        barraDeBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barraDeBusquedaActionPerformed(evt);
+            }
+        });
 
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(392, 423));
-        areaParaMostrar.setLayout(new java.awt.BorderLayout());
+        areaParaMostrar.setLayout(new java.awt.CardLayout());
+
+        panelVacio.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paciente-profesional.jpg"))); // NOI18N
+        panelVacio.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        areaParaMostrar.add(panelVacio, "VACIO");
+
+        panelDatos.setLayout(new java.awt.BorderLayout());
+        areaParaMostrar.add(panelDatos, "DATOS");
 
         personaList.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         personaList.setName(""); // NOI18N
@@ -162,7 +183,6 @@ public class PersonaMenu extends javax.swing.JFrame {
         buttonGroup1.add(obTodos);
         obTodos.setSelected(true);
         obTodos.setText("Todos");
-        obTodos.setActionCommand("Todos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,22 +315,24 @@ public class PersonaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_barraDeBusquedaActionPerformed
 
     private void pacienteListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_pacienteListValueChanged
-
+        if (evt.getValueIsAdjusting()) {
+            return; // Evita disparos dobles
+        }
         int index = pacienteList.getSelectedIndex();
 
         if (index < 0) {
-            return;
+            return; // Si no hay nada seleccionado, no hacemos nada (el limpiador ya se encargó)
         }
 
         Paciente p = listaPacientesFiltrada.get(index);
-        int cantidadEstudios = contarEstudiosDePaciente(p);
+        int cantidadEstudios = estudioController.contarEstudiosDePaciente(p);
 
         // Panel que combina la CartaPaciente con la info de estudios
         javax.swing.JPanel panelCombinado = new javax.swing.JPanel();
         panelCombinado.setLayout(new java.awt.BorderLayout());
 
         // La carta del paciente arriba
-        panelCombinado.add(new CartaPaciente(listaPacientes, index), java.awt.BorderLayout.CENTER);
+        panelCombinado.add(new CartaPaciente(listaPacientesFiltrada, index), java.awt.BorderLayout.CENTER);
 
         // Etiqueta con cantidad de estudios abajo
         javax.swing.JLabel labelEstudios = new javax.swing.JLabel(
@@ -319,33 +341,26 @@ public class PersonaMenu extends javax.swing.JFrame {
         labelEstudios.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
         labelEstudios.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
         panelCombinado.add(labelEstudios, java.awt.BorderLayout.SOUTH);
-
-        areaParaMostrar.removeAll();
-        areaParaMostrar.add(panelCombinado, java.awt.BorderLayout.CENTER);
-        areaParaMostrar.revalidate();
-        areaParaMostrar.repaint();
-
+        mostrarDatosEnPanel(panelCombinado);
     }//GEN-LAST:event_pacienteListValueChanged
 
     private void profesionalListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_profesionalListValueChanged
-        // TODO add your handling code here:
         if (!evt.getValueIsAdjusting()) {
             int indice = profesionalList.getSelectedIndex();
 
             if (indice != -1) {
                 Profesional seleccionado = this.listaProfesionalesFiltrada.get(indice);
-                areaParaMostrar.removeAll();
 
-                areaParaMostrar.add(new CartaProfesional(
+                // Creamos la carta y se la pasamos directamente a nuestro método limpiador
+                CartaProfesional cartaProf = new CartaProfesional(
                         seleccionado.getNombre(),
                         seleccionado.getApellido(),
                         seleccionado.getMail(),
                         seleccionado.getTel(),
                         seleccionado.getMatricula()
-                ), java.awt.BorderLayout.CENTER);
+                );
 
-                areaParaMostrar.revalidate();
-                areaParaMostrar.repaint();
+                mostrarDatosEnPanel(cartaProf);
             }
         }
     }//GEN-LAST:event_profesionalListValueChanged
@@ -396,8 +411,8 @@ public class PersonaMenu extends javax.swing.JFrame {
             if (confirmar == JOptionPane.YES_OPTION) {
                 // Le pedimos al controlador que elimine y guarde
                 int idxReal = listaPacientes.indexOf(p);
-                PacienteController pc = new PacienteController();
-                pc.eliminarPaciente(listaPacientes, idxReal);
+                PacienteController pc = new PacienteController(listaPacientes);
+                pc.eliminarPaciente(idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
@@ -441,8 +456,8 @@ public class PersonaMenu extends javax.swing.JFrame {
             if (confirmar == JOptionPane.YES_OPTION) {
                 // Le pedimos al controlador que elimine y guarde
                 int idxReal = listaProfesionales.indexOf(pr);
-                ProfesionalController prc = new ProfesionalController();
-                prc.eliminarProfesional(listaProfesionales, idxReal);
+                ProfesionalController prc = new ProfesionalController(listaProfesionales);
+                prc.eliminarProfesional(idxReal);
 
                 // Refrescar el JList para que deje de mostrarse
                 cargarListas();
@@ -460,11 +475,44 @@ public class PersonaMenu extends javax.swing.JFrame {
         obTodos.addActionListener(e -> filtrarPorObraSocial());
     }
 
+    private void configurarListenersExtras() {
+        // --- 1. Listener para la barra de búsqueda en tiempo real ---
+        barraDeBusqueda.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                ejecutarBusqueda();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                ejecutarBusqueda();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                ejecutarBusqueda();
+            }
+        });
+
+        // --- 2. Listener para los Tabs (Paciente/Profesional) ---
+        personaList.addChangeListener(e -> {
+            limpiarSeleccion(); // Si cambia de pestaña, chau datos fantasma
+            barraDeBusqueda.setText(""); // Opcional: limpiar la búsqueda
+            actualizarVisibilidadObraSocial();
+        });
+        actualizarVisibilidadObraSocial(); 
+    }
+
+    private void ejecutarBusqueda() {
+        obTodos.setSelected(true); // resetea el filtro visual
+    listaPacientesFiltrada = new ArrayList<>(listaPacientes); // resetea la lista
+        limpiarSeleccion(); // Siempre limpiar antes de filtrar
+        barraDeBusquedaActionPerformed(null); // Reutilizamos tu lógica de filtrado actual
+    }
+
     private void filtrarPorObraSocial() {
-DefaultListModel<String> modelo = new DefaultListModel<>();
+        limpiarSeleccion();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
 
         // Creamos una instancia de PacienteController para usar su filtro
-        PacienteController pc = new PacienteController();
+        PacienteController pc = new PacienteController(listaPacientes);
 
         // 1. Verificamos cuál de los tres botones está seleccionado
         if (obTodos.isSelected()) {
@@ -472,11 +520,11 @@ DefaultListModel<String> modelo = new DefaultListModel<>();
 
         } else if (obSi.isSelected()) {
             // ACÁ ESTÁ EL CAMBIO: Usamos 'pc' en lugar de 'estudioController'
-            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, true);
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(true);
 
         } else if (obNo.isSelected()) {
             // ACÁ TAMBIÉN: Usamos 'pc' en lugar de 'estudioController'
-            listaPacientesFiltrada = pc.filtrarPorObraSocial(listaPacientes, false);
+            listaPacientesFiltrada = pc.filtrarPorObraSocial(false);
 
         } else {
             listaPacientesFiltrada = new ArrayList<>(listaPacientes);
@@ -533,14 +581,40 @@ DefaultListModel<String> modelo = new DefaultListModel<>();
         ventanaCrear.setVisible(true);
     }//GEN-LAST:event_agregarActionPerformed
 
-    private int contarEstudiosDePaciente(Paciente p) {
-        int contador = 0;
-        for (Estudio e : listaEstudios) {
-            if (e.getPaciente().getDNI().equals(p.getDNI())) {
-                contador++;
-            }
-        }
-        return contador;
+    private void limpiarSeleccion() {
+        // 1. Deselecciona cualquier elemento de ambas listas
+        pacienteList.clearSelection();
+        profesionalList.clearSelection();
+
+        // 2. Limpia el panel de datos (borra la carta anterior)
+        panelDatos.removeAll();
+        panelDatos.revalidate();
+        panelDatos.repaint();
+
+        // 3. Le dice al CardLayout que muestre la carta "VACIO"
+        java.awt.CardLayout cl = (java.awt.CardLayout) areaParaMostrar.getLayout();
+        cl.show(areaParaMostrar, "VACIO");
+    }
+    private void actualizarVisibilidadObraSocial() {
+    boolean esPaciente = (personaList.getSelectedIndex() == 0);
+    obraSocialLabel.setVisible(esPaciente);
+    obTodos.setVisible(esPaciente);
+    obSi.setVisible(esPaciente);
+    obNo.setVisible(esPaciente);
+    if (!esPaciente) {
+        obTodos.setSelected(true);
+    }
+}
+
+    private void mostrarDatosEnPanel(javax.swing.JComponent carta) {
+        panelDatos.removeAll();
+        panelDatos.add(carta, java.awt.BorderLayout.CENTER);
+        panelDatos.revalidate();
+        panelDatos.repaint();
+
+        // Le dice al CardLayout que muestre la carta "DATOS"
+        java.awt.CardLayout cl = (java.awt.CardLayout) areaParaMostrar.getLayout();
+        cl.show(areaParaMostrar, "DATOS");
     }
 
     /**
@@ -585,6 +659,7 @@ DefaultListModel<String> modelo = new DefaultListModel<>();
     private javax.swing.JTextField barraDeBusqueda;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton eliminar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton modificar;
@@ -593,6 +668,8 @@ DefaultListModel<String> modelo = new DefaultListModel<>();
     private javax.swing.JRadioButton obTodos;
     private javax.swing.JLabel obraSocialLabel;
     private javax.swing.JList<String> pacienteList;
+    private javax.swing.JPanel panelDatos;
+    private javax.swing.JPanel panelVacio;
     private javax.swing.JTabbedPane personaList;
     private javax.swing.JList<String> profesionalList;
     private javax.swing.JButton volver;

@@ -41,8 +41,8 @@ public class CartaEstudio extends javax.swing.JPanel {
         this.setSize(362, 456);
     }
 
-    private void mostrarDatos(Estudio est) {
-        EstudioController estudio = new EstudioController(est);
+    private void mostrarDatos(Estudio estudio) {
+        EstudioController est = new EstudioController(estudio);
         PacienteController pc = new PacienteController(est.getPaciente());
         ProfesionalController pf = new ProfesionalController(est.getProfesional());
         FechaController fc = new FechaController(est.getFecha());
@@ -71,8 +71,8 @@ public class CartaEstudio extends javax.swing.JPanel {
 
         // jTextField8 → fecha de entrega
         // puede ser null si todavía no se asignó
-        if (estudio.getFechaEntrega() != null) {
-            FechaController fe = new FechaController(estudio.getFechaEntrega());
+        if (est.getFechaEntrega() != null) {
+            FechaController fe = new FechaController(est.getFechaEntrega());
             campoFechaEntrega.setText(fe.toString());
         } else {
             campoFechaEntrega.setText("Sin asignar");
@@ -97,7 +97,7 @@ public class CartaEstudio extends javax.swing.JPanel {
         }
 
         // Marcamos los que el estudio tiene
-        String[] analisisDelEstudio = estudio.getAnalisis();
+        String[] analisisDelEstudio = est.getAnalisis();
         if (analisisDelEstudio != null) {
             for (String nombreAnalisis : analisisDelEstudio) {
                 for (javax.swing.JCheckBox cb : checks) {
@@ -108,13 +108,11 @@ public class CartaEstudio extends javax.swing.JPanel {
                 }
             }
         }
-        campoEstado.setText(estudio.getEstado());
-        campoEstado.setEditable(false);
-        campoEstado.setText(estudio.getEstado());
+        campoEstado.setText(est.getEstado());
         campoEstado.setEditable(false);
 
 // Color según estado:
-        switch (estudio.getEstado()) {
+        switch (est.getEstado()) {
             case "Finalizado":
                 campoEstado.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
                 break;
