@@ -67,7 +67,6 @@ public class MainMenu extends javax.swing.JFrame {
         nombreCompañía.setText("Laboratorio de Análisis Clínicos Java SRL");
         nombreCompañía.setToolTipText("");
 
-        toStudios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estudio_Icon.jpg"))); // NOI18N
         toStudios.setText("Estudios");
         toStudios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,7 +74,6 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        toPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/persona_Icon.jpg"))); // NOI18N
         toPersona.setText("Personas");
         toPersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,10 +92,10 @@ public class MainMenu extends javax.swing.JFrame {
                         .addComponent(nombreCompañía))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(210, 210, 210)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(toPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-                            .addComponent(toStudios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(113, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,9 +104,9 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(nombreCompañía, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(toPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(toStudios)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(toStudios, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
