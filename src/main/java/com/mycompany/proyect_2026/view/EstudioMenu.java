@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.FechaController;
 import com.mycompany.proyect_2026.controller.ListaEstudioController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
@@ -36,7 +37,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.estudioController = new ListaEstudioController();
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
-                new String[]{"<Todos>", "En Elaboracion", "Finalizado", "Retirado", "Enviado"}
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
         ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -55,7 +56,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         this.estudioController = new ListaEstudioController(listaEstudios);
         initComponents();
         estadoSelector.setModel(new DefaultComboBoxModel<>(
-                new String[]{"<Todos>", "En Elaboracion", "Finalizado", "Retirado", "Enviado"}
+                new String[]{"<Todos>", "En Elaboración", "Finalizado", "Retirado", "Enviado"}
         ));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -93,6 +94,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void filtrarPorEstado() {
+        limpiarSeleccion();
         String estadoSeleccionado = estadoSelector.getSelectedItem().toString();
 
         if (estadoSeleccionado.equalsIgnoreCase("<Todos>")) {
@@ -112,6 +114,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void filtrarPorProfesional() {
+        limpiarSeleccion();
         int idx = profesionalSelector.getSelectedIndex();
 
         if (idx <= 0) {
@@ -146,6 +149,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     }
 
     private void filtrarPorFecha() {
+        limpiarSeleccion();
         try {
             int dia = Integer.parseInt(diaTField.getText().trim());
             int mes = Integer.parseInt(mesTField.getText().trim());
@@ -209,6 +213,9 @@ public class EstudioMenu extends javax.swing.JFrame {
         fechaLabel4 = new javax.swing.JLabel();
         anioTField = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
+        panelVacio = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        panelDatos = new javax.swing.JPanel();
         agregar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
         volver = new javax.swing.JButton();
@@ -251,7 +258,31 @@ public class EstudioMenu extends javax.swing.JFrame {
         anioTField.setPreferredSize(new java.awt.Dimension(70, 23));
 
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(295, 428));
-        areaParaMostrar.setLayout(new java.awt.BorderLayout());
+        areaParaMostrar.setLayout(new java.awt.CardLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/estetoscopio.jpg"))); // NOI18N
+
+        javax.swing.GroupLayout panelVacioLayout = new javax.swing.GroupLayout(panelVacio);
+        panelVacio.setLayout(panelVacioLayout);
+        panelVacioLayout.setHorizontalGroup(
+            panelVacioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVacioLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelVacioLayout.setVerticalGroup(
+            panelVacioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVacioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        areaParaMostrar.add(panelVacio, "VACIO");
+
+        panelDatos.setLayout(new java.awt.BorderLayout());
+        areaParaMostrar.add(panelDatos, "DATOS");
 
         agregar.setText("Agregar");
         agregar.addActionListener(new java.awt.event.ActionListener() {
@@ -311,7 +342,7 @@ public class EstudioMenu extends javax.swing.JFrame {
                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 116, Short.MAX_VALUE))
+                        .addGap(92, 156, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -338,38 +369,32 @@ public class EstudioMenu extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(profesionalSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(profesionalLabel))
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(modificar)
                             .addComponent(agregar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void estudioListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_estudioListValueChanged
-        // Evitar doble disparo mientras el usuario arrastra
         if (evt.getValueIsAdjusting()) {
-            return;
+            return; // Evita doble disparo
         }
-
         int idx = estudioList.getSelectedIndex();
         if (idx < 0) {
-            return; // nada seleccionado
+            return; // Si el índice es -1, no hacemos nada (el limpiador ya se encargó)
         }
-        // Obtener el estudio real de la lista
-        Estudio seleccionado = listaFiltrada.get(idx);
 
-        areaParaMostrar.removeAll();
-        areaParaMostrar.add(new CartaEstudio(seleccionado),
-                java.awt.BorderLayout.CENTER);
-        areaParaMostrar.revalidate();
-        areaParaMostrar.repaint();
+        // Instanciamos la carta y le decimos al panel que la muestre
+        Estudio seleccionado = listaFiltrada.get(idx);
+        mostrarDatosEnPanel(new CartaEstudio(seleccionado));
     }//GEN-LAST:event_estudioListValueChanged
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
@@ -389,7 +414,7 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         Estudio seleccionado = listaFiltrada.get(idx);
 
-        // Diálogo para cambiar estado
+        // --- 1. Diálogo para cambiar estado ---
         String[] opciones = {"En Elaboracion", "Finalizado", "Retirado", "Enviado"};
         String nuevoEstado = (String) JOptionPane.showInputDialog(
                 this,
@@ -405,30 +430,61 @@ public class EstudioMenu extends javax.swing.JFrame {
             estudioController.modificarEstado(seleccionado, nuevoEstado);
         }
 
-        // Diálogo para cambiar fecha de entrega
-        String nuevaFechaStr = JOptionPane.showInputDialog(
-                this,
-                "Nueva fecha de entrega (dd/mm/aaaa) — dejá vacío para no cambiar:",
-                seleccionado.getFechaEntrega() != null
-                ? seleccionado.getFechaEntrega().toString()
-                : ""
-        );
+        // --- 2. BUCLE DE VALIDACIÓN DE FECHA ---
+        boolean fechaValida = false;
 
-        if (nuevaFechaStr != null && !nuevaFechaStr.trim().isEmpty()) {
+        while (!fechaValida) {
+            // Preparamos el valor inicial por si ya tenía fecha
+            Object valorInicial = seleccionado.getFechaEntrega() != null ? seleccionado.getFechaEntrega().toString() : "";
+
+            // Usamos esta versión de showInputDialog para poder cambiar el título "Input"
+            String nuevaFechaStr = (String) JOptionPane.showInputDialog(
+                    this,
+                    "Nueva fecha de entrega (dd/mm/aaaa) — dejá vacío para no cambiar:",
+                    "Modificar Fecha de Entrega", // <-- ACÁ LE CAMBIAMOS EL TÍTULO
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    null,
+                    valorInicial
+            );
+
+            // A. Si toca "Cancel" o la "X", nuevaFechaStr es null. Salimos del bucle.
+            if (nuevaFechaStr == null) {
+                break;
+            }
+
+            String textoLimpio = nuevaFechaStr.trim();
+
+            // B. Si lo deja vacío y le da OK, no quiere cambiar la fecha. Salimos.
+            if (textoLimpio.isEmpty()) {
+                break;
+            }
+
+            // C. Intentamos parsear y validar la lógica
             try {
-                String[] p = nuevaFechaStr.trim().split("/");
-                Fecha nueva = new Fecha(
-                        Integer.parseInt(p[0]),
-                        Integer.parseInt(p[1]),
-                        Integer.parseInt(p[2])
-                );
+                Fecha nueva = FechaController.parsear(textoLimpio);
+
+                // VALIDACIÓN LÓGICA: Que no sea menor a la de realización
+                if (FechaController.esMenor(nueva, seleccionado.getFecha())) {
+                    JOptionPane.showMessageDialog(this,
+                            "La fecha de entrega no puede ser anterior a la de realización (" + seleccionado.getFecha().toString() + ").",
+                            "Error de Lógica", JOptionPane.ERROR_MESSAGE);
+                    continue; // El 'continue' hace que el bucle while vuelva a empezar a preguntar
+                }
+
+                // Si llegamos a esta línea, la fecha está perfecta
                 estudioController.modificarFechaEntrega(seleccionado, nueva);
+                fechaValida = true; // Al poner true, el bucle se rompe y avanza
+
             } catch (Exception e) {
+                // Si el usuario puso letras o "0", cae acá
                 JOptionPane.showMessageDialog(this,
-                        "Fecha inválida. No se modificó.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Fecha de entrega inválida: " + e.getMessage() + "\nUsá el formato dd/mm/aaaa",
+                        "Error de formato", JOptionPane.ERROR_MESSAGE);
+                // Como fechaValida sigue siendo false, el bucle vuelve a pedir la fecha
             }
         }
+        // ---------------------------------------
 
         refrescarVista();
         JOptionPane.showMessageDialog(this, "Estudio actualizado.", "Éxito",
@@ -441,6 +497,33 @@ public class EstudioMenu extends javax.swing.JFrame {
         new CrearEstudio(listaPacientes, listaProfesionales, listaEstudios, this)
                 .setVisible(true);
     }//GEN-LAST:event_agregarActionPerformed
+
+    // 1. Método para limpiar y mostrar la carta vacía
+    private void limpiarSeleccion() {
+        // Deselecciona el estudio de la lista
+        estudioList.clearSelection();
+
+        // Limpia el panel de datos
+        panelDatos.removeAll();
+        panelDatos.revalidate();
+        panelDatos.repaint();
+
+        // Cambia el CardLayout a la vista VACIO
+        java.awt.CardLayout cl = (java.awt.CardLayout) areaParaMostrar.getLayout();
+        cl.show(areaParaMostrar, "VACIO");
+    }
+
+    // 2. Método para incrustar la CartaEstudio y mostrarla
+    private void mostrarDatosEnPanel(javax.swing.JComponent carta) {
+        panelDatos.removeAll();
+        panelDatos.add(carta, java.awt.BorderLayout.CENTER);
+        panelDatos.revalidate();
+        panelDatos.repaint();
+
+        // Cambia el CardLayout a la vista DATOS
+        java.awt.CardLayout cl = (java.awt.CardLayout) areaParaMostrar.getLayout();
+        cl.show(areaParaMostrar, "DATOS");
+    }
 
     /**
      * @param args the command line arguments
@@ -488,9 +571,12 @@ public class EstudioMenu extends javax.swing.JFrame {
     private javax.swing.JLabel fechaLabel;
     private javax.swing.JLabel fechaLabel3;
     private javax.swing.JLabel fechaLabel4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField mesTField;
     private javax.swing.JButton modificar;
+    private javax.swing.JPanel panelDatos;
+    private javax.swing.JPanel panelVacio;
     private javax.swing.JLabel profesionalLabel;
     private javax.swing.JComboBox<String> profesionalSelector;
     private javax.swing.JButton volver;

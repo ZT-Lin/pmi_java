@@ -44,7 +44,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
-        
+
         this.setTitle("Nuevo Estudio");
     }
 
@@ -63,20 +63,19 @@ public class CrearEstudio extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurarFormulario();
         this.setSize(420, 480);
-        
+
         this.setTitle("Nuevo Estudio");
     }
 
     private void configurarFormulario() {
 
-        // ── Hacer editables los campos de fecha ────────────
-        // initComponents los pone como non-editable,
-        // los sobreescribimos acá
-        fRealizacion.setEditable(true);  // fecha de realización
-        fRealizacion.setText("dd/mm/aaaa");
+// ── Hacer editables los campos de fecha ────────────
+        fRealizacion.setEditable(true);
+        fEntrega.setEditable(true);
 
-        fEntrega.setEditable(true);  // fecha de entrega
-        fEntrega.setText("dd/mm/aaaa");
+        // Aplicamos el efecto Placeholder a ambos campos
+        configurarPlaceholder(fRealizacion, "dd/mm/aaaa");
+        configurarPlaceholder(fEntrega, "dd/mm/aaaa");
 
         // ── Agregar combo de pacientes ─────────────────────
         // Lo creamos programáticamente porque el form no lo tiene
@@ -182,37 +181,6 @@ public class CrearEstudio extends javax.swing.JFrame {
         Profesional pr = listaProfesionales.get(idx - 1);
         identProfesional.setText(pr.getNombre() + " " + pr.getApellido());
         matricula.setText(pr.getMatricula());
-    }
-
-    private Fecha parsearFecha(String texto) throws Exception {
-        // Esperamos formato dd/mm/aaaa
-        String[] partes = texto.split("/");
-
-        if (partes.length != 3) {
-            throw new Exception("Formato incorrecto. Usá dd/mm/aaaa");
-        }
-
-        try {
-            int dia = Integer.parseInt(partes[0].trim());
-            int mes = Integer.parseInt(partes[1].trim());
-            int anio = Integer.parseInt(partes[2].trim());
-
-            // Validaciones básicas
-            if (dia < 1 || dia > 31) {
-                throw new Exception("Día inválido");
-            }
-            if (mes < 1 || mes > 12) {
-                throw new Exception("Mes inválido");
-            }
-            if (anio < 2000 || anio > 2100) {
-                throw new Exception("Año inválido");
-            }
-
-            return new Fecha(dia, mes, anio);
-
-        } catch (NumberFormatException e) {
-            throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
-        }
     }
 
     private String[] obtenerAnalisisSeleccionados() {
@@ -462,7 +430,7 @@ public class CrearEstudio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
-  
+
         // ── Validar selección de paciente ──────────────────
         int idxPaciente = comboPaciente.getSelectedIndex();
         if (idxPaciente <= 0) {
@@ -480,7 +448,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Validar y parsear fecha de realización ─────────
         Fecha fechaRealizacion;
         try {
-            fechaRealizacion = parsearFecha(fRealizacion.getText());
+            fechaRealizacion = FechaController.parsear(fRealizacion.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fecha de realización inválida: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -493,17 +461,19 @@ public class CrearEstudio extends javax.swing.JFrame {
         String textoEntrega = fEntrega.getText().trim();
         if (!textoEntrega.isEmpty() && !textoEntrega.equals("dd/mm/aaaa")) {
             try {
-                fechaEntrega = parsearFecha(textoEntrega);
+                fechaEntrega = FechaController.parsear(textoEntrega);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Fecha de entrega inválida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
-        
+
         // -- Comparacion entre fechas --------
-        
-        if(FechaController.esMenor(fechaEntrega , fechaRealizacion)){
-            JOptionPane.showMessageDialog(this,"la fecha de entrega no puede ser menor que fecha de realizacion","Error",JOptionPane.ERROR_MESSAGE);
+        //Solo comparamos si el usuario ingreso fecha de entrega (es opcional)
+        if (fechaEntrega != null && FechaController.esMenor(fechaEntrega, fechaRealizacion)) {
+            JOptionPane.showMessageDialog(this,
+                    "La fecha de entrega no puede ser menor que la fecha de realización.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -540,6 +510,34 @@ public class CrearEstudio extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Estudio creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
     }//GEN-LAST:event_confirmarActionPerformed
+
+    // Método para crear el efecto "Placeholder" (Texto fantasma)
+    private void configurarPlaceholder(javax.swing.JTextField campo, String placeholder) {
+        // Estado inicial
+        campo.setText(placeholder);
+        campo.setForeground(java.awt.Color.GRAY);
+
+        // Agregamos el FocusListener
+        campo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                // Si el usuario hace clic y dice "dd/mm/aaaa", lo borramos y ponemos color negro
+                if (campo.getText().equals(placeholder)) {
+                    campo.setText("");
+                    campo.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                // Si el usuario se va del campo y lo dejó vacío, le devolvemos el "dd/mm/aaaa" en gris
+                if (campo.getText().trim().isEmpty()) {
+                    campo.setText(placeholder);
+                    campo.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+    }
 
     /**
      * @param args the command line arguments

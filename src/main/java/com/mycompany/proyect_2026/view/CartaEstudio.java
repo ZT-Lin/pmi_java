@@ -7,7 +7,9 @@ package com.mycompany.proyect_2026.view;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 
-import com.mycompany.proyect_2026.controller.*;
+
+import com.mycompany.proyect_2026.model.Paciente;
+import com.mycompany.proyect_2026.model.Profesional;
 
 /**
  *
@@ -41,92 +43,70 @@ public class CartaEstudio extends javax.swing.JPanel {
         this.setSize(362, 456);
     }
 
-    private void mostrarDatos(Estudio estudio) {
-        EstudioController est = new EstudioController(estudio);
-        PacienteController pc = new PacienteController(est.getPaciente());
-        ProfesionalController pf = new ProfesionalController(est.getProfesional());
-        FechaController fc = new FechaController(est.getFecha());
+   private void mostrarDatos(Estudio estudio) {
+    // Accedemos directamente al modelo 
+    // solo visualización de datos ya procesados.
+    Paciente paciente = estudio.getPaciente();
+    Profesional profesional = estudio.getProfesional();
 
-        // ── Datos del Paciente
-        // identPaciente → nombre y apellido del paciente
-        campoNombrePaciente.setText(
-                pc.getNombre() + " "
-                + pc.getApellido()
-        );
-        // jTextField2 → DNI del paciente
-        campoDNI.setText(pc.getDNI());
+    campoNombrePaciente.setText(paciente.getNombre() + " " + paciente.getApellido());
+    campoDNI.setText(paciente.getDNI());
 
-        // ── Datos del Profesional 
-        // jTextField3 → nombre y apellido del profesional
-        campoNombreProfesional.setText(
-                pf.getNombre() + " "
-                + pf.getApellido()
-        );
-        // jTextField7 → matrícula del profesional
-        campoMatricula.setText(pf.getMatricula());
+    campoNombreProfesional.setText(profesional.getNombre() + " " + profesional.getApellido());
+    campoMatricula.setText(profesional.getMatricula());
 
-        // ── Fechas 
-        // jTextField6 → fecha de realización
-        campoFechaRealizacion.setText(fc.toString());
+    campoFechaRealizacion.setText(estudio.getFecha().toString());
 
-        // jTextField8 → fecha de entrega
-        // puede ser null si todavía no se asignó
-        if (est.getFechaEntrega() != null) {
-            FechaController fe = new FechaController(est.getFechaEntrega());
-            campoFechaEntrega.setText(fe.toString());
-        } else {
-            campoFechaEntrega.setText("Sin asignar");
-        }
+    if (estudio.getFechaEntrega() != null) {
+        campoFechaEntrega.setText(estudio.getFechaEntrega().toString());
+    } else {
+        campoFechaEntrega.setText("Sin asignar");
+    }
 
-        // ── Análisis ────────────────────────────────────
-        // Juntamos los 10 checkboxes en un array para iterar
-        // El orden debe coincidir con las claves 1-10 del HashMap
-        javax.swing.JCheckBox[] checks = {
-            checkHemograma, checkGlucemia, checkColes, checkTrigli, checkOrina,
-            checkHepatograma, checkUrea, checkCreat, checkAcido, checkTSH
-        };
+    // ── Análisis ────────────────────────────────────
+    javax.swing.JCheckBox[] checks = {
+        checkHemograma, checkGlucemia, checkColes, checkTrigli, checkOrina,
+        checkHepatograma, checkUrea, checkCreat, checkAcido, checkTSH
+    };
 
-        // Ponemos el nombre de cada análisis como texto del checkbox
-        // y lo desmarcamos por defecto
-        for (int i = 0; i < checks.length; i++) {
-            int clave = i + 1; // las claves van de 1 a 10
-            String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(clave, "Análisis " + clave);
-            checks[i].setText(nombre);
-            checks[i].setSelected(false);   // desmarcado por defecto
-            checks[i].setEnabled(false);    // solo lectura, no se puede cambiar acá
-        }
+    for (int i = 0; i < checks.length; i++) {
+        int clave = i + 1;
+        String nombre = Analisis.TIPO_ANALYSIS.getOrDefault(clave, "Análisis " + clave);
+        checks[i].setText(nombre);
+        checks[i].setSelected(false);
+        checks[i].setEnabled(false);
+    }
 
-        // Marcamos los que el estudio tiene
-        String[] analisisDelEstudio = est.getAnalisis();
-        if (analisisDelEstudio != null) {
-            for (String nombreAnalisis : analisisDelEstudio) {
-                for (javax.swing.JCheckBox cb : checks) {
-                    if (cb.getText().equals(nombreAnalisis)) {
-                        cb.setSelected(true);
-                        break;
-                    }
+    String[] analisisDelEstudio = estudio.getAnalisis();
+    if (analisisDelEstudio != null) {
+        for (String nombreAnalisis : analisisDelEstudio) {
+            for (javax.swing.JCheckBox cb : checks) {
+                if (cb.getText().equals(nombreAnalisis)) {
+                    cb.setSelected(true);
+                    break;
                 }
             }
         }
-        campoEstado.setText(estudio.getEstado());
-        campoEstado.setEditable(false);
+    }
 
-// Color según estado:
-        switch (est.getEstado()) {
-            case "Finalizado":
-                campoEstado.setBackground(new java.awt.Color(144, 238, 144)); // verde claro
-                break;
-            case "Retirado":
-                campoEstado.setBackground(new java.awt.Color(200, 200, 200)); // gris
-                break;
-            case "Enviado":
-                campoEstado.setBackground(new java.awt.Color(135, 206, 250)); // azul claro
-                break;
-            default: // En Elaboración
-                campoEstado.setBackground(new java.awt.Color(255, 200, 100)); // naranja
-                break;
-        }
-    } // cierre de mostrarDatos()
+    campoEstado.setText(estudio.getEstado());
+    campoEstado.setEditable(false);
+
+    switch (estudio.getEstado()) {
+        case "Finalizado":
+            campoEstado.setBackground(new java.awt.Color(144, 238, 144));
+            break;
+        case "Retirado":
+            campoEstado.setBackground(new java.awt.Color(200, 200, 200));
+            break;
+        case "Enviado":
+            campoEstado.setBackground(new java.awt.Color(135, 206, 250));
+            break;
+        default:
+            campoEstado.setBackground(new java.awt.Color(255, 200, 100));
+            break;
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.

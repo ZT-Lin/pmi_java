@@ -7,25 +7,24 @@ import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  *
- * @author lamas Controlador para la gestion de estudios. Concentra la logica de
- * filtrado, creacion y consultas
+ * @author lamas Controlador para la gestion de estudios. Concentra la logica de filtrado, creacion y consultas
  *
  */
 public class EstudioController {
+
     private Estudio estudio;
-    
-    public EstudioController(){
-         estudio = new Estudio();
+
+    public EstudioController() {
+        estudio = new Estudio();
     }
-    public EstudioController(Estudio data){
-         this.estudio = data;
+
+    public EstudioController(Estudio data) {
+        this.estudio = data;
     }
-    
+
     public Fecha getFecha() {
         return estudio.getFecha();
     }
@@ -33,7 +32,6 @@ public class EstudioController {
     public Fecha getFechaEntrega() {
         return estudio.getFechaEntrega();
     }
-
 
     public void setEstado(String estado) {
         estudio.setEstado(estado);
@@ -43,19 +41,18 @@ public class EstudioController {
     }
 
     public void setFecha(Fecha fecha) {
-        estudio.setFecha( fecha );
+        estudio.setFecha(fecha);
     }
 
     public String getNombreEstudio() {
         return estudio.getNombreEstudio();
     }
-    
     public Paciente getPaciente() {
         return estudio.getPaciente();
     }
 
     public void setPaciente(Paciente paciente) {
-        estudio.setPaciente ( paciente);
+        estudio.setPaciente(paciente);
     }
 
     public Profesional getProfesional() {
