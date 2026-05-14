@@ -1,3 +1,3 @@
-10|4|2026|Estudio_12345678|12345678|1001|En Elaboracion|null|
-5|4|2026|Estudio_87654321|87654321|1002|Finalizado|null|
-1|5|2026|Estudio_33445566|33445566|1003|En Elaboracion|null|
+5|5|2026|Estudio_1234567|1234567|1007|Enviado|11/5/2026|Hemograma_Completo,Colesterol_Total,Orina_Completa
+3|2|2026|Estudio_33445566|33445566|1006|Finalizado|6/2/2026|Orina_Completa
+25|3|2025|Estudio_20689496|20689496|1004|Retirado|8/4/2025|Hemograma_Completo,Glucemia,Orina_Completa
