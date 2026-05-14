@@ -55,7 +55,7 @@ public class ProfesionalController {
         return profesional.getMail();
     }
 
-    public String getTelefono() {
+    public String getTel() {
         return profesional.getTel();
     }
 

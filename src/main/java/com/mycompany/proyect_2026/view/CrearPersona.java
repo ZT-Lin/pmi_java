@@ -58,7 +58,7 @@ public class CrearPersona extends javax.swing.JFrame {
             ArrayList<Profesional> profesionales,
             ArrayList<Estudio> estudios,
             PersonaMenu padre,
-            Paciente pacienteAEditar,
+            Paciente paciente,
             int indice) {
         this.setTitle("Modificar Paciente");
         this.listaPacientes = pacientes;
@@ -69,6 +69,8 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        PacienteController pacienteAEditar = new PacienteController(paciente);
 
         // Pre-seleccionar "Paciente" en el combo
         selectPacOPro.setSelectedItem("Paciente");
@@ -97,7 +99,7 @@ public class CrearPersona extends javax.swing.JFrame {
             ArrayList<Profesional> profesionales,
             ArrayList<Estudio> estudios,
             PersonaMenu padre,
-            Profesional profesionalAEditar,
+            Profesional profesional,
             int indice) {
         this.setTitle("Modificar Profesional");
         this.listaPacientes = pacientes;
@@ -110,6 +112,9 @@ public class CrearPersona extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         selectPacOPro.setSelectedItem("Profesional");
+        
+        
+        ProfesionalController profesionalAEditar = new ProfesionalController(profesional);
 
         nombreText.setText(profesionalAEditar.getNombre());
         nombreText.setEditable(false);
