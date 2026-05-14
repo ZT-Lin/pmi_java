@@ -171,8 +171,6 @@ public class GestorArchivos {
             throw new IOException("Error de formato: El archivo de estudios tiene datos dañados.", e);
         } catch (FileNotFoundException e) {
             throw e;
-        } catch (IOException e) {
-            throw e;
         } finally {
             if (lector != null) {
                 lector.close();
