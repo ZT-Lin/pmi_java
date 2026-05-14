@@ -25,8 +25,8 @@ public class EstudioController {
         this.estudio = data;
     }
 
-    public Fecha getFecha() {
-        return estudio.getFecha();
+    public Fecha getFechaRealiz() {
+        return estudio.getFechaRealiz();
     }
 
     public Fecha getFechaEntrega() {
@@ -40,8 +40,8 @@ public class EstudioController {
         return estudio.getEstado();
     }
 
-    public void setFecha(Fecha fecha) {
-        estudio.setFecha(fecha);
+    public void setFechaRealiz(Fecha fecha) {
+        estudio.setFechaRealiz(fecha);
     }
 
     public String getNombreEstudio() {
@@ -61,6 +61,10 @@ public class EstudioController {
     
     public String[] getAnalisis(){
         return estudio.getAnalisis();
+    }
+    
+    public Estudio getEstudio(){
+        return estudio;
     }
 
 }

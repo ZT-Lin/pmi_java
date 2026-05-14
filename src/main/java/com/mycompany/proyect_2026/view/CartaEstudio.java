@@ -11,6 +11,8 @@ import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 
+import com.mycompany.proyect_2026.controller.*;
+
 /**
  *
  * @author linzh
@@ -43,22 +45,25 @@ public class CartaEstudio extends javax.swing.JPanel {
         this.setSize(362, 456);
     }
 
-   private void mostrarDatos(Estudio estudio) {
+   private void mostrarDatos(Estudio est) {
     // Accedemos directamente al modelo 
     // solo visualización de datos ya procesados.
-    Paciente paciente = estudio.getPaciente();
-    Profesional profesional = estudio.getProfesional();
-
+    EstudioController estudio = new EstudioController(est);
+    PacienteController paciente = new PacienteController(estudio.getPaciente());
+    ProfesionalController profesional = new ProfesionalController(estudio.getProfesional());
+    FechaController fr = new FechaController(estudio.getFechaRealiz());
+    FechaController fe = new FechaController(estudio.getFechaEntrega());
+    
     campoNombrePaciente.setText(paciente.getNombre() + " " + paciente.getApellido());
     campoDNI.setText(paciente.getDNI());
 
     campoNombreProfesional.setText(profesional.getNombre() + " " + profesional.getApellido());
     campoMatricula.setText(profesional.getMatricula());
 
-    campoFechaRealizacion.setText(estudio.getFecha().toString());
+    campoFechaRealizacion.setText(fr.toString());
 
     if (estudio.getFechaEntrega() != null) {
-        campoFechaEntrega.setText(estudio.getFechaEntrega().toString());
+        campoFechaEntrega.setText(fr.toString());
     } else {
         campoFechaEntrega.setText("Sin asignar");
     }

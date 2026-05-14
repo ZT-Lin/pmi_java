@@ -184,7 +184,7 @@ public class GestorArchivos {
                 ? e.getFechaEntrega().getDia() + "/" + e.getFechaEntrega().getMes() + "/" + e.getFechaEntrega().getAnio()
                 : "null";
         String analisis = (e.getAnalisis() != null) ? String.join(",", e.getAnalisis()) : "";
-        return e.getFecha().getDia() + "|" + e.getFecha().getMes() + "|" + e.getFecha().getAnio() + "|"
+        return e.getFechaRealiz().getDia() + "|" + e.getFechaRealiz().getMes() + "|" + e.getFechaRealiz().getAnio() + "|"
                 + e.getNombreEstudio() + "|" + e.getPaciente().getDNI() + "|"
                 + e.getProfesional().getMatricula() + "|" + e.getEstado() + "|"
                 + fechaEntrega + "|" + analisis;

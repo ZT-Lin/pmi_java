@@ -10,7 +10,7 @@ package com.mycompany.proyect_2026.model;
  */
 public class Estudio {
 
-    private Fecha fecha; //fecha de realizacion
+    private Fecha fechaRealiza; //fecha de realizacion
     private Fecha fechaEntrega;
     private String estado; //"En Elaboracoin", "Finalizado", "Retirado", "Enviado"
     private String nombreEstudio;
@@ -23,7 +23,7 @@ public class Estudio {
 
     //Constructor
     public Estudio(Fecha fecha, String nombreEstudio, Paciente paciente, Profesional profesional) {
-        this.fecha = fecha;
+        this.fechaRealiza = fecha;
         this.nombreEstudio = nombreEstudio;
         this.estado = "En Elaboración"; // valor por defecto
         this.fechaEntrega = null;        // se completa después
@@ -32,7 +32,7 @@ public class Estudio {
         this.profesional = profesional;
     }
     public Estudio() {
-        this.fecha = new Fecha();
+        this.fechaRealiza = new Fecha();
         this.nombreEstudio = null;
         this.estado = "En Elaboración"; // valor por defecto
         this.fechaEntrega = new Fecha();        // se completa después
@@ -42,8 +42,8 @@ public class Estudio {
     }
 
     //Getters y Setters
-    public Fecha getFecha() {
-        return fecha;
+    public Fecha getFechaRealiz() {
+        return fechaRealiza;
     }
 
     public Fecha getFechaEntrega() {
@@ -62,8 +62,8 @@ public class Estudio {
         this.estado = estado;
     }
 
-    public void setFecha(Fecha fecha) {
-        this.fecha = fecha;
+    public void setFechaRealiz(Fecha fecha) {
+        this.fechaRealiza = fecha;
     }
 
     public String getNombreEstudio() {
@@ -117,7 +117,7 @@ public class Estudio {
     public String toString() {
         String str
                 = "Estudio: " + nombreEstudio
-                + "\n\tFecha: " + fecha.toString() + " " + paciente.getApellido()
+                + "\n\tFecha: " + fechaRealiza.toString() + " " + paciente.getApellido()
                 + "\n\tPaciente: " + paciente.getNombre()
                 + "\n\tProfesional a cargo: " + profesional.getNombre()
                 + "\n\tInforme: " + informeResultados;

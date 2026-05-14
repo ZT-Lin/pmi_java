@@ -72,7 +72,6 @@ public class PersonaMenu extends javax.swing.JFrame {
         barraDeBusqueda = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
         panelVacio = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         panelDatos = new javax.swing.JPanel();
         personaList = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,11 +101,6 @@ public class PersonaMenu extends javax.swing.JFrame {
         areaParaMostrar.setLayout(new java.awt.CardLayout());
 
         panelVacio.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo1.jpg"))); // NOI18N
-        panelVacio.add(jLabel1, java.awt.BorderLayout.CENTER);
-
         areaParaMostrar.add(panelVacio, "VACIO");
 
         panelDatos.setLayout(new java.awt.BorderLayout());
@@ -659,7 +653,6 @@ public class PersonaMenu extends javax.swing.JFrame {
     private javax.swing.JTextField barraDeBusqueda;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton eliminar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton modificar;

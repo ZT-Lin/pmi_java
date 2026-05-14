@@ -37,7 +37,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="132" max="32767" attributes="0"/>
+              <EmptySpace pref="138" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -49,8 +49,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="toPersona" min="-2" pref="45" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="toStudios" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <Component id="toStudios" min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace pref="105" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,9 +67,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="toStudios">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/estudio_Icon.jpg"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Estudios"/>
       </Properties>
       <Events>
@@ -78,9 +75,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="toPersona">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/persona_Icon.jpg"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Personas"/>
       </Properties>
       <Events>

@@ -71,9 +71,9 @@ public class ListaEstudioController {
     public ArrayList<Estudio> filtrarPorFecha(int dia, int mes, int anio) {
         ArrayList<Estudio> resultado = new ArrayList<>();
         for (Estudio e : listaEstudios) {
-            if (e.getFecha().getDia() == dia
-                    && e.getFecha().getMes() == mes
-                    && e.getFecha().getAnio() == anio) {
+            if (e.getFechaRealiz().getDia() == dia
+                    && e.getFechaRealiz().getMes() == mes
+                    && e.getFechaRealiz().getAnio() == anio) {
                 resultado.add(e);
             }
         }
