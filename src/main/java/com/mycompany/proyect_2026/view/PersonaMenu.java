@@ -104,7 +104,7 @@ public class PersonaMenu extends javax.swing.JFrame {
         panelVacio.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paciente-profesional.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo1.jpg"))); // NOI18N
         panelVacio.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         areaParaMostrar.add(panelVacio, "VACIO");
@@ -194,7 +194,7 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(volver)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                        .addComponent(barraDeBusqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                     .addComponent(personaList)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(obTodos)
@@ -245,7 +245,7 @@ public class PersonaMenu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(areaParaMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();

@@ -1,3 +1,4 @@
 5|5|2026|Estudio_1234567|1234567|1007|Enviado|11/5/2026|Hemograma_Completo,Colesterol_Total,Orina_Completa
 3|2|2026|Estudio_33445566|33445566|1006|Finalizado|6/2/2026|Orina_Completa
 25|3|2025|Estudio_20689496|20689496|1004|Retirado|8/4/2025|Hemograma_Completo,Glucemia,Orina_Completa
+20|5|2024|Estudio_12345678|12345678|1004|En Elaboración|29/5/2024|Trigliceridos,Orina_Completa,Urea,Creatinina,Acido_Urico

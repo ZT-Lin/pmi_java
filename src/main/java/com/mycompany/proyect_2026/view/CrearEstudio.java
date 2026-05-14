@@ -69,14 +69,13 @@ public class CrearEstudio extends javax.swing.JFrame {
 
     private void configurarFormulario() {
 
-        // ── Hacer editables los campos de fecha ────────────
-        // initComponents los pone como non-editable,
-        // los sobreescribimos acá
-        fRealizacion.setEditable(true);  // fecha de realización
-        fRealizacion.setText("dd/mm/aaaa");
+// ── Hacer editables los campos de fecha ────────────
+        fRealizacion.setEditable(true);
+        fEntrega.setEditable(true);
 
-        fEntrega.setEditable(true);  // fecha de entrega
-        fEntrega.setText("dd/mm/aaaa");
+        // Aplicamos el efecto Placeholder a ambos campos
+        configurarPlaceholder(fRealizacion, "dd/mm/aaaa");
+        configurarPlaceholder(fEntrega, "dd/mm/aaaa");
 
         // ── Agregar combo de pacientes ─────────────────────
         // Lo creamos programáticamente porque el form no lo tiene
@@ -183,7 +182,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         identProfesional.setText(pr.getNombre() + " " + pr.getApellido());
         matricula.setText(pr.getMatricula());
     }
-    
+
     private String[] obtenerAnalisisSeleccionados() {
         javax.swing.JCheckBox[] checks = {
             jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
@@ -511,6 +510,34 @@ public class CrearEstudio extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Estudio creado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
     }//GEN-LAST:event_confirmarActionPerformed
+
+    // Método para crear el efecto "Placeholder" (Texto fantasma)
+    private void configurarPlaceholder(javax.swing.JTextField campo, String placeholder) {
+        // Estado inicial
+        campo.setText(placeholder);
+        campo.setForeground(java.awt.Color.GRAY);
+
+        // Agregamos el FocusListener
+        campo.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                // Si el usuario hace clic y dice "dd/mm/aaaa", lo borramos y ponemos color negro
+                if (campo.getText().equals(placeholder)) {
+                    campo.setText("");
+                    campo.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                // Si el usuario se va del campo y lo dejó vacío, le devolvemos el "dd/mm/aaaa" en gris
+                if (campo.getText().trim().isEmpty()) {
+                    campo.setText(placeholder);
+                    campo.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+    }
 
     /**
      * @param args the command line arguments
