@@ -37,7 +37,7 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        this.setTitle("Nueva Persona");
+        this.setTitle("Agregar Nueva Persona");
     }
 
     public CrearPersona(ArrayList<Paciente> pacientes,
@@ -50,7 +50,7 @@ public class CrearPersona extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setTitle("Modificar Profesional");
+        this.setTitle("Agregar Nueva Persona");
     }
 
     // Constructor para EDITAR un paciente existente
@@ -99,7 +99,7 @@ public class CrearPersona extends javax.swing.JFrame {
             PersonaMenu padre,
             Profesional profesionalAEditar,
             int indice) {
-        this.setTitle("Nueva Profesional");
+        this.setTitle("Modificar Profesional");
         this.listaPacientes = pacientes;
         this.listaProfesionales = profesionales;
         this.ventanaPadre = padre;
