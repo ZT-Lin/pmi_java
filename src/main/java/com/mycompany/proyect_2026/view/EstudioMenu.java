@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyect_2026.view;
 
+import com.mycompany.proyect_2026.controller.FechaController;
 import com.mycompany.proyect_2026.controller.ListaEstudioController;
 import com.mycompany.proyect_2026.model.Estudio;
 import com.mycompany.proyect_2026.model.Fecha;
@@ -416,17 +417,13 @@ public class EstudioMenu extends javax.swing.JFrame {
 
         if (nuevaFechaStr != null && !nuevaFechaStr.trim().isEmpty()) {
             try {
-                String[] p = nuevaFechaStr.trim().split("/");
-                Fecha nueva = new Fecha(
-                        Integer.parseInt(p[0]),
-                        Integer.parseInt(p[1]),
-                        Integer.parseInt(p[2])
-                );
+                Fecha nueva = FechaController.parsear(nuevaFechaStr.trim());
                 estudioController.modificarFechaEntrega(seleccionado, nueva);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this,
-                        "Fecha inválida. No se modificó.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Fecha de entrega inválida: " + e.getMessage()
+                        + "\nUsá el formato dd/mm/aaaa",
+                        "Error de formato", JOptionPane.ERROR_MESSAGE);
             }
         }
 

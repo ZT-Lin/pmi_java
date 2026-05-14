@@ -183,38 +183,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         identProfesional.setText(pr.getNombre() + " " + pr.getApellido());
         matricula.setText(pr.getMatricula());
     }
-
-    private Fecha parsearFecha(String texto) throws Exception {
-        // Esperamos formato dd/mm/aaaa
-        String[] partes = texto.split("/");
-
-        if (partes.length != 3) {
-            throw new Exception("Formato incorrecto. Usá dd/mm/aaaa");
-        }
-
-        try {
-            int dia = Integer.parseInt(partes[0].trim());
-            int mes = Integer.parseInt(partes[1].trim());
-            int anio = Integer.parseInt(partes[2].trim());
-
-            // Validaciones básicas
-            if (dia < 1 || dia > 31) {
-                throw new Exception("Día inválido");
-            }
-            if (mes < 1 || mes > 12) {
-                throw new Exception("Mes inválido");
-            }
-            if (anio < 2000 || anio > 2100) {
-                throw new Exception("Año inválido");
-            }
-
-            return new Fecha(dia, mes, anio);
-
-        } catch (NumberFormatException e) {
-            throw new Exception("La fecha debe contener solo números. Usá dd/mm/aaaa");
-        }
-    }
-
+    
     private String[] obtenerAnalisisSeleccionados() {
         javax.swing.JCheckBox[] checks = {
             jCheckBox1, jCheckBox2, jCheckBox3, jCheckBox4, jCheckBox5,
@@ -480,7 +449,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         // ── Validar y parsear fecha de realización ─────────
         Fecha fechaRealizacion;
         try {
-            fechaRealizacion = parsearFecha(fRealizacion.getText());
+            fechaRealizacion = FechaController.parsear(fRealizacion.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fecha de realización inválida: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -493,7 +462,7 @@ public class CrearEstudio extends javax.swing.JFrame {
         String textoEntrega = fEntrega.getText().trim();
         if (!textoEntrega.isEmpty() && !textoEntrega.equals("dd/mm/aaaa")) {
             try {
-                fechaEntrega = parsearFecha(textoEntrega);
+                fechaEntrega = FechaController.parsear(textoEntrega);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Fecha de entrega inválida.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
