@@ -10,13 +10,13 @@ package com.mycompany.proyect_2026.model;
  */
 public abstract class Persona {
 
-    protected String nombre, apellido;
+    private String nombre, apellido;
     /*
         ↑no se modifica↑
         implementar el set y get 
         pero no le deja cambiar en el sistema
      */
-    protected String mail, telefono;
+    private String mail, telefono;
     //Constructores:
 
     public Persona() {
