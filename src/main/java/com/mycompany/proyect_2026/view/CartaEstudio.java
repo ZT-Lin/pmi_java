@@ -7,7 +7,7 @@ package com.mycompany.proyect_2026.view;
 import com.mycompany.proyect_2026.model.Analisis;
 import com.mycompany.proyect_2026.model.Estudio;
 
-import com.mycompany.proyect_2026.controller.*;
+
 import com.mycompany.proyect_2026.model.Paciente;
 import com.mycompany.proyect_2026.model.Profesional;
 
