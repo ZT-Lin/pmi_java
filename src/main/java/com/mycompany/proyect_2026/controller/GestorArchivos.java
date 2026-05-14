@@ -193,48 +193,34 @@ public class GestorArchivos {
     }
 
     public static void agregarPacienteFisico(Paciente p) throws IOException {
-
-        try {
-
-            FileWriter fw = new FileWriter("data/pacientes.txt", true);
-
-            // Guardar con "|"
-            String linea = p.getNombre() + "|" + p.getApellido() + "|"
-                    + p.getMail() + "|" + p.getDNI() + "|"
-                    + p.getTel() + "|" + p.getObraSocial() + "\n";
-
-            fw.write(linea);
-
-            fw.close();
-
-        } catch (IOException e) {
-
-            javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar paciente.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
+    FileWriter fw = null;
+    try {
+        fw = new FileWriter("data/pacientes.txt", true);
+        String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                + p.getMail() + "|" + p.getDNI() + "|"
+                + p.getTel() + "|" + p.getObraSocial() + "\n";
+        fw.write(linea);
+    } finally {
+        if (fw != null) {
+            try { fw.close(); } catch (IOException ex) { /* ignorar */ }
         }
     }
+}
 
     public static void agregarProfesionalFisico(Profesional p) throws IOException {
-
-        try {
-
-            FileWriter fw = new FileWriter("data/profesionales.txt", true);
-
-            // Guardar con "|"
-            String linea = p.getNombre() + "|" + p.getApellido() + "|"
-                    + p.getMail() + "|" + p.getTel() + "|"
-                    + p.getMatricula() + "\n";
-
-            fw.write(linea);
-
-            fw.close();
-
-        } catch (IOException e) {
-
-            javax.swing.JOptionPane.showMessageDialog(null, "Error al guardar profesional.", "Error de Archivo", javax.swing.JOptionPane.ERROR_MESSAGE);
-
+    FileWriter fw = null;
+    try {
+        fw = new FileWriter("data/profesionales.txt", true);
+        String linea = p.getNombre() + "|" + p.getApellido() + "|"
+                + p.getMail() + "|" + p.getTel() + "|"
+                + p.getMatricula() + "\n";
+        fw.write(linea);
+    } finally {
+        if (fw != null) {
+            try { fw.close(); } catch (IOException ex) { /* ignorar */ }
         }
-
     }
+}
 
     public static void cargarAnalisisDesdeArchivo() throws IOException {
 
