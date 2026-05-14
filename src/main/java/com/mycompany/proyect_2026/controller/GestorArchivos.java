@@ -286,11 +286,11 @@ public class GestorArchivos {
             agregarProfesionalFisico(pr3);
 
             // 3 Estudios (Básicos)
-            Estudio e1 = new Estudio(new Fecha(1, 10, 2026), "Radiografía", p1, pr1);
+            Estudio e1 = new Estudio(new Fecha(1, 10, 2026), "Glucemia", p1, pr1);
 
-            Estudio e2 = new Estudio(new Fecha(5, 10, 2026), "Ecografía", p2, pr2);
+            Estudio e2 = new Estudio(new Fecha(5, 10, 2026), "Urea", p2, pr2);
 
-            Estudio e3 = new Estudio(new Fecha(10, 10, 2026), "Resonancia", p3, pr3);
+            Estudio e3 = new Estudio(new Fecha(10, 10, 2026), "Creatinina", p3, pr3);
 
             guardarEstudioEnArchivo(e1);
 
