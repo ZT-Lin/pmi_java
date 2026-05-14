@@ -210,6 +210,7 @@ public class EstudioMenu extends javax.swing.JFrame {
         anioTField = new javax.swing.JTextField();
         areaParaMostrar = new javax.swing.JPanel();
         panelVacio = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         panelDatos = new javax.swing.JPanel();
         agregar = new javax.swing.JButton();
         modificar = new javax.swing.JButton();
@@ -254,15 +255,23 @@ public class EstudioMenu extends javax.swing.JFrame {
         areaParaMostrar.setPreferredSize(new java.awt.Dimension(295, 428));
         areaParaMostrar.setLayout(new java.awt.CardLayout());
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\src\\main\\resources\\estetoscopio.jpg")); // NOI18N
+
         javax.swing.GroupLayout panelVacioLayout = new javax.swing.GroupLayout(panelVacio);
         panelVacio.setLayout(panelVacioLayout);
         panelVacioLayout.setHorizontalGroup(
             panelVacioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVacioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelVacioLayout.setVerticalGroup(
             panelVacioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
+            .addGroup(panelVacioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         areaParaMostrar.add(panelVacio, "VACIO");
@@ -328,7 +337,7 @@ public class EstudioMenu extends javax.swing.JFrame {
                         .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 156, Short.MAX_VALUE))
+                        .addGap(92, 164, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -363,7 +372,7 @@ public class EstudioMenu extends javax.swing.JFrame {
                             .addComponent(modificar)
                             .addComponent(agregar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))))
+                        .addComponent(areaParaMostrar, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE))))
         );
 
         pack();
@@ -560,6 +569,7 @@ public class EstudioMenu extends javax.swing.JFrame {
     private javax.swing.JLabel fechaLabel;
     private javax.swing.JLabel fechaLabel3;
     private javax.swing.JLabel fechaLabel4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField mesTField;
     private javax.swing.JButton modificar;

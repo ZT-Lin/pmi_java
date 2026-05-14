@@ -133,6 +133,20 @@
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="D:\codefile\pmi_java\src\main\resources\paciente-profesional.jpg"/>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                  <BorderConstraints direction="Center"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+          </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelDatos">
           <Constraints>

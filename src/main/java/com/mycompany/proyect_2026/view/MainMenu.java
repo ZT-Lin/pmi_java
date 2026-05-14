@@ -69,6 +69,7 @@ public class MainMenu extends javax.swing.JFrame {
         nombreCompañía.setText("Laboratorio de Análisis Clínicos Java SRL");
         nombreCompañía.setToolTipText("");
 
+        toStudios.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\src\\main\\resources\\estudio_Icon.jpg")); // NOI18N
         toStudios.setText("Estudios");
         toStudios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +77,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        toPersona.setIcon(new javax.swing.ImageIcon("D:\\codefile\\pmi_java\\src\\main\\resources\\persona_Icon.jpg")); // NOI18N
         toPersona.setText("Personas");
         toPersona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
